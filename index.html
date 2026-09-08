@@ -122,7 +122,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{ma
 <section class="hero"><div class="brand"><div><h1>Garagey ✨</h1><p>Tu garaje, siempre bajo control.</p></div><button class="gear" onclick="openSettings()">⚙️</button></div>
 <div class="quick"><div class="q">Vehículos<b id="qVehicles">0</b></div><div class="q">Intervenciones<b id="qInterventions">0</b></div><div class="q">Gasto total<b id="qCost">0 €</b></div><div class="q">Avisos<b id="qAlerts">0</b></div></div></section>
 <div class="layout"><aside class="panel sidebar"><div class="section-title">MIS VEHÍCULOS <span>🚘</span></div><div id="vehicles"></div><button class="add" onclick="openVehicle()">＋ Añadir vehículo</button></aside><main class="content" id="main"></main></div>
-<button class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v4.2 · Optimizada para Chrome Android · Multivehículo sin límites</div></div>
+<button class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v4.3.1 · Reparación crítica · Chrome Android · Centro de avisos</div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog"><div class="top"><h2>🚘 Tu vehículo</h2><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
 <div class="form"><div><label>Nombre</label><input id="vname" placeholder="Ej. Qashqai familiar"></div><div><label>Tipo</label><select id="vtype"><option>Coche</option><option>Moto</option></select></div><div><label>Marca</label><input id="vbrand" placeholder="Opcional"></div><div><label>Modelo</label><input id="vmodel" placeholder="Opcional"></div><div class="full"><label>Kilometraje actual</label><input id="vkm" type="number" min="0"></div></div>
@@ -270,7 +270,7 @@ function render(){
 }
 function selectVehicle(id){data.selected=id;save();render()}
 function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);$('vehicleModal').classList.add('show');window.editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vkm').value=v?.km||''}
-function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),{name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0)})}else{let v={id:Date.now(),name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0),interventions:[]};data.vehicles.push(v);data.selected=v.id // Sin límite de vehículos}save();closeModal('vehicleModal');render()}
+function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),{name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0)})}else{let v={id:Date.now(),name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0),interventions:[]};data.vehicles.push(v);data.selected=v.id;}save();closeModal('vehicleModal');render()}
 function openIntervention(){let v=data.vehicles.find(x=>x.id===data.selected);$('interventionModal').classList.add('show');$('idate').value=new Date().toISOString().slice(0,10);$('ikm').value=v.km||'';$('itype').value='Mantenimiento';$('inext').value='';$('totalCost').value='';$('costItems').innerHTML='';addCost();typeFields()}
 function typeFields(){
  ['maintenanceFields','tireFields','beltFields','otherFields','itvFields','insuranceFields','taxFields'].forEach(x=>$(x).classList.add('hidden'));
@@ -296,7 +296,7 @@ function deleteVehicle(id){if(confirm('¿Eliminar vehículo y todo su historial?
 function closeModal(id){$(id).classList.remove('show')}
 function openSettings(){$('settingsModal').classList.add('show');$('schemaVersion').textContent='v'+data.schemaVersion}
 function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='garagey_backup.json';a.click();URL.revokeObjectURL(a.href)}
-function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let imported=JSON.parse(r.result);if(!Array.isArray(imported.vehicles))throw 0;data=imported;migrate();if(!data.selected)data.selected=data.vehicles[0]?.id||null;save();closeModal('settingsModal');
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let imported=JSON.parse(r.result);if(!Array.isArray(imported.vehicles))throw 0;data=imported;migrate();if(!data.selected)data.selected=data.vehicles[0]?.id||null;save();closeModal('settingsModal');render();alert('Copia restaurada correctamente')}catch(err){alert('Archivo de copia no válido')}};r.readAsText(f)}
 /* SINCRONIZACIÓN CLOUD
    Google/Gmail se usa como identidad y Google Drive como almacenamiento.
    Para activar sincronización real se necesita un OAuth Client ID propio,
@@ -318,6 +318,5 @@ function syncCloud(){
  alert('Base de sincronización preparada. Para activar la conexión real con Google Drive falta vincular el OAuth Client ID y las credenciales autorizadas de Google.');
 }
 
-render();alert('Copia restaurada correctamente')}catch(err){alert('Archivo de copia no válido')}};r.readAsText(f)}
 render();
 </script></body></html>
