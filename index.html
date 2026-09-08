@@ -133,7 +133,6 @@ opacity:1
 }
 
 </style>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body><div class="app">
 <section class="hero"><div class="brand"><div><h1>Garagey ✨</h1><p>Tu garaje, siempre bajo control.</p></div><button class="gear" onclick="openSettings()">⚙️</button></div>
@@ -180,15 +179,10 @@ opacity:1
 <p><b>Tu información está separada de la interfaz.</b> Esto permite actualizar el diseño y añadir funciones sin borrar el historial.</p>
 <div class="card" style="box-shadow:none;border:1px solid var(--line)"><b>Versión de datos:</b> <span id="schemaVersion"></span><br><span class="muted">Las futuras versiones pueden ejecutar migraciones automáticas.</span></div>
 <div class="card" style="box-shadow:none;border:1px solid var(--line);margin-top:14px">
-<b>☁️ Sincronización con Google Drive</b>
-<p class="muted">Tus datos se guardan en el espacio privado de Garagey dentro de Google Drive.</p>
-<div id="cloudStatus" class="muted">Estado: sin conectar</div>
-<div id="cloudLastSync" class="muted" style="margin-top:4px"></div>
-<div class="actions" style="margin-top:10px">
-<button class="primary" onclick="connectGoogle()">🔐 Conectar Google</button>
-<button class="soft" onclick="syncCloud()">☁️ Guardar ahora</button>
-<button class="soft" onclick="restoreCloud()">⬇️ Restaurar nube</button>
-</div>
+<b>☁️ Sincronización Google / Gmail</b>
+<p class="muted">La sincronización real con Google Drive requiere configurar una credencial OAuth de Google Cloud. Sin esa credencial, Gmail no puede autorizar copias automáticas.</p>
+<div id="cloudStatus" class="muted">Estado: configuración pendiente</div>
+<div class="actions" style="margin-top:10px"><button class="primary" onclick="configureGoogleCloud()">Configurar cuenta Google</button><button class="soft" onclick="syncCloud()">☁️ Sincronizar ahora</button></div>
 </div>
 <div class="actions"><button class="soft" onclick="exportData()">⬇️ Copia de seguridad</button><label class="soft" style="margin:0;cursor:pointer">⬆️ Restaurar copia<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label></div>
 </div></div>
@@ -214,7 +208,7 @@ function migrate(){
  }
  save();
 }
-function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data));scheduleCloudSync()}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data))}
 migrate();
 const $=id=>document.getElementById(id), euro=n=>new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(n||0));
 
@@ -361,71 +355,26 @@ function closeModal(id){$(id).classList.remove('show')}
 function openSettings(){$('settingsModal').classList.add('show');$('schemaVersion').textContent='v'+data.schemaVersion}
 function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='garagey_backup.json';a.click();URL.revokeObjectURL(a.href)}
 function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let imported=JSON.parse(r.result);if(!Array.isArray(imported.vehicles))throw 0;data=imported;migrate();if(!data.selected)data.selected=data.vehicles[0]?.id||null;save();closeModal('settingsModal');render();alert('Copia restaurada correctamente')}catch(err){alert('Archivo de copia no válido')}};r.readAsText(f)}
-/* SINCRONIZACIÓN REAL CON GOOGLE DRIVE */
-const GOOGLE_CLIENT_ID='806286137329-crrn5nf8dfb8gbgeui3463hj81hgk441.apps.googleusercontent.com';
-const GOOGLE_SCOPE='https://www.googleapis.com/auth/drive.appdata';
-const GOOGLE_BACKUP_NAME='garagey-backup.json';
-let googleToken=null, googleTokenClient=null, syncTimer=null;
-
-function updateCloudStatus(message){
- const el=$('cloudStatus'); if(el) el.textContent=message || (googleToken?'Estado: conectado':'Estado: sin conectar');
- const last=localStorage.getItem('garagey_google_last_sync');
- if($('cloudLastSync')) $('cloudLastSync').textContent=last?'Última sincronización: '+new Date(last).toLocaleString('es-ES'):'';
+/* SINCRONIZACIÓN CLOUD
+   Google/Gmail se usa como identidad y Google Drive como almacenamiento.
+   Para activar sincronización real se necesita un OAuth Client ID propio,
+   configurable sin modificar los datos ni la aplicación. */
+function configureGoogleCloud(){
+ let current=localStorage.getItem('garagey_google_client_id')||'';
+ let id=prompt('Introduce el Google OAuth Client ID de tu proyecto (Google Cloud Console):',current);
+ if(id!==null){localStorage.setItem('garagey_google_client_id',id.trim());updateCloudStatus();alert('Configuración guardada. La cuenta y los datos locales no se han modificado.')}
 }
-function initGoogle(){
- if(!window.google||!google.accounts?.oauth2)return false;
- if(!googleTokenClient) googleTokenClient=google.accounts.oauth2.initTokenClient({
-  client_id:GOOGLE_CLIENT_ID,scope:GOOGLE_SCOPE,
-  callback:(resp)=>{if(resp.error){updateCloudStatus('Error: '+resp.error);alert('Google no autorizó: '+resp.error);return;}
-   googleToken=resp.access_token;updateCloudStatus('Estado: conectado a Google Drive');syncCloud();}
- });
- return true;
+function updateCloudStatus(){
+ let el=$('cloudStatus'); if(!el)return;
+ let id=localStorage.getItem('garagey_google_client_id');
+ el.textContent=id?'Estado: listo para conectar con Google Drive':'Estado: configuración pendiente';
 }
-function connectGoogle(){
- if(!initGoogle()){updateCloudStatus('Cargando Google…');setTimeout(connectGoogle,800);return;}
- googleTokenClient.requestAccessToken({prompt:googleToken?'':'consent'});
+function syncCloud(){
+ let id=localStorage.getItem('garagey_google_client_id');
+ if(!id){alert('Primero debes configurar tu Google OAuth Client ID. Esto es necesario para conectar de forma segura tu propia aplicación con Google Drive.');return}
+ // Base preparada: el backend OAuth/Drive se añade sin tocar el esquema de datos.
+ alert('Base de sincronización preparada. Para activar la conexión real con Google Drive falta vincular el OAuth Client ID y las credenciales autorizadas de Google.');
 }
-async function googleFetch(url,options={}){
- if(!googleToken)throw new Error('No hay sesión de Google activa');
- const headers=new Headers(options.headers||{});headers.set('Authorization','Bearer '+googleToken);
- const r=await fetch(url,{...options,headers});
- if(!r.ok)throw new Error('Google Drive '+r.status+' '+await r.text());
- return r;
-}
-async function findBackup(){
- const q=encodeURIComponent("name='garagey-backup.json' and trashed=false");
- const r=await googleFetch('https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&q='+q+'&fields=files(id,name,modifiedTime)');
- const j=await r.json();return j.files?.[0]||null;
-}
-async function syncCloud(){
- if(!googleToken){connectGoogle();return;}
- try{
-  updateCloudStatus('Sincronizando…');
-  const backup={version:1,updatedAt:new Date().toISOString(),app:'Garagey',data:data};
-  const existing=await findBackup(), boundary='garagey_'+Date.now();
-  const metadata={name:GOOGLE_BACKUP_NAME,parents:['appDataFolder'],mimeType:'application/json'};
-  const body=['--'+boundary,'Content-Type: application/json; charset=UTF-8','',JSON.stringify(metadata),'--'+boundary,'Content-Type: application/json','',JSON.stringify(backup),'--'+boundary+'--',''].join('\r\n');
-  const url=existing?'https://www.googleapis.com/upload/drive/v3/files/'+existing.id+'?uploadType=multipart':'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart';
-  await googleFetch(url,{method:existing?'PATCH':'POST',headers:{'Content-Type':'multipart/related; boundary='+boundary},body});
-  localStorage.setItem('garagey_google_last_sync',new Date().toISOString());updateCloudStatus('Estado: sincronizado correctamente');
- }catch(e){console.error(e);updateCloudStatus('Error de sincronización');alert('No se pudo guardar: '+e.message);}
-}
-async function restoreCloud(){
- if(!googleToken){connectGoogle();alert('Autoriza Google y pulsa después otra vez Restaurar nube.');return;}
- if(!confirm('¿Restaurar los datos desde Google Drive? Se sustituirán los datos locales.'))return;
- try{
-  const f=await findBackup();if(!f)throw new Error('No existe ninguna copia en Google Drive');
-  updateCloudStatus('Restaurando copia…');
-  const r=await googleFetch('https://www.googleapis.com/drive/v3/files/'+f.id+'?alt=media');
-  const backup=await r.json(), imported=backup.data||backup;
-  if(!Array.isArray(imported.vehicles))throw new Error('Formato de copia no válido');
-  data=imported;migrate();if(!data.selected)data.selected=data.vehicles[0]?.id||null;save();render();
-  updateCloudStatus('Estado: copia restaurada correctamente');alert('Datos restaurados correctamente.');
- }catch(e){console.error(e);updateCloudStatus('Error al restaurar');alert('No se pudo restaurar: '+e.message);}
-}
-function scheduleCloudSync(){if(!googleToken)return;clearTimeout(syncTimer);syncTimer=setTimeout(syncCloud,2500);}
-window.addEventListener('load',()=>setTimeout(()=>{initGoogle();updateCloudStatus();},500));
-function configureGoogleCloud(){alert('Google Drive ya está configurado. Pulsa Conectar Google.');}
 
 render();
 </script></body></html>
