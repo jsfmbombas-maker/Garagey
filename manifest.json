@@ -3,7 +3,8 @@
   "short_name": "Garagey",
   "start_url": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#f6f7fb",
   "theme_color": "#2196F3",
-  "description": "Control de mantenimiento y avisos para vehículos."
+  "description": "Gestor de mantenimiento, ITV, seguros, impuestos y avisos para tus vehículos."
 }
