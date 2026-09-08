@@ -4,6 +4,6 @@
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f6f7fb",
-  "theme_color": "#2196F3",
+  "theme_color": "#6c5ce7",
   "description": "Gestor de mantenimiento, ITV, seguros, impuestos y avisos para tus vehículos."
 }
