@@ -2,12 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#6c5ce7">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="theme-color" content="#2196F3">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Garagey">
-<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>Garagey · Tu garaje inteligente</title>
 <style>
 :root{
@@ -27,20 +26,103 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{ma
 .content{min-width:0}.card{padding:22px;margin-bottom:18px}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}.top h2{margin:0;font-size:25px}.muted{color:var(--muted)}
 .actions{display:flex;gap:8px;flex-wrap:wrap}.primary{background:var(--primary);color:white;padding:11px 14px;border-radius:13px;font-weight:800}.soft{background:#f0edff;color:#5848d6;padding:11px 14px;border-radius:13px;font-weight:800}.danger{background:#fff0f2;color:#dc496b;padding:8px 10px;border-radius:10px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.stat{padding:16px;border-radius:18px;background:#fafafe}.stat:nth-child(1){border-left:4px solid var(--primary)}.stat:nth-child(2){border-left:4px solid var(--cyan)}.stat:nth-child(3){border-left:4px solid var(--orange)}.stat b{display:block;font-size:23px;margin-top:4px}
-.alert{padding:13px 15px;border-radius:14px;background:#fff7eb;margin:12px 0;border:1px solid #ffe4bb}.alert.red{background:#fff1f2;border-color:#fecdd3}.alert.orange{background:#fff7ed;border-color:#fed7aa}.alert.blue{background:#eff6ff;border-color:#bfdbfe}.notice-panel{background:linear-gradient(135deg,#1f2937,#334155);color:white}.notice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.notice{padding:14px;border-radius:16px;background:#ffffff12;border:1px solid #ffffff18}.notice b{font-size:22px;display:block}.notice small{color:#cbd5e1}
+.alert{padding:13px 15px;border-radius:14px;background:#fff7eb;margin:12px 0;border:1px solid #ffe4bb}.alert.red{background:#fff1f2;border-color:#fecdd3}.alert.orange{background:#fff7ed;border-color:#fed7aa}.alert.blue{background:#eff6ff;border-color:#bfdbfe}.notice-panel{background:linear-gradient(135deg,#1f2937,#334155);color:white}.notice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.notice{padding:14px;border-radius:16px;background:#ffffff12;border:1px solid #ffffff18}.notice b{font-size:22px;display:block}.notice small{color:#cbd5e1}.mobile-add-vehicle{display:none;position:fixed;right:18px;bottom:18px;z-index:20;border:0;border-radius:999px;padding:15px 22px;font-weight:900;font-size:16px;box-shadow:0 10px 24px rgba(33,150,243,.35);background:#2196F3;color:#000000}
 .timeline{margin-top:8px}.item{border-left:3px solid #ded9ff;padding:0 0 18px 18px;margin-left:8px;position:relative}.item:before{content:"";position:absolute;width:12px;height:12px;background:var(--primary);border-radius:50%;left:-7px;top:3px}.item:last-child{padding-bottom:0}.item-head{display:flex;justify-content:space-between;gap:12px}.badge{background:#f0edff;color:#5848d6;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:700}
 .empty{text-align:center;padding:50px 15px;color:var(--muted)}.empty .big{font-size:52px}
 .modal{display:none;position:fixed;inset:0;background:#10142699;z-index:10;padding:18px;overflow:auto}.modal.show{display:block}.dialog{max-width:780px;background:white;margin:25px auto;border-radius:24px;padding:24px;box-shadow:0 20px 60px #0005}
 .dialog h2{margin-top:0}.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}label{font-size:13px;font-weight:800;display:block;margin-bottom:6px}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}textarea{min-height:90px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.check{padding:10px;border:1px solid var(--line);border-radius:12px;font-weight:500}
 .hidden{display:none}.cost-row{display:grid;grid-template-columns:1fr 120px auto;gap:8px;margin-bottom:7px}.footer-note{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
-@media(max-width:780px){.layout{grid-template-columns:1fr}.sidebar{display:flex;overflow:auto;gap:8px}.sidebar .section-title,.sidebar .add{display:none}.vehicle{min-width:190px}.quick,.stats{grid-template-columns:1fr}.form,.checks{grid-template-columns:1fr}.hero{padding:20px}.top{flex-direction:column}.cost-row{grid-template-columns:1fr 100px auto}}
+
+/* GARAGEY v4.2 - Optimización específica para Chrome Android */
+@media(max-width:780px){
+  html{width:100%;overflow-x:hidden}
+  body{width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
+  .app{width:100%;max-width:none;padding:10px 10px calc(110px + env(safe-area-inset-bottom));margin:0}
+  .hero{border-radius:20px;padding:18px 16px}
+  .brand h1{font-size:24px}
+  .brand p{font-size:13px;line-height:1.35}
+  .gear{min-width:44px;min-height:44px;font-size:18px}
+  .quick{grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+  .quick .q{padding:11px;border-radius:14px;font-size:12px}
+  .q b{font-size:19px;margin-top:2px}
+
+  .layout{display:block;margin-top:12px}
+  .sidebar{display:flex;padding:0;background:transparent;box-shadow:none;border-radius:0;overflow-x:auto;gap:8px;margin:0 -2px 12px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+  .sidebar .section-title,.sidebar .add{display:none}
+  .sidebar::-webkit-scrollbar{display:none}
+  .vehicle{flex:0 0 78%;min-width:0;margin:0;padding:13px 14px;background:#fff;border:1px solid #edf0f6;box-shadow:0 6px 18px rgba(40,35,80,.08);scroll-snap-align:start}
+  .vehicle.active{background:#f0edff;border-color:#ddd7ff}
+  .vehicle small{font-size:12px}
+
+  .content{width:100%;min-width:0}
+  .panel,.card{border-radius:18px}
+  .card{padding:16px;margin-bottom:12px}
+  .top{flex-direction:column;align-items:stretch;gap:12px}
+  .top h2{font-size:21px;line-height:1.2}
+  .muted{font-size:14px}
+
+  .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
+  .actions button{width:100%;min-height:44px;padding:10px 9px;font-size:13px}
+  .actions .primary{grid-column:span 2}
+
+  .stats{grid-template-columns:1fr;gap:9px;margin-top:14px}
+  .stat{padding:14px 15px}
+  .stat b{font-size:21px}
+
+  .notice-grid{grid-template-columns:1fr;gap:8px}
+  .notice{padding:13px}
+  .notice b{font-size:19px}
+
+  .item{padding-left:15px}
+  .item-head{flex-direction:column;gap:6px}
+  .badge{align-self:flex-start}
+
+  .modal{padding:0;display:none;align-items:flex-end;background:#101426aa}
+  .modal.show{display:flex}
+  .dialog{width:100%;max-width:none;max-height:92vh;overflow-y:auto;margin:0;border-radius:24px 24px 0 0;padding:20px 16px calc(24px + env(safe-area-inset-bottom))}
+  .dialog .top{flex-direction:row;align-items:center;justify-content:space-between}
+  .dialog .top h2{font-size:21px}
+  .form,.checks{grid-template-columns:1fr;gap:12px}
+  input,select,textarea{font-size:16px;min-height:46px;padding:12px}
+  textarea{min-height:110px}
+  .cost-row{grid-template-columns:1fr;gap:7px;padding:10px;background:#fafafe;border:1px solid #edf0f6;border-radius:14px}
+  .cost-row button{min-height:40px}
+
+  .mobile-add-vehicle{
+    display:block;
+    position:fixed;
+    right:14px;
+    bottom:calc(16px + env(safe-area-inset-bottom));
+    z-index:30;
+    border:0;
+    border-radius:999px;
+    padding:16px 22px;
+    min-height:52px;
+    font-weight:900;
+    font-size:16px;
+    letter-spacing:.1px;
+    box-shadow:0 12px 28px rgba(33,150,243,.40);
+    background:#2196F3;
+    color:#000000;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .footer-note{padding:0 10px 20px;margin-top:8px;font-size:11px}
+}
+@media(max-width:390px){
+  .brand h1{font-size:22px}
+  .vehicle{flex-basis:84%}
+  .actions{grid-template-columns:1fr}
+  .actions .primary{grid-column:span 1}
+  .mobile-add-vehicle{padding:14px 18px;font-size:15px}
+}
+
 </style>
 </head>
 <body><div class="app">
 <section class="hero"><div class="brand"><div><h1>Garagey ✨</h1><p>Tu garaje, siempre bajo control.</p></div><button class="gear" onclick="openSettings()">⚙️</button></div>
 <div class="quick"><div class="q">Vehículos<b id="qVehicles">0</b></div><div class="q">Intervenciones<b id="qInterventions">0</b></div><div class="q">Gasto total<b id="qCost">0 €</b></div><div class="q">Avisos<b id="qAlerts">0</b></div></div></section>
 <div class="layout"><aside class="panel sidebar"><div class="section-title">MIS VEHÍCULOS <span>🚘</span></div><div id="vehicles"></div><button class="add" onclick="openVehicle()">＋ Añadir vehículo</button></aside><main class="content" id="main"></main></div>
-<div class="footer-note">Garagey v4 · Centro de avisos inteligente · Datos versionados y preparados para futuras actualizaciones</div></div>
+<button class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v4.2 · Optimizada para Chrome Android · Multivehículo sin límites</div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog"><div class="top"><h2>🚘 Tu vehículo</h2><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
 <div class="form"><div><label>Nombre</label><input id="vname" placeholder="Ej. Qashqai familiar"></div><div><label>Tipo</label><select id="vtype"><option>Coche</option><option>Moto</option></select></div><div><label>Marca</label><input id="vbrand" placeholder="Opcional"></div><div><label>Modelo</label><input id="vmodel" placeholder="Opcional"></div><div class="full"><label>Kilometraje actual</label><input id="vkm" type="number" min="0"></div></div>
@@ -92,7 +174,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{ma
    La interfaz puede cambiar sin modificar ni perder los datos.
    Cada futura actualización incrementará schemaVersion y aplicará migraciones. */
 const STORAGE_KEY='garagey_data';
-const CURRENT_SCHEMA=4;
+const CURRENT_SCHEMA=4; // Número de vehículos ilimitado
 function freshData(){return {schemaVersion:CURRENT_SCHEMA,vehicles:[],selected:null}}
 let data;
 try{data=JSON.parse(localStorage.getItem(STORAGE_KEY))||freshData()}catch(e){data=freshData()}
@@ -181,14 +263,14 @@ function render(){
  if(!v){m.innerHTML=renderNoticePanel()+'<section class="card empty"><div class="big">🛠️</div><h2>Tu garaje está listo</h2><p>Empieza añadiendo un coche o una moto.</p><button class="primary" onclick="openVehicle()">Añadir mi primer vehículo</button></section>';return}
  let ints=[...(v.interventions||[])].sort((a,b)=>b.id-a.id),cost=ints.reduce((a,x)=>a+Number(x.totalCost||0),0);
  let due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm));
- m.innerHTML=renderNoticePanel()+`<section class="card"><div class="top"><div><h2>${v.type==='Moto'?'🏍️':'🚗'} ${v.name}</h2><div class="muted">${[v.brand,v.model,v.type].filter(Boolean).join(' · ')} · ${v.km||0} km</div></div><div class="actions"><button class="soft" onclick="openVehicle(${v.id})">Editar</button><button class="primary" onclick="openIntervention()">＋ Intervención</button><button class="danger" onclick="deleteVehicle(${v.id})">Eliminar</button></div></div>
+ m.innerHTML=renderNoticePanel()+`<section class="card"><div class="top"><div><h2>${v.type==='Moto'?'🏍️':'🚗'} ${v.name}</h2><div class="muted">${[v.brand,v.model,v.type].filter(Boolean).join(' · ')} · ${v.km||0} km</div></div><div class="actions"><button class="soft" onclick="openVehicle()">＋ Vehículo</button><button class="soft" onclick="openVehicle(${v.id})">Editar</button><button class="primary" onclick="openIntervention()">＋ Intervención</button><button class="danger" onclick="deleteVehicle(${v.id})">Eliminar</button></div></div>
  <div class="stats"><div class="stat"><span class="muted">Intervenciones</span><b>${ints.length}</b></div><div class="stat"><span class="muted">Gasto acumulado</span><b>${euro(cost)}</b></div><div class="stat"><span class="muted">Avisos pendientes</span><b>${due.length}</b></div></div></section>
  ${due.map(i=>`<div class="alert">⚠️ <b>${i.type}</b> requiere atención. Próximo objetivo: ${i.nextKm.toLocaleString('es-ES')} km.</div>`).join('')}
  <section class="card"><div class="top"><h2>Historial</h2><span class="muted">${ints.length} registros</span></div><div class="timeline">${ints.length?ints.map(i=>`<div class="item"><div class="item-head"><div><span class="badge">${i.type}</span><p style="margin:8px 0 3px"><b>${i.details}</b></p><small class="muted">${i.date||'Sin fecha'} · ${Number(i.km).toLocaleString('es-ES')} km${i.nextKm?' · Próxima: '+Number(i.nextKm).toLocaleString('es-ES')+' km':''}</small></div><div style="text-align:right"><b>${euro(i.totalCost)}</b><br><button class="danger" style="margin-top:8px" onclick="deleteIntervention(${i.id})">Eliminar</button></div></div></div>`).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></section>`;
 }
 function selectVehicle(id){data.selected=id;save();render()}
 function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);$('vehicleModal').classList.add('show');window.editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vkm').value=v?.km||''}
-function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),{name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0)})}else{let v={id:Date.now(),name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0),interventions:[]};data.vehicles.push(v);data.selected=v.id}save();closeModal('vehicleModal');render()}
+function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),{name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0)})}else{let v={id:Date.now(),name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0),interventions:[]};data.vehicles.push(v);data.selected=v.id // Sin límite de vehículos}save();closeModal('vehicleModal');render()}
 function openIntervention(){let v=data.vehicles.find(x=>x.id===data.selected);$('interventionModal').classList.add('show');$('idate').value=new Date().toISOString().slice(0,10);$('ikm').value=v.km||'';$('itype').value='Mantenimiento';$('inext').value='';$('totalCost').value='';$('costItems').innerHTML='';addCost();typeFields()}
 function typeFields(){
  ['maintenanceFields','tireFields','beltFields','otherFields','itvFields','insuranceFields','taxFields'].forEach(x=>$(x).classList.add('hidden'));
@@ -238,8 +320,4 @@ function syncCloud(){
 
 render();alert('Copia restaurada correctamente')}catch(err){alert('Archivo de copia no válido')}};r.readAsText(f)}
 render();
-</script><script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
-}
 </script></body></html>

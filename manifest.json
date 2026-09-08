@@ -1,9 +1,10 @@
 {
   "name": "Garagey - Control de Vehículos",
   "short_name": "Garagey",
-  "start_url": "./index.html",
+  "start_url": "./",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#f6f7fb",
-  "theme_color": "#6c5ce7",
+  "theme_color": "#2196F3",
   "description": "Gestor de mantenimiento, ITV, seguros, impuestos y avisos para tus vehículos."
 }

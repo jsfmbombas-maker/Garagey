@@ -1,12 +1,20 @@
-GARAGEY v4.1.1
+GARAGEY v4.2 - OPTIMIZADA PARA CHROME ANDROID
 
-Cambios:
-- Botón "Añadir vehículo" con fondo azul #2196F3.
-- Texto e icono en negro para máxima legibilidad.
-- Se mantiene soporte para vehículos ilimitados.
-- Actualización de caché PWA.
+MEJORAS PRINCIPALES:
+- Diseño específico para pantallas móviles.
+- Eliminado el comportamiento de escritorio comprimido.
+- Tarjetas de vehículos adaptadas al desplazamiento horizontal táctil.
+- Paneles y estadísticas optimizados para una sola columna.
+- Botones grandes y fáciles de pulsar.
+- Formularios con tamaño táctil adecuado.
+- Modales convertidos en paneles inferiores tipo aplicación móvil.
+- Botón "Añadir vehículo" azul con letras negras y siempre visible.
+- Soporte para zonas seguras de Android.
+- Nueva caché PWA para forzar la actualización.
 
-Para actualizar GitHub:
-1. Sustituye index.html, manifest.json y sw.js en la raíz del repositorio.
-2. Haz Commit changes.
-3. Vercel desplegará automáticamente la nueva versión.
+ACTUALIZACIÓN EN GITHUB:
+1. Sustituye index.html, manifest.json y sw.js.
+2. Haz Commit changes en la rama main.
+3. Vercel debería desplegar automáticamente.
+
+Si Vercel no está conectado al repositorio, habrá que hacer Redeploy manual desde Vercel.
