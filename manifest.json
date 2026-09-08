@@ -3,8 +3,7 @@
   "short_name": "Garagey",
   "start_url": "./",
   "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#f6f7fb",
   "theme_color": "#2196F3",
-  "description": "Gestor de mantenimiento y documentación de vehículos."
+  "description": "Control de mantenimiento y avisos para vehículos."
 }

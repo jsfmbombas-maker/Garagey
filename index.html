@@ -2,11 +2,12 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
-<meta name="theme-color" content="#2196F3">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#6c5ce7">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Garagey">
+<link rel="manifest" href="manifest.json">
 <title>Garagey · Tu garaje inteligente</title>
 <style>
 :root{
@@ -26,103 +27,36 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{ma
 .content{min-width:0}.card{padding:22px;margin-bottom:18px}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}.top h2{margin:0;font-size:25px}.muted{color:var(--muted)}
 .actions{display:flex;gap:8px;flex-wrap:wrap}.primary{background:var(--primary);color:white;padding:11px 14px;border-radius:13px;font-weight:800}.soft{background:#f0edff;color:#5848d6;padding:11px 14px;border-radius:13px;font-weight:800}.danger{background:#fff0f2;color:#dc496b;padding:8px 10px;border-radius:10px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.stat{padding:16px;border-radius:18px;background:#fafafe}.stat:nth-child(1){border-left:4px solid var(--primary)}.stat:nth-child(2){border-left:4px solid var(--cyan)}.stat:nth-child(3){border-left:4px solid var(--orange)}.stat b{display:block;font-size:23px;margin-top:4px}
-.alert{padding:13px 15px;border-radius:14px;background:#fff7eb;margin:12px 0;border:1px solid #ffe4bb}.alert.red{background:#fff1f2;border-color:#fecdd3}.alert.orange{background:#fff7ed;border-color:#fed7aa}.alert.blue{background:#eff6ff;border-color:#bfdbfe}.notice-panel{background:linear-gradient(135deg,#1f2937,#334155);color:white}.notice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.notice{padding:14px;border-radius:16px;background:#ffffff12;border:1px solid #ffffff18}.notice b{font-size:22px;display:block}.notice small{color:#cbd5e1}.mobile-add-vehicle{display:none;position:fixed;right:18px;bottom:18px;z-index:20;border:0;border-radius:999px;padding:15px 22px;font-weight:900;font-size:16px;box-shadow:0 10px 24px rgba(33,150,243,.35);background:#2196F3;color:#000000}
+.alert{padding:13px 15px;border-radius:14px;background:#fff7eb;margin:12px 0;border:1px solid #ffe4bb}.alert.red{background:#fff1f2;border-color:#fecdd3}.alert.orange{background:#fff7ed;border-color:#fed7aa}.alert.blue{
+background:#e8f3ff;
+border-color:#9fc9ef;
+color:#123a63;
+opacity:1
+}
+.notice-panel .alert.blue{color:#123a63}
+.notice-panel .alert.blue b{
+color:#123a63 !important;
+font-weight:900;
+opacity:1
+}
+.notice-panel .alert.blue small{
+color:#40556b !important;
+font-weight:600;
+opacity:1
+}.notice-panel{background:linear-gradient(135deg,#1f2937,#334155);color:white}.notice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.notice{padding:14px;border-radius:16px;background:#ffffff12;border:1px solid #ffffff18}.notice b{font-size:22px;display:block}.notice small{color:#cbd5e1}
 .timeline{margin-top:8px}.item{border-left:3px solid #ded9ff;padding:0 0 18px 18px;margin-left:8px;position:relative}.item:before{content:"";position:absolute;width:12px;height:12px;background:var(--primary);border-radius:50%;left:-7px;top:3px}.item:last-child{padding-bottom:0}.item-head{display:flex;justify-content:space-between;gap:12px}.badge{background:#f0edff;color:#5848d6;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:700}
 .empty{text-align:center;padding:50px 15px;color:var(--muted)}.empty .big{font-size:52px}
 .modal{display:none;position:fixed;inset:0;background:#10142699;z-index:10;padding:18px;overflow:auto}.modal.show{display:block}.dialog{max-width:780px;background:white;margin:25px auto;border-radius:24px;padding:24px;box-shadow:0 20px 60px #0005}
 .dialog h2{margin-top:0}.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}label{font-size:13px;font-weight:800;display:block;margin-bottom:6px}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}textarea{min-height:90px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.check{padding:10px;border:1px solid var(--line);border-radius:12px;font-weight:500}
 .hidden{display:none}.cost-row{display:grid;grid-template-columns:1fr 120px auto;gap:8px;margin-bottom:7px}.footer-note{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
-
-/* GARAGEY v4.2 - Optimización específica para Chrome Android */
-@media(max-width:780px){
-  html{width:100%;overflow-x:hidden}
-  body{width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%}
-  .app{width:100%;max-width:none;padding:10px 10px calc(110px + env(safe-area-inset-bottom));margin:0}
-  .hero{border-radius:20px;padding:18px 16px}
-  .brand h1{font-size:24px}
-  .brand p{font-size:13px;line-height:1.35}
-  .gear{min-width:44px;min-height:44px;font-size:18px}
-  .quick{grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
-  .quick .q{padding:11px;border-radius:14px;font-size:12px}
-  .q b{font-size:19px;margin-top:2px}
-
-  .layout{display:block;margin-top:12px}
-  .sidebar{display:flex;padding:0;background:transparent;box-shadow:none;border-radius:0;overflow-x:auto;gap:8px;margin:0 -2px 12px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
-  .sidebar .section-title,.sidebar .add{display:none}
-  .sidebar::-webkit-scrollbar{display:none}
-  .vehicle{flex:0 0 78%;min-width:0;margin:0;padding:13px 14px;background:#fff;border:1px solid #edf0f6;box-shadow:0 6px 18px rgba(40,35,80,.08);scroll-snap-align:start}
-  .vehicle.active{background:#f0edff;border-color:#ddd7ff}
-  .vehicle small{font-size:12px}
-
-  .content{width:100%;min-width:0}
-  .panel,.card{border-radius:18px}
-  .card{padding:16px;margin-bottom:12px}
-  .top{flex-direction:column;align-items:stretch;gap:12px}
-  .top h2{font-size:21px;line-height:1.2}
-  .muted{font-size:14px}
-
-  .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%}
-  .actions button{width:100%;min-height:44px;padding:10px 9px;font-size:13px}
-  .actions .primary{grid-column:span 2}
-
-  .stats{grid-template-columns:1fr;gap:9px;margin-top:14px}
-  .stat{padding:14px 15px}
-  .stat b{font-size:21px}
-
-  .notice-grid{grid-template-columns:1fr;gap:8px}
-  .notice{padding:13px}
-  .notice b{font-size:19px}
-
-  .item{padding-left:15px}
-  .item-head{flex-direction:column;gap:6px}
-  .badge{align-self:flex-start}
-
-  .modal{padding:0;display:none;align-items:flex-end;background:#101426aa}
-  .modal.show{display:flex}
-  .dialog{width:100%;max-width:none;max-height:92vh;overflow-y:auto;margin:0;border-radius:24px 24px 0 0;padding:20px 16px calc(24px + env(safe-area-inset-bottom))}
-  .dialog .top{flex-direction:row;align-items:center;justify-content:space-between}
-  .dialog .top h2{font-size:21px}
-  .form,.checks{grid-template-columns:1fr;gap:12px}
-  input,select,textarea{font-size:16px;min-height:46px;padding:12px}
-  textarea{min-height:110px}
-  .cost-row{grid-template-columns:1fr;gap:7px;padding:10px;background:#fafafe;border:1px solid #edf0f6;border-radius:14px}
-  .cost-row button{min-height:40px}
-
-  .mobile-add-vehicle{
-    display:block;
-    position:fixed;
-    right:14px;
-    bottom:calc(16px + env(safe-area-inset-bottom));
-    z-index:30;
-    border:0;
-    border-radius:999px;
-    padding:16px 22px;
-    min-height:52px;
-    font-weight:900;
-    font-size:16px;
-    letter-spacing:.1px;
-    box-shadow:0 12px 28px rgba(33,150,243,.40);
-    background:#2196F3;
-    color:#000000;
-    -webkit-tap-highlight-color:transparent;
-  }
-  .footer-note{padding:0 10px 20px;margin-top:8px;font-size:11px}
-}
-@media(max-width:390px){
-  .brand h1{font-size:22px}
-  .vehicle{flex-basis:84%}
-  .actions{grid-template-columns:1fr}
-  .actions .primary{grid-column:span 1}
-  .mobile-add-vehicle{padding:14px 18px;font-size:15px}
-}
-
+@media(max-width:780px){.layout{grid-template-columns:1fr}.sidebar{display:flex;overflow:auto;gap:8px}.sidebar .section-title,.sidebar .add{display:none}.vehicle{min-width:190px}.quick,.stats{grid-template-columns:1fr}.form,.checks{grid-template-columns:1fr}.hero{padding:20px}.top{flex-direction:column}.cost-row{grid-template-columns:1fr 100px auto}}
 </style>
 </head>
 <body><div class="app">
 <section class="hero"><div class="brand"><div><h1>Garagey ✨</h1><p>Tu garaje, siempre bajo control.</p></div><button class="gear" onclick="openSettings()">⚙️</button></div>
 <div class="quick"><div class="q">Vehículos<b id="qVehicles">0</b></div><div class="q">Intervenciones<b id="qInterventions">0</b></div><div class="q">Gasto total<b id="qCost">0 €</b></div><div class="q">Avisos<b id="qAlerts">0</b></div></div></section>
 <div class="layout"><aside class="panel sidebar"><div class="section-title">MIS VEHÍCULOS <span>🚘</span></div><div id="vehicles"></div><button class="add" onclick="openVehicle()">＋ Añadir vehículo</button></aside><main class="content" id="main"></main></div>
-<button class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v4.4 · Edición de intervenciones · Chrome Android</div></div>
+<div class="footer-note">Garagey · Centro de avisos inteligente · Corrección de legibilidad</div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog"><div class="top"><h2>🚘 Tu vehículo</h2><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
 <div class="form"><div><label>Nombre</label><input id="vname" placeholder="Ej. Qashqai familiar"></div><div><label>Tipo</label><select id="vtype"><option>Coche</option><option>Moto</option></select></div><div><label>Marca</label><input id="vbrand" placeholder="Opcional"></div><div><label>Modelo</label><input id="vmodel" placeholder="Opcional"></div><div class="full"><label>Kilometraje actual</label><input id="vkm" type="number" min="0"></div></div>
@@ -154,8 +88,6 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{ma
 <div><label>Fecha de vencimiento / pago</label><input id="taxDueDate" type="date"></div>
 <div class="full"><label>Administración u observaciones</label><textarea id="taxNotes" placeholder="Ayuntamiento, referencia o anotaciones..."></textarea></div>
 </div></div>
-<div class="full"><label>Descripción editable de la intervención</label>
-<textarea id="manualDetails" placeholder="Opcional. Permite corregir o ampliar la descripción de una intervención existente."></textarea></div>
 <div class="full"><label>Coste de piezas y elementos</label><div id="costItems"></div><button class="soft" type="button" onclick="addCost()">＋ Añadir pieza</button><div style="margin-top:12px"><label>Coste total de la intervención (€)</label><input id="totalCost" type="number" step=".01" min="0"></div></div></div>
 <div class="actions" style="margin-top:20px"><button class="primary" onclick="saveIntervention()">Guardar intervención</button></div></div></div>
 
@@ -164,7 +96,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{ma
 <div class="card" style="box-shadow:none;border:1px solid var(--line)"><b>Versión de datos:</b> <span id="schemaVersion"></span><br><span class="muted">Las futuras versiones pueden ejecutar migraciones automáticas.</span></div>
 <div class="card" style="box-shadow:none;border:1px solid var(--line);margin-top:14px">
 <b>☁️ Sincronización Google / Gmail</b>
-<p class="muted">La sincronización real con Google Drive requiere configurar una credencial OAuth de Google Cloud. Sin esa credencial, Gmail no puede autorizar copias automáticas.</p>
+<p class="muted">Garagey está preparado para sincronizar una copia cifrada de tus datos con tu cuenta de Google Drive asociada a Gmail.</p>
 <div id="cloudStatus" class="muted">Estado: configuración pendiente</div>
 <div class="actions" style="margin-top:10px"><button class="primary" onclick="configureGoogleCloud()">Configurar cuenta Google</button><button class="soft" onclick="syncCloud()">☁️ Sincronizar ahora</button></div>
 </div>
@@ -176,7 +108,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{ma
    La interfaz puede cambiar sin modificar ni perder los datos.
    Cada futura actualización incrementará schemaVersion y aplicará migraciones. */
 const STORAGE_KEY='garagey_data';
-const CURRENT_SCHEMA=4; // Número de vehículos ilimitado
+const CURRENT_SCHEMA=4;
 function freshData(){return {schemaVersion:CURRENT_SCHEMA,vehicles:[],selected:null}}
 let data;
 try{data=JSON.parse(localStorage.getItem(STORAGE_KEY))||freshData()}catch(e){data=freshData()}
@@ -268,41 +200,12 @@ function render(){
  m.innerHTML=renderNoticePanel()+`<section class="card"><div class="top"><div><h2>${v.type==='Moto'?'🏍️':'🚗'} ${v.name}</h2><div class="muted">${[v.brand,v.model,v.type].filter(Boolean).join(' · ')} · ${v.km||0} km</div></div><div class="actions"><button class="soft" onclick="openVehicle(${v.id})">Editar</button><button class="primary" onclick="openIntervention()">＋ Intervención</button><button class="danger" onclick="deleteVehicle(${v.id})">Eliminar</button></div></div>
  <div class="stats"><div class="stat"><span class="muted">Intervenciones</span><b>${ints.length}</b></div><div class="stat"><span class="muted">Gasto acumulado</span><b>${euro(cost)}</b></div><div class="stat"><span class="muted">Avisos pendientes</span><b>${due.length}</b></div></div></section>
  ${due.map(i=>`<div class="alert">⚠️ <b>${i.type}</b> requiere atención. Próximo objetivo: ${i.nextKm.toLocaleString('es-ES')} km.</div>`).join('')}
- <section class="card"><div class="top"><h2>Historial</h2><span class="muted">${ints.length} registros</span></div><div class="timeline">${ints.length?ints.map(i=>`<div class="item"><div class="item-head"><div><span class="badge">${i.type}</span><p style="margin:8px 0 3px"><b>${i.details}</b></p><small class="muted">${i.date||'Sin fecha'} · ${Number(i.km).toLocaleString('es-ES')} km${i.nextKm?' · Próxima: '+Number(i.nextKm).toLocaleString('es-ES')+' km':''}</small></div><div style="text-align:right"><b>${euro(i.totalCost)}</b><br><button class="soft" style="margin-top:8px" onclick="openIntervention(${i.id})">Editar</button><br><button class="danger" style="margin-top:8px" onclick="deleteIntervention(${i.id})">Eliminar</button></div></div></div>`).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></section>`;
+ <section class="card"><div class="top"><h2>Historial</h2><span class="muted">${ints.length} registros</span></div><div class="timeline">${ints.length?ints.map(i=>`<div class="item"><div class="item-head"><div><span class="badge">${i.type}</span><p style="margin:8px 0 3px"><b>${i.details}</b></p><small class="muted">${i.date||'Sin fecha'} · ${Number(i.km).toLocaleString('es-ES')} km${i.nextKm?' · Próxima: '+Number(i.nextKm).toLocaleString('es-ES')+' km':''}</small></div><div style="text-align:right"><b>${euro(i.totalCost)}</b><br><button class="danger" style="margin-top:8px" onclick="deleteIntervention(${i.id})">Eliminar</button></div></div></div>`).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></section>`;
 }
 function selectVehicle(id){data.selected=id;save();render()}
 function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);$('vehicleModal').classList.add('show');window.editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vkm').value=v?.km||''}
-function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),{name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0)})}else{let v={id:Date.now(),name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0),interventions:[]};data.vehicles.push(v);data.selected=v.id;}save();closeModal('vehicleModal');render()}
-function openIntervention(id){
- let v=data.vehicles.find(x=>x.id===data.selected);
- let item=id?(v.interventions||[]).find(x=>x.id===id):null;
- window.editIntervention=id||null;
- $('interventionModal').classList.add('show');
- $('idate').value=item?.date||new Date().toISOString().slice(0,10);
- $('ikm').value=item?.km??v.km??'';
- $('itype').value=item?.type||'Mantenimiento';
- $('inext').value=item?.interval||'';
- $('totalCost').value=item?.totalCost??'';
- $('manualDetails').value=item?.details||'';
- $('costItems').innerHTML='';
- (item?.parts?.length?item.parts:[{name:'',cost:''}]).forEach(p=>{
-   addCost();
-   let r=$('costItems').lastElementChild, inputs=r.querySelectorAll('input');
-   inputs[0].value=p.name||''; inputs[1].value=p.cost??'';
- });
- // Recuperación aproximada de los campos específicos al editar registros antiguos.
- document.querySelectorAll('#maintenanceFields input[type=checkbox]').forEach(x=>x.checked=false);
- if(item){
-   let d=item.details||'';
-   if(item.type==='Mantenimiento')document.querySelectorAll('#maintenanceFields input[type=checkbox]').forEach(x=>x.checked=d.includes(x.value));
-   if(item.type==='Neumáticos'){let a=d.split(' · ');$('tireSize').value=a[0]||'';$('tireBrand').value=a[1]||'';}
-   if(item.type==='Correa/Cadena'){let a=d.split(' · ');$('beltType').value=a[0]||$('beltType').value;$('beltBrand').value=a[1]||'';}
-   if(item.type==='Varios')$('otherDescription').value=d;
- }
- typeFields();
- document.querySelector('#interventionModal h2').textContent=item?'✏️ Editar intervención':'🔧 Nueva intervención';
- document.querySelector('#interventionModal .primary').textContent=item?'Guardar cambios':'Guardar intervención';
-}
+function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),{name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0)})}else{let v={id:Date.now(),name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0),interventions:[]};data.vehicles.push(v);data.selected=v.id}save();closeModal('vehicleModal');render()}
+function openIntervention(){let v=data.vehicles.find(x=>x.id===data.selected);$('interventionModal').classList.add('show');$('idate').value=new Date().toISOString().slice(0,10);$('ikm').value=v.km||'';$('itype').value='Mantenimiento';$('inext').value='';$('totalCost').value='';$('costItems').innerHTML='';addCost();typeFields()}
 function typeFields(){
  ['maintenanceFields','tireFields','beltFields','otherFields','itvFields','insuranceFields','taxFields'].forEach(x=>$(x).classList.add('hidden'));
  let t=$('itype').value;
@@ -310,8 +213,7 @@ function typeFields(){
  $(map[t]).classList.remove('hidden');
 }
 function addCost(){let d=document.createElement('div');d.className='cost-row';d.innerHTML='<input placeholder="Pieza o elemento"><input type="number" step=".01" placeholder="Coste €"><button class="danger" type="button" onclick="this.parentElement.remove()">×</button>';$('costItems').appendChild(d)}
-function saveIntervention(){
- let v=data.vehicles.find(x=>x.id===data.selected),type=$('itype').value,details='';
+function saveIntervention(){let v=data.vehicles.find(x=>x.id===data.selected),type=$('itype').value,details='';
  if(type==='Mantenimiento')details=[...document.querySelectorAll('#maintenanceFields input:checked')].map(x=>x.value).join(', ')||'Mantenimiento general';
  if(type==='Neumáticos')details=`${$('tireSize').value||'Medida no indicada'} · ${$('tireBrand').value||'Marca no indicada'}`;
  if(type==='Correa/Cadena')details=`${$('beltType').value} · ${$('beltBrand').value||'Marca no indicada'}`;
@@ -319,26 +221,16 @@ function saveIntervention(){
  if(type==='ITV')details=`Resultado: ${$('itvResult').value}${$('itvNextDate').value?' · Próxima ITV: '+$('itvNextDate').value:''}${$('itvNotes').value?' · '+$('itvNotes').value:''}`;
  if(type==='Seguro')details=`${$('insuranceCompany').value||'Aseguradora no indicada'} · ${$('insurancePeriod').value}${$('insuranceExpiry').value?' · Vence: '+$('insuranceExpiry').value:''}${$('insurancePolicy').value?' · Póliza: '+$('insurancePolicy').value:''}`;
  if(type==='Impuestos')details=`${$('taxType').value}${$('taxDueDate').value?' · Pago: '+$('taxDueDate').value:''}${$('taxNotes').value?' · '+$('taxNotes').value:''}`;
- let manual=$('manualDetails').value.trim(); if(manual)details=manual;
  let km=Number($('ikm').value||0),interval=Number($('inext').value||0);
  let parts=[...document.querySelectorAll('.cost-row')].map(r=>({name:r.querySelectorAll('input')[0].value,cost:Number(r.querySelectorAll('input')[1].value||0)})).filter(x=>x.name||x.cost);
- let record={type,date:$('idate').value,km,nextKm:interval?km+interval:null,interval,details,parts,totalCost:Number($('totalCost').value||0)};
- if(window.editIntervention){
-   let existing=(v.interventions||[]).find(x=>x.id===window.editIntervention);
-   if(existing)Object.assign(existing,record);
- }else{
-   record.id=Date.now();v.interventions.push(record);
- }
- window.editIntervention=null;
- if(km>Number(v.km||0))v.km=km;
- save();closeModal('interventionModal');render();
-}
+ v.interventions.push({id:Date.now(),type,date:$('idate').value,km,nextKm:interval?km+interval:null,interval,details,parts,totalCost:Number($('totalCost').value||0)});
+ if(km>Number(v.km||0))v.km=km;save();closeModal('interventionModal');render()}
 function deleteIntervention(id){let v=data.vehicles.find(x=>x.id===data.selected);if(confirm('¿Eliminar esta intervención?')){v.interventions=v.interventions.filter(x=>x.id!==id);save();render()}}
 function deleteVehicle(id){if(confirm('¿Eliminar vehículo y todo su historial?')){data.vehicles=data.vehicles.filter(x=>x.id!==id);data.selected=data.vehicles[0]?.id||null;save();render()}}
 function closeModal(id){$(id).classList.remove('show')}
 function openSettings(){$('settingsModal').classList.add('show');$('schemaVersion').textContent='v'+data.schemaVersion}
 function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='garagey_backup.json';a.click();URL.revokeObjectURL(a.href)}
-function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let imported=JSON.parse(r.result);if(!Array.isArray(imported.vehicles))throw 0;data=imported;migrate();if(!data.selected)data.selected=data.vehicles[0]?.id||null;save();closeModal('settingsModal');render();alert('Copia restaurada correctamente')}catch(err){alert('Archivo de copia no válido')}};r.readAsText(f)}
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let imported=JSON.parse(r.result);if(!Array.isArray(imported.vehicles))throw 0;data=imported;migrate();if(!data.selected)data.selected=data.vehicles[0]?.id||null;save();closeModal('settingsModal');
 /* SINCRONIZACIÓN CLOUD
    Google/Gmail se usa como identidad y Google Drive como almacenamiento.
    Para activar sincronización real se necesita un OAuth Client ID propio,
@@ -360,5 +252,10 @@ function syncCloud(){
  alert('Base de sincronización preparada. Para activar la conexión real con Google Drive falta vincular el OAuth Client ID y las credenciales autorizadas de Google.');
 }
 
+render();alert('Copia restaurada correctamente')}catch(err){alert('Archivo de copia no válido')}};r.readAsText(f)}
 render();
+</script><script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+}
 </script></body></html>
