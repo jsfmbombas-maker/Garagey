@@ -1,0 +1,12 @@
+GARAGEY v4.1.1
+
+Cambios:
+- Botón "Añadir vehículo" con fondo azul #2196F3.
+- Texto e icono en negro para máxima legibilidad.
+- Se mantiene soporte para vehículos ilimitados.
+- Actualización de caché PWA.
+
+Para actualizar GitHub:
+1. Sustituye index.html, manifest.json y sw.js en la raíz del repositorio.
+2. Haz Commit changes.
+3. Vercel desplegará automáticamente la nueva versión.
