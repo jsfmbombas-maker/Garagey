@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#6c5ce7">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Garagey">
+<link rel="manifest" href="manifest.json">
+<title>Garagey · Tu garaje inteligente</title>
+<style>
+:root{
+ --bg:#f6f7fb;--card:#fff;--text:#18212f;--muted:#788194;--primary:#6c5ce7;
+ --pink:#fd79a8;--cyan:#00cec9;--orange:#ff9f43;--line:#e9ebf1;--shadow:0 12px 35px rgba(40,35,80,.10)
+}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;background:linear-gradient(180deg,#f8f7ff 0,#f5f7fb 45%);color:var(--text)}
+button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{max-width:1100px;margin:auto;padding:20px 16px 80px}
+.hero{background:linear-gradient(135deg,#6c5ce7,#8d7cf5 55%,#fd79a8);border-radius:28px;padding:26px;color:white;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;width:220px;height:220px;border-radius:50%;background:#ffffff16;right:-55px;top:-80px}.brand{display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+.brand h1{margin:0;font-size:27px}.brand p{margin:5px 0 0;color:#f0edff}.gear{background:#ffffff25;color:white;padding:10px 13px;border-radius:14px}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;position:relative;z-index:1}.quick .q{background:#ffffff18;padding:13px;border-radius:16px;backdrop-filter:blur(8px)}.q b{font-size:20px;display:block}
+.layout{display:grid;grid-template-columns:280px 1fr;gap:20px;margin-top:20px}.panel,.card{background:var(--card);border-radius:22px;box-shadow:var(--shadow)}
+.sidebar{padding:16px}.section-title{display:flex;justify-content:space-between;align-items:center;padding:5px 4px 13px;font-weight:800}
+.vehicle{border:1px solid transparent;padding:14px;border-radius:16px;margin:7px 0;cursor:pointer;transition:.2s}.vehicle:hover{background:#f7f6ff}.vehicle.active{background:#f0edff;border-color:#ddd7ff}.vehicle small{color:var(--muted);display:block;margin-top:3px}
+.icon{font-size:24px;margin-right:8px}.add{width:100%;background:#ece9ff;color:#5848d6;padding:12px;border-radius:14px;font-weight:800;margin-top:12px}
+.content{min-width:0}.card{padding:22px;margin-bottom:18px}.top{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}.top h2{margin:0;font-size:25px}.muted{color:var(--muted)}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.primary{background:var(--primary);color:white;padding:11px 14px;border-radius:13px;font-weight:800}.soft{background:#f0edff;color:#5848d6;padding:11px 14px;border-radius:13px;font-weight:800}.danger{background:#fff0f2;color:#dc496b;padding:8px 10px;border-radius:10px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}.stat{padding:16px;border-radius:18px;background:#fafafe}.stat:nth-child(1){border-left:4px solid var(--primary)}.stat:nth-child(2){border-left:4px solid var(--cyan)}.stat:nth-child(3){border-left:4px solid var(--orange)}.stat b{display:block;font-size:23px;margin-top:4px}
+.alert{padding:13px 15px;border-radius:14px;background:#fff7eb;margin:12px 0;border:1px solid #ffe4bb}.alert.red{background:#fff1f2;border-color:#fecdd3}.alert.orange{background:#fff7ed;border-color:#fed7aa}.alert.blue{background:#eff6ff;border-color:#bfdbfe}.notice-panel{background:linear-gradient(135deg,#1f2937,#334155);color:white}.notice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.notice{padding:14px;border-radius:16px;background:#ffffff12;border:1px solid #ffffff18}.notice b{font-size:22px;display:block}.notice small{color:#cbd5e1}
+.timeline{margin-top:8px}.item{border-left:3px solid #ded9ff;padding:0 0 18px 18px;margin-left:8px;position:relative}.item:before{content:"";position:absolute;width:12px;height:12px;background:var(--primary);border-radius:50%;left:-7px;top:3px}.item:last-child{padding-bottom:0}.item-head{display:flex;justify-content:space-between;gap:12px}.badge{background:#f0edff;color:#5848d6;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:700}
+.empty{text-align:center;padding:50px 15px;color:var(--muted)}.empty .big{font-size:52px}
+.modal{display:none;position:fixed;inset:0;background:#10142699;z-index:10;padding:18px;overflow:auto}.modal.show{display:block}.dialog{max-width:780px;background:white;margin:25px auto;border-radius:24px;padding:24px;box-shadow:0 20px 60px #0005}
+.dialog h2{margin-top:0}.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}label{font-size:13px;font-weight:800;display:block;margin-bottom:6px}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}textarea{min-height:90px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.check{padding:10px;border:1px solid var(--line);border-radius:12px;font-weight:500}
+.hidden{display:none}.cost-row{display:grid;grid-template-columns:1fr 120px auto;gap:8px;margin-bottom:7px}.footer-note{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+@media(max-width:780px){.layout{grid-template-columns:1fr}.sidebar{display:flex;overflow:auto;gap:8px}.sidebar .section-title,.sidebar .add{display:none}.vehicle{min-width:190px}.quick,.stats{grid-template-columns:1fr}.form,.checks{grid-template-columns:1fr}.hero{padding:20px}.top{flex-direction:column}.cost-row{grid-template-columns:1fr 100px auto}}
+</style>
+</head>
+<body><div class="app">
+<section class="hero"><div class="brand"><div><h1>Garagey ✨</h1><p>Tu garaje, siempre bajo control.</p></div><button class="gear" onclick="openSettings()">⚙️</button></div>
+<div class="quick"><div class="q">Vehículos<b id="qVehicles">0</b></div><div class="q">Intervenciones<b id="qInterventions">0</b></div><div class="q">Gasto total<b id="qCost">0 €</b></div><div class="q">Avisos<b id="qAlerts">0</b></div></div></section>
+<div class="layout"><aside class="panel sidebar"><div class="section-title">MIS VEHÍCULOS <span>🚘</span></div><div id="vehicles"></div><button class="add" onclick="openVehicle()">＋ Añadir vehículo</button></aside><main class="content" id="main"></main></div>
+<div class="footer-note">Garagey v4 · Centro de avisos inteligente · Datos versionados y preparados para futuras actualizaciones</div></div>
+
+<div class="modal" id="vehicleModal"><div class="dialog"><div class="top"><h2>🚘 Tu vehículo</h2><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
+<div class="form"><div><label>Nombre</label><input id="vname" placeholder="Ej. Qashqai familiar"></div><div><label>Tipo</label><select id="vtype"><option>Coche</option><option>Moto</option></select></div><div><label>Marca</label><input id="vbrand" placeholder="Opcional"></div><div><label>Modelo</label><input id="vmodel" placeholder="Opcional"></div><div class="full"><label>Kilometraje actual</label><input id="vkm" type="number" min="0"></div></div>
+<div class="actions" style="margin-top:20px"><button class="primary" onclick="saveVehicle()">Guardar vehículo</button></div></div></div>
+
+<div class="modal" id="interventionModal"><div class="dialog"><div class="top"><h2>🔧 Nueva intervención</h2><button class="soft" onclick="closeModal('interventionModal')">Cerrar</button></div>
+<div class="form"><div><label>Tipo de intervención</label><select id="itype" onchange="typeFields()"><option value="Mantenimiento">🛢️ Mantenimiento</option><option value="Neumáticos">🛞 Cambio de neumáticos</option><option value="Correa/Cadena">⚙️ Cambio correa/cadena</option><option value="Varios">🔧 Intervenciones varias</option>
+<option value="ITV">📋 ITV</option>
+<option value="Seguro">🛡️ Seguro</option>
+<option value="Impuestos">🏛️ Impuestos</option></select></div>
+<div><label>Fecha</label><input id="idate" type="date"></div><div><label>Kilómetros actuales</label><input id="ikm" type="number"></div><div><label>Próxima intervención (intervalo)</label><select id="inext"><option value="">Sin programar</option><option>10000</option><option>15000</option><option>20000</option><option>25000</option><option>30000</option><option>35000</option><option>40000</option><option>45000</option><option>50000</option></select></div>
+<div class="full" id="maintenanceFields"><label>Acciones realizadas</label><div class="checks"><label class="check"><input type="checkbox" value="Cambio de aceite"> Cambio de aceite</label><label class="check"><input type="checkbox" value="Filtro de aceite"> Filtro de aceite</label><label class="check"><input type="checkbox" value="Filtro de gasoil"> Filtro de gasoil</label><label class="check"><input type="checkbox" value="Filtro de aire"> Filtro de aire</label><label class="check"><input type="checkbox" value="Filtro de habitáculo"> Filtro de habitáculo</label></div></div>
+<div class="full hidden" id="tireFields"><div class="form"><div><label>Medida</label><input id="tireSize" placeholder="225/45 R17"></div><div><label>Marca</label><input id="tireBrand" placeholder="Michelin"></div></div></div>
+<div class="full hidden" id="beltFields"><div class="form"><div><label>Tipo</label><select id="beltType"><option>Correa de distribución</option><option>Cadena de distribución</option><option>Correa auxiliar</option></select></div><div><label>Marca</label><input id="beltBrand"></div></div></div>
+<div class="full hidden" id="otherFields"><label>Descripción</label><textarea id="otherDescription" placeholder="Describe la intervención realizada..."></textarea></div>
+<div class="full hidden" id="itvFields"><div class="form">
+<div><label>Resultado</label><select id="itvResult"><option>Favorable</option><option>Desfavorable</option><option>Favorable con defectos leves</option></select></div>
+<div><label>Próxima ITV</label><input id="itvNextDate" type="date"></div>
+<div class="full"><label>Observaciones</label><textarea id="itvNotes" placeholder="Defectos, observaciones o anotaciones..."></textarea></div>
+</div></div>
+<div class="full hidden" id="insuranceFields"><div class="form">
+<div><label>Aseguradora</label><input id="insuranceCompany" placeholder="Ej. Mapfre"></div>
+<div><label>Número de póliza</label><input id="insurancePolicy" placeholder="Opcional"></div>
+<div><label>Fecha de vencimiento</label><input id="insuranceExpiry" type="date"></div>
+<div><label>Periodicidad</label><select id="insurancePeriod"><option>Anual</option><option>Semestral</option><option>Mensual</option></select></div>
+</div></div>
+<div class="full hidden" id="taxFields"><div class="form">
+<div><label>Tipo de impuesto</label><select id="taxType"><option>Impuesto de Vehículos (IVTM)</option><option>Impuesto de Matriculación</option><option>Otro impuesto o tasa</option></select></div>
+<div><label>Fecha de vencimiento / pago</label><input id="taxDueDate" type="date"></div>
+<div class="full"><label>Administración u observaciones</label><textarea id="taxNotes" placeholder="Ayuntamiento, referencia o anotaciones..."></textarea></div>
+</div></div>
+<div class="full"><label>Coste de piezas y elementos</label><div id="costItems"></div><button class="soft" type="button" onclick="addCost()">＋ Añadir pieza</button><div style="margin-top:12px"><label>Coste total de la intervención (€)</label><input id="totalCost" type="number" step=".01" min="0"></div></div></div>
+<div class="actions" style="margin-top:20px"><button class="primary" onclick="saveIntervention()">Guardar intervención</button></div></div></div>
+
+<div class="modal" id="settingsModal"><div class="dialog"><div class="top"><h2>⚙️ Ajustes y evolución</h2><button class="soft" onclick="closeModal('settingsModal')">Cerrar</button></div>
+<p><b>Tu información está separada de la interfaz.</b> Esto permite actualizar el diseño y añadir funciones sin borrar el historial.</p>
+<div class="card" style="box-shadow:none;border:1px solid var(--line)"><b>Versión de datos:</b> <span id="schemaVersion"></span><br><span class="muted">Las futuras versiones pueden ejecutar migraciones automáticas.</span></div>
+<div class="card" style="box-shadow:none;border:1px solid var(--line);margin-top:14px">
+<b>☁️ Sincronización Google / Gmail</b>
+<p class="muted">Garagey está preparado para sincronizar una copia cifrada de tus datos con tu cuenta de Google Drive asociada a Gmail.</p>
+<div id="cloudStatus" class="muted">Estado: configuración pendiente</div>
+<div class="actions" style="margin-top:10px"><button class="primary" onclick="configureGoogleCloud()">Configurar cuenta Google</button><button class="soft" onclick="syncCloud()">☁️ Sincronizar ahora</button></div>
+</div>
+<div class="actions"><button class="soft" onclick="exportData()">⬇️ Copia de seguridad</button><label class="soft" style="margin:0;cursor:pointer">⬆️ Restaurar copia<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label></div>
+</div></div>
+
+<script>
+/* ARQUITECTURA DE DATOS VERSIONADA
+   La interfaz puede cambiar sin modificar ni perder los datos.
+   Cada futura actualización incrementará schemaVersion y aplicará migraciones. */
+const STORAGE_KEY='garagey_data';
+const CURRENT_SCHEMA=4;
+function freshData(){return {schemaVersion:CURRENT_SCHEMA,vehicles:[],selected:null}}
+let data;
+try{data=JSON.parse(localStorage.getItem(STORAGE_KEY))||freshData()}catch(e){data=freshData()}
+function migrate(){
+ data.schemaVersion=data.schemaVersion||1;
+ if(data.schemaVersion<2){
+   data.vehicles=(data.vehicles||[]).map(v=>({...v,brand:v.brand||'',model:v.model||'',interventions:v.interventions||[]}));
+   data.schemaVersion=2;
+ }
+ if(data.schemaVersion<3){
+   data.vehicles=(data.vehicles||[]).map(v=>({...v,interventions:(v.interventions||[])}));
+   data.schemaVersion=3;
+ }
+ save();
+}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data))}
+migrate();
+const $=id=>document.getElementById(id), euro=n=>new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(n||0));
+
+
+function daysUntil(dateString){
+ if(!dateString)return null;
+ const today=new Date(); today.setHours(0,0,0,0);
+ const target=new Date(dateString+'T00:00:00');
+ return Math.ceil((target-today)/86400000);
+}
+function getAlerts(){
+ const alerts=[];
+ data.vehicles.forEach(v=>{
+   const km=Number(v.km||0);
+   (v.interventions||[]).forEach(i=>{
+     // Kilometre-based maintenance warnings
+     if(i.nextKm){
+       const remaining=Number(i.nextKm)-km;
+       if(remaining<=0) alerts.push({level:'red',icon:'🔴',vehicle:v.name,title:i.type,detail:`Vencido por ${Math.abs(remaining).toLocaleString('es-ES')} km · Objetivo: ${Number(i.nextKm).toLocaleString('es-ES')} km`,id:i.id});
+       else if(remaining<=1500) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:i.type,detail:`Próximo en ${remaining.toLocaleString('es-ES')} km`,id:i.id});
+     }
+     // ITV dates
+     if(i.type==='ITV'){
+       const match=(i.details||'').match(/Próxima ITV:\s*(\d{4}-\d{2}-\d{2})/);
+       if(match){
+         const d=daysUntil(match[1]);
+         if(d!==null && d<0) alerts.push({level:'red',icon:'🔴',vehicle:v.name,title:'ITV caducada',detail:`Venció hace ${Math.abs(d)} días`,id:i.id});
+         else if(d!==null && d<=30) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'ITV próxima',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
+       }
+     }
+     // Insurance dates
+     if(i.type==='Seguro'){
+       const match=(i.details||'').match(/Vence:\s*(\d{4}-\d{2}-\d{2})/);
+       if(match){
+         const d=daysUntil(match[1]);
+         if(d!==null && d<0) alerts.push({level:'red',icon:'🔴',vehicle:v.name,title:'Seguro vencido',detail:`Venció hace ${Math.abs(d)} días`,id:i.id});
+         else if(d!==null && d<=30) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'Seguro próximo a vencer',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
+       }
+     }
+     // Tax dates
+     if(i.type==='Impuestos'){
+       const match=(i.details||'').match(/Pago:\s*(\d{4}-\d{2}-\d{2})/);
+       if(match){
+         const d=daysUntil(match[1]);
+         if(d!==null && d<0) alerts.push({level:'red',icon:'🔴',vehicle:v.name,title:'Impuesto pendiente/vencido',detail:`Fecha superada hace ${Math.abs(d)} días`,id:i.id});
+         else if(d!==null && d<=30) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'Impuesto próximo',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
+       }
+     }
+   });
+ });
+ return alerts.sort((a,b)=>a.level==='red'?-1:b.level==='red'?1:0);
+}
+function renderNoticePanel(){
+ const alerts=getAlerts();
+ const critical=alerts.filter(a=>a.level==='red').length;
+ const upcoming=alerts.filter(a=>a.level==='orange').length;
+ const panel=`<section class="card notice-panel">
+ <div class="top"><div><h2>🔔 Centro de avisos</h2><div style="color:#cbd5e1">Todo lo que necesita tu atención, en un solo lugar.</div></div><span class="badge" style="background:#ffffff22;color:white">${alerts.length} activos</span></div>
+ <div class="notice-grid" style="margin-top:16px"><div class="notice">Críticos<b>${critical}</b><small>Caducados o vencidos</small></div><div class="notice">Próximos<b>${upcoming}</b><small>Próximos 30 días / 1.500 km</small></div><div class="notice">Vehículos<b>${new Set(alerts.map(a=>a.vehicle)).size}</b><small>Con avisos activos</small></div></div>
+ ${alerts.length?`<div style="margin-top:16px">${alerts.map(a=>`<div class="alert ${a.level}">${a.icon} <b>${a.vehicle} · ${a.title}</b><br><small>${a.detail}</small></div>`).join('')}</div>`:'<div class="alert blue" style="margin-top:16px">✨ <b>Todo bajo control.</b><br><small>No tienes avisos pendientes actualmente.</small></div>'}
+ </section>`;
+ return panel;
+}
+
+function render(){
+ $('qVehicles').textContent=data.vehicles.length;
+ let all=data.vehicles.flatMap(v=>v.interventions||[]);$('qInterventions').textContent=all.length;$('qCost').textContent=euro(all.reduce((a,x)=>a+Number(x.totalCost||0),0));$('qAlerts').textContent=getAlerts().length;
+ $('vehicles').innerHTML=data.vehicles.length?data.vehicles.map(v=>`<div class="vehicle ${v.id===data.selected?'active':''}" onclick="selectVehicle(${v.id})"><span class="icon">${v.type==='Moto'?'🏍️':'🚗'}</span><b>${v.name}</b><small>${v.brand||v.type}${v.model?' · '+v.model:''} · ${v.km||0} km</small></div>`).join(''):'<div class="empty">Añade tu primer vehículo ✨</div>';
+ const v=data.vehicles.find(x=>x.id===data.selected),m=$('main');
+ if(!v){m.innerHTML=renderNoticePanel()+'<section class="card empty"><div class="big">🛠️</div><h2>Tu garaje está listo</h2><p>Empieza añadiendo un coche o una moto.</p><button class="primary" onclick="openVehicle()">Añadir mi primer vehículo</button></section>';return}
+ let ints=[...(v.interventions||[])].sort((a,b)=>b.id-a.id),cost=ints.reduce((a,x)=>a+Number(x.totalCost||0),0);
+ let due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm));
+ m.innerHTML=renderNoticePanel()+`<section class="card"><div class="top"><div><h2>${v.type==='Moto'?'🏍️':'🚗'} ${v.name}</h2><div class="muted">${[v.brand,v.model,v.type].filter(Boolean).join(' · ')} · ${v.km||0} km</div></div><div class="actions"><button class="soft" onclick="openVehicle(${v.id})">Editar</button><button class="primary" onclick="openIntervention()">＋ Intervención</button><button class="danger" onclick="deleteVehicle(${v.id})">Eliminar</button></div></div>
+ <div class="stats"><div class="stat"><span class="muted">Intervenciones</span><b>${ints.length}</b></div><div class="stat"><span class="muted">Gasto acumulado</span><b>${euro(cost)}</b></div><div class="stat"><span class="muted">Avisos pendientes</span><b>${due.length}</b></div></div></section>
+ ${due.map(i=>`<div class="alert">⚠️ <b>${i.type}</b> requiere atención. Próximo objetivo: ${i.nextKm.toLocaleString('es-ES')} km.</div>`).join('')}
+ <section class="card"><div class="top"><h2>Historial</h2><span class="muted">${ints.length} registros</span></div><div class="timeline">${ints.length?ints.map(i=>`<div class="item"><div class="item-head"><div><span class="badge">${i.type}</span><p style="margin:8px 0 3px"><b>${i.details}</b></p><small class="muted">${i.date||'Sin fecha'} · ${Number(i.km).toLocaleString('es-ES')} km${i.nextKm?' · Próxima: '+Number(i.nextKm).toLocaleString('es-ES')+' km':''}</small></div><div style="text-align:right"><b>${euro(i.totalCost)}</b><br><button class="danger" style="margin-top:8px" onclick="deleteIntervention(${i.id})">Eliminar</button></div></div></div>`).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></section>`;
+}
+function selectVehicle(id){data.selected=id;save();render()}
+function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);$('vehicleModal').classList.add('show');window.editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vkm').value=v?.km||''}
+function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),{name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0)})}else{let v={id:Date.now(),name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0),interventions:[]};data.vehicles.push(v);data.selected=v.id}save();closeModal('vehicleModal');render()}
+function openIntervention(){let v=data.vehicles.find(x=>x.id===data.selected);$('interventionModal').classList.add('show');$('idate').value=new Date().toISOString().slice(0,10);$('ikm').value=v.km||'';$('itype').value='Mantenimiento';$('inext').value='';$('totalCost').value='';$('costItems').innerHTML='';addCost();typeFields()}
+function typeFields(){
+ ['maintenanceFields','tireFields','beltFields','otherFields','itvFields','insuranceFields','taxFields'].forEach(x=>$(x).classList.add('hidden'));
+ let t=$('itype').value;
+ let map={'Mantenimiento':'maintenanceFields','Neumáticos':'tireFields','Correa/Cadena':'beltFields','Varios':'otherFields','ITV':'itvFields','Seguro':'insuranceFields','Impuestos':'taxFields'};
+ $(map[t]).classList.remove('hidden');
+}
+function addCost(){let d=document.createElement('div');d.className='cost-row';d.innerHTML='<input placeholder="Pieza o elemento"><input type="number" step=".01" placeholder="Coste €"><button class="danger" type="button" onclick="this.parentElement.remove()">×</button>';$('costItems').appendChild(d)}
+function saveIntervention(){let v=data.vehicles.find(x=>x.id===data.selected),type=$('itype').value,details='';
+ if(type==='Mantenimiento')details=[...document.querySelectorAll('#maintenanceFields input:checked')].map(x=>x.value).join(', ')||'Mantenimiento general';
+ if(type==='Neumáticos')details=`${$('tireSize').value||'Medida no indicada'} · ${$('tireBrand').value||'Marca no indicada'}`;
+ if(type==='Correa/Cadena')details=`${$('beltType').value} · ${$('beltBrand').value||'Marca no indicada'}`;
+ if(type==='Varios')details=$('otherDescription').value||'Intervención sin descripción';
+ if(type==='ITV')details=`Resultado: ${$('itvResult').value}${$('itvNextDate').value?' · Próxima ITV: '+$('itvNextDate').value:''}${$('itvNotes').value?' · '+$('itvNotes').value:''}`;
+ if(type==='Seguro')details=`${$('insuranceCompany').value||'Aseguradora no indicada'} · ${$('insurancePeriod').value}${$('insuranceExpiry').value?' · Vence: '+$('insuranceExpiry').value:''}${$('insurancePolicy').value?' · Póliza: '+$('insurancePolicy').value:''}`;
+ if(type==='Impuestos')details=`${$('taxType').value}${$('taxDueDate').value?' · Pago: '+$('taxDueDate').value:''}${$('taxNotes').value?' · '+$('taxNotes').value:''}`;
+ let km=Number($('ikm').value||0),interval=Number($('inext').value||0);
+ let parts=[...document.querySelectorAll('.cost-row')].map(r=>({name:r.querySelectorAll('input')[0].value,cost:Number(r.querySelectorAll('input')[1].value||0)})).filter(x=>x.name||x.cost);
+ v.interventions.push({id:Date.now(),type,date:$('idate').value,km,nextKm:interval?km+interval:null,interval,details,parts,totalCost:Number($('totalCost').value||0)});
+ if(km>Number(v.km||0))v.km=km;save();closeModal('interventionModal');render()}
+function deleteIntervention(id){let v=data.vehicles.find(x=>x.id===data.selected);if(confirm('¿Eliminar esta intervención?')){v.interventions=v.interventions.filter(x=>x.id!==id);save();render()}}
+function deleteVehicle(id){if(confirm('¿Eliminar vehículo y todo su historial?')){data.vehicles=data.vehicles.filter(x=>x.id!==id);data.selected=data.vehicles[0]?.id||null;save();render()}}
+function closeModal(id){$(id).classList.remove('show')}
+function openSettings(){$('settingsModal').classList.add('show');$('schemaVersion').textContent='v'+data.schemaVersion}
+function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='garagey_backup.json';a.click();URL.revokeObjectURL(a.href)}
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let imported=JSON.parse(r.result);if(!Array.isArray(imported.vehicles))throw 0;data=imported;migrate();if(!data.selected)data.selected=data.vehicles[0]?.id||null;save();closeModal('settingsModal');
+/* SINCRONIZACIÓN CLOUD
+   Google/Gmail se usa como identidad y Google Drive como almacenamiento.
+   Para activar sincronización real se necesita un OAuth Client ID propio,
+   configurable sin modificar los datos ni la aplicación. */
+function configureGoogleCloud(){
+ let current=localStorage.getItem('garagey_google_client_id')||'';
+ let id=prompt('Introduce el Google OAuth Client ID de tu proyecto (Google Cloud Console):',current);
+ if(id!==null){localStorage.setItem('garagey_google_client_id',id.trim());updateCloudStatus();alert('Configuración guardada. La cuenta y los datos locales no se han modificado.')}
+}
+function updateCloudStatus(){
+ let el=$('cloudStatus'); if(!el)return;
+ let id=localStorage.getItem('garagey_google_client_id');
+ el.textContent=id?'Estado: listo para conectar con Google Drive':'Estado: configuración pendiente';
+}
+function syncCloud(){
+ let id=localStorage.getItem('garagey_google_client_id');
+ if(!id){alert('Primero debes configurar tu Google OAuth Client ID. Esto es necesario para conectar de forma segura tu propia aplicación con Google Drive.');return}
+ // Base preparada: el backend OAuth/Drive se añade sin tocar el esquema de datos.
+ alert('Base de sincronización preparada. Para activar la conexión real con Google Drive falta vincular el OAuth Client ID y las credenciales autorizadas de Google.');
+}
+
+render();alert('Copia restaurada correctamente')}catch(err){alert('Archivo de copia no válido')}};r.readAsText(f)}
+render();
+</script><script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js'));
+}
+</script></body></html>
