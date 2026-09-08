@@ -122,7 +122,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{ma
 <section class="hero"><div class="brand"><div><h1>Garagey ✨</h1><p>Tu garaje, siempre bajo control.</p></div><button class="gear" onclick="openSettings()">⚙️</button></div>
 <div class="quick"><div class="q">Vehículos<b id="qVehicles">0</b></div><div class="q">Intervenciones<b id="qInterventions">0</b></div><div class="q">Gasto total<b id="qCost">0 €</b></div><div class="q">Avisos<b id="qAlerts">0</b></div></div></section>
 <div class="layout"><aside class="panel sidebar"><div class="section-title">MIS VEHÍCULOS <span>🚘</span></div><div id="vehicles"></div><button class="add" onclick="openVehicle()">＋ Añadir vehículo</button></aside><main class="content" id="main"></main></div>
-<button class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v4.3.1 · Reparación crítica · Chrome Android · Centro de avisos</div></div>
+<button class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v4.4 · Edición de intervenciones · Chrome Android</div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog"><div class="top"><h2>🚘 Tu vehículo</h2><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
 <div class="form"><div><label>Nombre</label><input id="vname" placeholder="Ej. Qashqai familiar"></div><div><label>Tipo</label><select id="vtype"><option>Coche</option><option>Moto</option></select></div><div><label>Marca</label><input id="vbrand" placeholder="Opcional"></div><div><label>Modelo</label><input id="vmodel" placeholder="Opcional"></div><div class="full"><label>Kilometraje actual</label><input id="vkm" type="number" min="0"></div></div>
@@ -154,6 +154,8 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{ma
 <div><label>Fecha de vencimiento / pago</label><input id="taxDueDate" type="date"></div>
 <div class="full"><label>Administración u observaciones</label><textarea id="taxNotes" placeholder="Ayuntamiento, referencia o anotaciones..."></textarea></div>
 </div></div>
+<div class="full"><label>Descripción editable de la intervención</label>
+<textarea id="manualDetails" placeholder="Opcional. Permite corregir o ampliar la descripción de una intervención existente."></textarea></div>
 <div class="full"><label>Coste de piezas y elementos</label><div id="costItems"></div><button class="soft" type="button" onclick="addCost()">＋ Añadir pieza</button><div style="margin-top:12px"><label>Coste total de la intervención (€)</label><input id="totalCost" type="number" step=".01" min="0"></div></div></div>
 <div class="actions" style="margin-top:20px"><button class="primary" onclick="saveIntervention()">Guardar intervención</button></div></div></div>
 
@@ -162,7 +164,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer;border:0}.app{ma
 <div class="card" style="box-shadow:none;border:1px solid var(--line)"><b>Versión de datos:</b> <span id="schemaVersion"></span><br><span class="muted">Las futuras versiones pueden ejecutar migraciones automáticas.</span></div>
 <div class="card" style="box-shadow:none;border:1px solid var(--line);margin-top:14px">
 <b>☁️ Sincronización Google / Gmail</b>
-<p class="muted">Garagey está preparado para sincronizar una copia cifrada de tus datos con tu cuenta de Google Drive asociada a Gmail.</p>
+<p class="muted">La sincronización real con Google Drive requiere configurar una credencial OAuth de Google Cloud. Sin esa credencial, Gmail no puede autorizar copias automáticas.</p>
 <div id="cloudStatus" class="muted">Estado: configuración pendiente</div>
 <div class="actions" style="margin-top:10px"><button class="primary" onclick="configureGoogleCloud()">Configurar cuenta Google</button><button class="soft" onclick="syncCloud()">☁️ Sincronizar ahora</button></div>
 </div>
@@ -263,15 +265,44 @@ function render(){
  if(!v){m.innerHTML=renderNoticePanel()+'<section class="card empty"><div class="big">🛠️</div><h2>Tu garaje está listo</h2><p>Empieza añadiendo un coche o una moto.</p><button class="primary" onclick="openVehicle()">Añadir mi primer vehículo</button></section>';return}
  let ints=[...(v.interventions||[])].sort((a,b)=>b.id-a.id),cost=ints.reduce((a,x)=>a+Number(x.totalCost||0),0);
  let due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm));
- m.innerHTML=renderNoticePanel()+`<section class="card"><div class="top"><div><h2>${v.type==='Moto'?'🏍️':'🚗'} ${v.name}</h2><div class="muted">${[v.brand,v.model,v.type].filter(Boolean).join(' · ')} · ${v.km||0} km</div></div><div class="actions"><button class="soft" onclick="openVehicle()">＋ Vehículo</button><button class="soft" onclick="openVehicle(${v.id})">Editar</button><button class="primary" onclick="openIntervention()">＋ Intervención</button><button class="danger" onclick="deleteVehicle(${v.id})">Eliminar</button></div></div>
+ m.innerHTML=renderNoticePanel()+`<section class="card"><div class="top"><div><h2>${v.type==='Moto'?'🏍️':'🚗'} ${v.name}</h2><div class="muted">${[v.brand,v.model,v.type].filter(Boolean).join(' · ')} · ${v.km||0} km</div></div><div class="actions"><button class="soft" onclick="openVehicle(${v.id})">Editar</button><button class="primary" onclick="openIntervention()">＋ Intervención</button><button class="danger" onclick="deleteVehicle(${v.id})">Eliminar</button></div></div>
  <div class="stats"><div class="stat"><span class="muted">Intervenciones</span><b>${ints.length}</b></div><div class="stat"><span class="muted">Gasto acumulado</span><b>${euro(cost)}</b></div><div class="stat"><span class="muted">Avisos pendientes</span><b>${due.length}</b></div></div></section>
  ${due.map(i=>`<div class="alert">⚠️ <b>${i.type}</b> requiere atención. Próximo objetivo: ${i.nextKm.toLocaleString('es-ES')} km.</div>`).join('')}
- <section class="card"><div class="top"><h2>Historial</h2><span class="muted">${ints.length} registros</span></div><div class="timeline">${ints.length?ints.map(i=>`<div class="item"><div class="item-head"><div><span class="badge">${i.type}</span><p style="margin:8px 0 3px"><b>${i.details}</b></p><small class="muted">${i.date||'Sin fecha'} · ${Number(i.km).toLocaleString('es-ES')} km${i.nextKm?' · Próxima: '+Number(i.nextKm).toLocaleString('es-ES')+' km':''}</small></div><div style="text-align:right"><b>${euro(i.totalCost)}</b><br><button class="danger" style="margin-top:8px" onclick="deleteIntervention(${i.id})">Eliminar</button></div></div></div>`).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></section>`;
+ <section class="card"><div class="top"><h2>Historial</h2><span class="muted">${ints.length} registros</span></div><div class="timeline">${ints.length?ints.map(i=>`<div class="item"><div class="item-head"><div><span class="badge">${i.type}</span><p style="margin:8px 0 3px"><b>${i.details}</b></p><small class="muted">${i.date||'Sin fecha'} · ${Number(i.km).toLocaleString('es-ES')} km${i.nextKm?' · Próxima: '+Number(i.nextKm).toLocaleString('es-ES')+' km':''}</small></div><div style="text-align:right"><b>${euro(i.totalCost)}</b><br><button class="soft" style="margin-top:8px" onclick="openIntervention(${i.id})">Editar</button><br><button class="danger" style="margin-top:8px" onclick="deleteIntervention(${i.id})">Eliminar</button></div></div></div>`).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></section>`;
 }
 function selectVehicle(id){data.selected=id;save();render()}
 function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);$('vehicleModal').classList.add('show');window.editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vkm').value=v?.km||''}
 function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),{name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0)})}else{let v={id:Date.now(),name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0),interventions:[]};data.vehicles.push(v);data.selected=v.id;}save();closeModal('vehicleModal');render()}
-function openIntervention(){let v=data.vehicles.find(x=>x.id===data.selected);$('interventionModal').classList.add('show');$('idate').value=new Date().toISOString().slice(0,10);$('ikm').value=v.km||'';$('itype').value='Mantenimiento';$('inext').value='';$('totalCost').value='';$('costItems').innerHTML='';addCost();typeFields()}
+function openIntervention(id){
+ let v=data.vehicles.find(x=>x.id===data.selected);
+ let item=id?(v.interventions||[]).find(x=>x.id===id):null;
+ window.editIntervention=id||null;
+ $('interventionModal').classList.add('show');
+ $('idate').value=item?.date||new Date().toISOString().slice(0,10);
+ $('ikm').value=item?.km??v.km??'';
+ $('itype').value=item?.type||'Mantenimiento';
+ $('inext').value=item?.interval||'';
+ $('totalCost').value=item?.totalCost??'';
+ $('manualDetails').value=item?.details||'';
+ $('costItems').innerHTML='';
+ (item?.parts?.length?item.parts:[{name:'',cost:''}]).forEach(p=>{
+   addCost();
+   let r=$('costItems').lastElementChild, inputs=r.querySelectorAll('input');
+   inputs[0].value=p.name||''; inputs[1].value=p.cost??'';
+ });
+ // Recuperación aproximada de los campos específicos al editar registros antiguos.
+ document.querySelectorAll('#maintenanceFields input[type=checkbox]').forEach(x=>x.checked=false);
+ if(item){
+   let d=item.details||'';
+   if(item.type==='Mantenimiento')document.querySelectorAll('#maintenanceFields input[type=checkbox]').forEach(x=>x.checked=d.includes(x.value));
+   if(item.type==='Neumáticos'){let a=d.split(' · ');$('tireSize').value=a[0]||'';$('tireBrand').value=a[1]||'';}
+   if(item.type==='Correa/Cadena'){let a=d.split(' · ');$('beltType').value=a[0]||$('beltType').value;$('beltBrand').value=a[1]||'';}
+   if(item.type==='Varios')$('otherDescription').value=d;
+ }
+ typeFields();
+ document.querySelector('#interventionModal h2').textContent=item?'✏️ Editar intervención':'🔧 Nueva intervención';
+ document.querySelector('#interventionModal .primary').textContent=item?'Guardar cambios':'Guardar intervención';
+}
 function typeFields(){
  ['maintenanceFields','tireFields','beltFields','otherFields','itvFields','insuranceFields','taxFields'].forEach(x=>$(x).classList.add('hidden'));
  let t=$('itype').value;
@@ -279,7 +310,8 @@ function typeFields(){
  $(map[t]).classList.remove('hidden');
 }
 function addCost(){let d=document.createElement('div');d.className='cost-row';d.innerHTML='<input placeholder="Pieza o elemento"><input type="number" step=".01" placeholder="Coste €"><button class="danger" type="button" onclick="this.parentElement.remove()">×</button>';$('costItems').appendChild(d)}
-function saveIntervention(){let v=data.vehicles.find(x=>x.id===data.selected),type=$('itype').value,details='';
+function saveIntervention(){
+ let v=data.vehicles.find(x=>x.id===data.selected),type=$('itype').value,details='';
  if(type==='Mantenimiento')details=[...document.querySelectorAll('#maintenanceFields input:checked')].map(x=>x.value).join(', ')||'Mantenimiento general';
  if(type==='Neumáticos')details=`${$('tireSize').value||'Medida no indicada'} · ${$('tireBrand').value||'Marca no indicada'}`;
  if(type==='Correa/Cadena')details=`${$('beltType').value} · ${$('beltBrand').value||'Marca no indicada'}`;
@@ -287,10 +319,20 @@ function saveIntervention(){let v=data.vehicles.find(x=>x.id===data.selected),ty
  if(type==='ITV')details=`Resultado: ${$('itvResult').value}${$('itvNextDate').value?' · Próxima ITV: '+$('itvNextDate').value:''}${$('itvNotes').value?' · '+$('itvNotes').value:''}`;
  if(type==='Seguro')details=`${$('insuranceCompany').value||'Aseguradora no indicada'} · ${$('insurancePeriod').value}${$('insuranceExpiry').value?' · Vence: '+$('insuranceExpiry').value:''}${$('insurancePolicy').value?' · Póliza: '+$('insurancePolicy').value:''}`;
  if(type==='Impuestos')details=`${$('taxType').value}${$('taxDueDate').value?' · Pago: '+$('taxDueDate').value:''}${$('taxNotes').value?' · '+$('taxNotes').value:''}`;
+ let manual=$('manualDetails').value.trim(); if(manual)details=manual;
  let km=Number($('ikm').value||0),interval=Number($('inext').value||0);
  let parts=[...document.querySelectorAll('.cost-row')].map(r=>({name:r.querySelectorAll('input')[0].value,cost:Number(r.querySelectorAll('input')[1].value||0)})).filter(x=>x.name||x.cost);
- v.interventions.push({id:Date.now(),type,date:$('idate').value,km,nextKm:interval?km+interval:null,interval,details,parts,totalCost:Number($('totalCost').value||0)});
- if(km>Number(v.km||0))v.km=km;save();closeModal('interventionModal');render()}
+ let record={type,date:$('idate').value,km,nextKm:interval?km+interval:null,interval,details,parts,totalCost:Number($('totalCost').value||0)};
+ if(window.editIntervention){
+   let existing=(v.interventions||[]).find(x=>x.id===window.editIntervention);
+   if(existing)Object.assign(existing,record);
+ }else{
+   record.id=Date.now();v.interventions.push(record);
+ }
+ window.editIntervention=null;
+ if(km>Number(v.km||0))v.km=km;
+ save();closeModal('interventionModal');render();
+}
 function deleteIntervention(id){let v=data.vehicles.find(x=>x.id===data.selected);if(confirm('¿Eliminar esta intervención?')){v.interventions=v.interventions.filter(x=>x.id!==id);save();render()}}
 function deleteVehicle(id){if(confirm('¿Eliminar vehículo y todo su historial?')){data.vehicles=data.vehicles.filter(x=>x.id!==id);data.selected=data.vehicles[0]?.id||null;save();render()}}
 function closeModal(id){$(id).classList.remove('show')}
