@@ -1,24 +1,25 @@
-GARAGEY - PRUEBA LOCAL EN MÓVIL
+GARAGEY v5.0.1 - GOOGLE DRIVE ESTABLE
 
-Esta versión está preparada para probar Garagey como aplicación local/PWA.
+Esta actualización parte del index.html estable proporcionado.
 
 IMPORTANTE:
-Un navegador Android no permite instalar directamente un archivo ZIP como aplicación.
-Para probarla correctamente:
+Google Drive se ha añadido como módulo independiente para no modificar:
+- Vehículos
+- Intervenciones
+- Edición de intervenciones
+- Centro de avisos
+- Renderizado principal
 
-OPCIÓN RECOMENDADA:
-1. Descomprime esta carpeta.
-2. Copia los archivos a un pequeño servidor web local o hosting temporal.
-3. Abre index.html mediante HTTPS.
-4. En Chrome Android pulsa "Instalar aplicación" o "Añadir a pantalla de inicio".
+FUNCIONES DE ESTA PRIMERA FASE:
+1. Conectar Google.
+2. Guardar copia manual.
+3. Restaurar copia manual.
+4. Mostrar última copia.
 
-Para una prueba totalmente local sin servidor, también puedes abrir index.html
-directamente con Chrome, aunque algunas funciones PWA (como Service Worker)
-pueden requerir HTTPS o localhost.
+REQUISITOS EN GOOGLE CLOUD:
+- Google Drive API habilitada.
+- OAuth Web Client configurado.
+- Origen JavaScript autorizado:
+  https://garagey-two.vercel.app
 
-Los datos se guardan localmente en el dispositivo/navegador.
-
-Cuando Garagey pase a APK Android:
-- Se mantendrá el mismo modelo de datos.
-- Podrán migrarse los datos.
-- Las futuras actualizaciones conservarán la información.
+No incluye todavía sincronización automática. Primero se prueba la conexión manual.
