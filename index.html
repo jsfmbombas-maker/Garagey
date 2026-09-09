@@ -139,7 +139,7 @@ opacity:1
 <section class="hero"><div class="brand"><div><h1>Garagey ✨</h1><p>Tu garaje, siempre bajo control.</p></div><button class="gear" onclick="openSettings()">⚙️</button></div>
 <div class="quick"><div class="q">Vehículos<b id="qVehicles">0</b></div><div class="q">Intervenciones<b id="qInterventions">0</b></div><div class="q">Gasto total<b id="qCost">0 €</b></div><div class="q">Avisos<b id="qAlerts">0</b></div></div></section>
 <div class="layout"><aside class="panel sidebar"><div class="section-title">MIS VEHÍCULOS <span>🚘</span></div><div id="vehicles"></div><button class="add" onclick="openVehicle()">＋ Añadir vehículo</button></aside><main class="content" id="main"></main></div>
-<button class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v4.4.1 · Edición de intervenciones + Centro de avisos corregido</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v5.2.3 · Botón de añadir vehículo solo en inicio</div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog"><div class="top"><h2>🚘 Tu vehículo</h2><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
 <div class="form"><div><label>Nombre</label><input id="vname" placeholder="Ej. Qashqai familiar"></div><div><label>Tipo</label><select id="vtype"><option>Coche</option><option>Moto</option></select></div><div><label>Marca</label><input id="vbrand" placeholder="Opcional"></div><div><label>Modelo</label><input id="vmodel" placeholder="Opcional"></div><div class="full"><label>Kilometraje actual</label><input id="vkm" type="number" min="0"></div></div>
@@ -279,11 +279,16 @@ function renderNoticePanel(){
  return panel;
 }
 
+function updateMobileAddButton(show){
+ const b=$('mobileAddVehicle');
+ if(b) b.style.display=show?'block':'none';
+}
 function render(){
  $('qVehicles').textContent=data.vehicles.length;
  let all=data.vehicles.flatMap(v=>v.interventions||[]);$('qInterventions').textContent=all.length;$('qCost').textContent=euro(all.reduce((a,x)=>a+Number(x.totalCost||0),0));$('qAlerts').textContent=getAlerts().length;
  $('vehicles').innerHTML=data.vehicles.length?data.vehicles.map(v=>`<div class="vehicle ${v.id===data.selected?'active':''}" onclick="selectVehicle(${v.id})"><span class="icon">${v.type==='Moto'?'🏍️':'🚗'}</span><b>${v.name}</b><small>${v.brand||v.type}${v.model?' · '+v.model:''} · ${v.km||0} km</small></div>`).join(''):'<div class="empty">Añade tu primer vehículo ✨</div>';
  const v=data.vehicles.find(x=>x.id===data.selected),m=$('main');
+ updateMobileAddButton(!v);
  if(!v){m.innerHTML=renderNoticePanel()+'<section class="card empty"><div class="big">🛠️</div><h2>Tu garaje está listo</h2><p>Empieza añadiendo un coche o una moto.</p><button class="primary" onclick="openVehicle()">Añadir mi primer vehículo</button></section>';return}
  let ints=[...(v.interventions||[])].sort((a,b)=>b.id-a.id),cost=ints.reduce((a,x)=>a+Number(x.totalCost||0),0);
  let due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm));
@@ -293,7 +298,7 @@ function render(){
  <section class="card"><div class="top"><h2>Historial</h2><span class="muted">${ints.length} registros</span></div><div class="timeline">${ints.length?ints.map(i=>`<div class="item"><div class="item-head"><div><span class="badge">${i.type}</span><p style="margin:8px 0 3px"><b>${i.details}</b></p><small class="muted">${i.date||'Sin fecha'} · ${Number(i.km).toLocaleString('es-ES')} km${i.nextKm?' · Próxima: '+Number(i.nextKm).toLocaleString('es-ES')+' km':''}</small></div><div style="text-align:right"><b>${euro(i.totalCost)}</b><br><button class="soft" style="margin-top:8px" onclick="openIntervention(${i.id})">Editar</button><br><button class="danger" style="margin-top:8px" onclick="deleteIntervention(${i.id})">Eliminar</button></div></div></div>`).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></section>`;
 }
 function selectVehicle(id){data.selected=id;save();render()}
-function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);$('vehicleModal').classList.add('show');window.editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vkm').value=v?.km||''}
+function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);updateMobileAddButton(false);$('vehicleModal').classList.add('show');window.editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vkm').value=v?.km||''}
 function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),{name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0)})}else{let v={id:Date.now(),name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0),interventions:[]};data.vehicles.push(v);data.selected=v.id;}save();closeModal('vehicleModal');render()}
 function openIntervention(id){
  let v=data.vehicles.find(x=>x.id===data.selected);
@@ -357,7 +362,7 @@ function saveIntervention(){
 }
 function deleteIntervention(id){let v=data.vehicles.find(x=>x.id===data.selected);if(confirm('¿Eliminar esta intervención?')){v.interventions=v.interventions.filter(x=>x.id!==id);save();render()}}
 function deleteVehicle(id){if(confirm('¿Eliminar vehículo y todo su historial?')){data.vehicles=data.vehicles.filter(x=>x.id!==id);data.selected=data.vehicles[0]?.id||null;save();render()}}
-function closeModal(id){$(id).classList.remove('show')}
+function closeModal(id){$(id).classList.remove('show'); if(id==='vehicleModal' || id==='settingsModal' || id==='interventionModal'){const v=data.vehicles.find(x=>x.id===data.selected);updateMobileAddButton(!v)}}
 function openSettings(){$('settingsModal').classList.add('show');$('schemaVersion').textContent='v'+data.schemaVersion}
 function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='garagey_backup.json';a.click();URL.revokeObjectURL(a.href)}
 function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let imported=JSON.parse(r.result);if(!Array.isArray(imported.vehicles))throw 0;data=imported;migrate();if(!data.selected)data.selected=data.vehicles[0]?.id||null;save();closeModal('settingsModal');render();alert('Copia restaurada correctamente')}catch(err){alert('Archivo de copia no válido')}};r.readAsText(f)}
