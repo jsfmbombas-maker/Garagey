@@ -1,1 +1,0 @@
-v5.0: OAuth real + Google Drive appDataFolder. Añade https://garagey-two.vercel.app como origen JavaScript autorizado y habilita Google Drive API.
