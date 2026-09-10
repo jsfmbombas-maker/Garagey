@@ -1,25 +1,9 @@
-GARAGEY v5.0.1 - GOOGLE DRIVE ESTABLE
+Garagey v5.2.4
 
-Esta actualización parte del index.html estable proporcionado.
+Corrección del botón flotante «Añadir vehículo»:
+- En móvil aparece en la pantalla principal.
+- Se oculta mientras cualquier ventana/modal esté abierta.
+- Vuelve a aparecer automáticamente al cerrar el modal.
+- No modifica los datos, Google Drive, sincronización ni el resto de funciones.
 
-IMPORTANTE:
-Google Drive se ha añadido como módulo independiente para no modificar:
-- Vehículos
-- Intervenciones
-- Edición de intervenciones
-- Centro de avisos
-- Renderizado principal
-
-FUNCIONES DE ESTA PRIMERA FASE:
-1. Conectar Google.
-2. Guardar copia manual.
-3. Restaurar copia manual.
-4. Mostrar última copia.
-
-REQUISITOS EN GOOGLE CLOUD:
-- Google Drive API habilitada.
-- OAuth Web Client configurado.
-- Origen JavaScript autorizado:
-  https://garagey-two.vercel.app
-
-No incluye todavía sincronización automática. Primero se prueba la conexión manual.
+Sustituir los archivos de la versión anterior en GitHub y dejar que Vercel despliegue.
