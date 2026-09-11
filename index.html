@@ -321,6 +321,12 @@ html,body{width:100%!important;min-width:0!important;max-width:100%!important;ov
   .card,.notice-panel{padding-left:10px!important;padding-right:10px!important}
 }
 
+
+/* GARAGEY — Ficha de vehículo Signature */
+.vehicle-signature-card{background:linear-gradient(145deg,#071a2c,#0d2942);border-radius:24px;overflow:hidden;margin-bottom:18px;box-shadow:0 18px 45px rgba(7,26,44,.18);border:1px solid #173b5c;color:#fff}
+.vehicle-hero{position:relative;min-height:310px;overflow:hidden;background:#081a2b}.vehicle-hero-image{position:absolute;inset:0;background-size:cover;background-position:center 58%;filter:saturate(.95)}.vehicle-hero-image:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#061426e8 0%,#0614268a 42%,#06142612 78%),linear-gradient(0deg,#061426e8 0%,transparent 55%)}.vehicle-hero-image.is-moto{background:radial-gradient(circle at 75% 42%,#245277 0,#102f49 35%,#071827 72%)}.vehicle-moto-art{font-size:120px;position:absolute;right:8%;bottom:12%;filter:drop-shadow(0 12px 20px #0008)}.vehicle-hero-content{position:absolute;z-index:2;left:24px;bottom:24px;right:24px}.vehicle-type-badge{display:inline-flex;align-items:center;gap:7px;background:#071a2dcc;border:1px solid #6bb5ff66;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:800;margin-bottom:10px}.vehicle-hero h2{font-size:32px;line-height:1.05;margin:0 0 5px;letter-spacing:-.03em}.vehicle-model{font-size:18px;color:#c9d9e9;margin-bottom:12px}.vehicle-spec-line{display:flex;flex-wrap:wrap;gap:8px;color:#d9e6f4;font-size:13px}.vehicle-spec-line span{background:#ffffff12;border:1px solid #ffffff18;padding:6px 9px;border-radius:9px}.vehicle-mileage{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 20px;border-top:1px solid #ffffff12;border-bottom:1px solid #ffffff12;background:#0a2034}.eyebrow{display:block;font-size:10px;color:#9bb2c9;letter-spacing:.12em;font-weight:800;margin-bottom:4px}.vehicle-mileage strong{font-size:25px}.vehicle-link{background:none;color:#70b9ff;font-weight:800;border:0;font-size:13px}.vehicle-stats-pro{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:14px 16px}.vstat{display:flex;align-items:center;gap:10px;padding:14px;border-radius:16px;border:1px solid #ffffff18}.vstat>span{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:19px;background:#ffffff16}.vstat b{display:block;font-size:20px}.vstat small{display:block;color:#b7c8d9;font-size:11px;margin-top:2px}.vstat-blue{background:linear-gradient(135deg,#103a83,#0b2448)}.vstat-green{background:linear-gradient(135deg,#075a4c,#0b403a)}.vstat-red{background:linear-gradient(135deg,#72293b,#411d2a)}.vehicle-data-panel{margin:0 16px 16px;border:1px solid #214b6f;border-radius:18px;padding:16px;background:#061a2caa}.vehicle-data-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid #ffffff18}.vehicle-data-head h3{margin:0;font-size:18px}.vehicle-data-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}.vehicle-data-grid>div{padding:12px 0;border-bottom:1px solid #ffffff10}.vehicle-data-grid span{display:block;color:#8fa9c0;font-size:11px;margin-bottom:3px}.vehicle-data-grid b{font-size:14px}.vehicle-actions-pro{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 18px}.vehicle-actions-pro button{min-height:48px;border-radius:13px}.vehicle-actions-pro .soft{background:#0b2238;color:#dcecff;border:1px solid #62b4ff88}.vehicle-actions-pro .primary{background:linear-gradient(90deg,#1688ff,#9145ef);box-shadow:0 10px 25px #1688ff33}
+@media(max-width:900px),(pointer:coarse) and (max-width:1100px){.vehicle-signature-card{width:100%;border-radius:20px}.vehicle-hero{min-height:285px}.vehicle-hero-content{left:18px;right:18px;bottom:18px}.vehicle-hero h2{font-size:28px}.vehicle-model{font-size:16px}.vehicle-stats-pro{grid-template-columns:1fr;gap:8px;padding:12px}.vstat{padding:12px}.vehicle-data-grid{grid-template-columns:1fr}.vehicle-data-panel{margin-left:12px;margin-right:12px}.vehicle-actions-pro{grid-template-columns:1fr;margin:0;padding:0 12px 14px}.vehicle-mileage{padding:16px 14px}.vehicle-mileage strong{font-size:23px}}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
@@ -331,7 +337,7 @@ html,body{width:100%!important;min-width:0!important;max-width:100%!important;ov
 <button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v5.2.4 · Avisos 3 meses · Fichas profesionales</div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog"><div class="top"><h2>🚘 Tu vehículo</h2><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
-<div class="form"><div><label>Nombre</label><input id="vname" placeholder="Ej. Qashqai familiar"></div><div><label>Tipo</label><select id="vtype"><option>Coche</option><option>Moto</option></select></div><div><label>Marca</label><input id="vbrand" placeholder="Opcional"></div><div><label>Modelo</label><input id="vmodel" placeholder="Opcional"></div><div class="full"><label>Kilometraje actual</label><input id="vkm" type="number" min="0"></div></div>
+<div class="form"><div><label>Nombre</label><input id="vname" placeholder="Ej. Qashqai familiar"></div><div><label>Tipo de vehículo</label><select id="vtype"><option>Coche</option><option>Moto</option></select></div><div><label>Marca</label><input id="vbrand" placeholder="Nissan"></div><div><label>Modelo</label><input id="vmodel" placeholder="Qashqai"></div><div><label>Año de matriculación</label><input id="vyear" type="number" min="1886" max="2100" placeholder="2016"></div><div><label>Combustible</label><select id="vfuel"><option value="">Seleccionar</option><option>Gasolina</option><option>Diésel</option><option>Híbrido</option><option>Híbrido enchufable</option><option>Eléctrico</option><option>GLP</option><option>GNC</option><option>Otro</option></select></div><div class="full"><label>Kilometraje actual</label><input id="vkm" type="number" min="0"></div></div>
 <div class="actions" style="margin-top:20px"><button class="primary" onclick="saveVehicle()">Guardar vehículo</button></div></div></div>
 
 <div class="modal" id="interventionModal"><div class="dialog"><div class="top"><h2>🔧 Nueva intervención</h2><button class="soft" onclick="closeModal('interventionModal')">Cerrar</button></div>
@@ -387,7 +393,7 @@ html,body{width:100%!important;min-width:0!important;max-width:100%!important;ov
    La interfaz puede cambiar sin modificar ni perder los datos.
    Cada futura actualización incrementará schemaVersion y aplicará migraciones. */
 const STORAGE_KEY='garagey_data';
-const CURRENT_SCHEMA=4; // Número de vehículos ilimitado
+const CURRENT_SCHEMA=5; // Número de vehículos ilimitado
 function freshData(){return {schemaVersion:CURRENT_SCHEMA,vehicles:[],selected:null}}
 let data;
 try{data=JSON.parse(localStorage.getItem(STORAGE_KEY))||freshData()}catch(e){data=freshData()}
@@ -400,6 +406,10 @@ function migrate(){
  if(data.schemaVersion<3){
    data.vehicles=(data.vehicles||[]).map(v=>({...v,interventions:(v.interventions||[])}));
    data.schemaVersion=3;
+ }
+ if(data.schemaVersion<5){
+   data.vehicles=(data.vehicles||[]).map(v=>({...v,year:v.year||'',fuel:v.fuel||''}));
+   data.schemaVersion=5;
  }
  save();
 }
@@ -480,13 +490,31 @@ function renderNoticePanel(){
 function render(){
  $('qVehicles').textContent=data.vehicles.length;
  let all=data.vehicles.flatMap(v=>v.interventions||[]);$('qInterventions').textContent=all.length;$('qCost').textContent=euro(all.reduce((a,x)=>a+Number(x.totalCost||0),0));$('qAlerts').textContent=getAlerts().length;
- $('vehicles').innerHTML=data.vehicles.length?data.vehicles.map(v=>`<div class="vehicle ${v.id===data.selected?'active':''}" onclick="selectVehicle(${v.id})"><span class="icon">${v.type==='Moto'?'🏍️':'🚗'}</span><b>${v.name}</b><small>${v.brand||v.type}${v.model?' · '+v.model:''} · ${v.km||0} km</small></div>`).join(''):'<div class="empty">Añade tu primer vehículo ✨</div>';
+ $('vehicles').innerHTML=data.vehicles.length?data.vehicles.map(v=>`<div class="vehicle ${v.id===data.selected?'active':''}" onclick="selectVehicle(${v.id})"><span class="icon">${v.type==='Moto'?'🏍️':'🚗'}</span><b>${v.name}</b><small>${v.brand||''}${v.model?' · '+v.model:''}${v.year?' · '+v.year:''} · ${Number(v.km||0).toLocaleString('es-ES')} km</small></div>`).join(''):'<div class="empty">Añade tu primer vehículo ✨</div>';
  const v=data.vehicles.find(x=>x.id===data.selected),m=$('main');
  if(!v){m.innerHTML=renderNoticePanel()+'<section class="card empty"><div class="big">🛠️</div><h2>Tu garaje está listo</h2><p>Empieza añadiendo un coche o una moto.</p><button class="primary" onclick="openVehicle()">Añadir mi primer vehículo</button></section>';return}
  let ints=[...(v.interventions||[])].sort((a,b)=>b.id-a.id),cost=ints.reduce((a,x)=>a+Number(x.totalCost||0),0);
  let due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm));
- m.innerHTML=renderNoticePanel()+`<section class="card"><div class="top"><div><h2>${v.type==='Moto'?'🏍️':'🚗'} ${v.name}</h2><div class="muted">${[v.brand,v.model,v.type].filter(Boolean).join(' · ')} · ${v.km||0} km</div></div><div class="actions"><button class="soft" onclick="openVehicle(${v.id})">Editar</button><button class="primary" onclick="openIntervention()">＋ Intervención</button><button class="danger" onclick="deleteVehicle(${v.id})">Eliminar</button></div></div>
- <div class="stats"><div class="stat"><span class="muted">Intervenciones</span><b>${ints.length}</b></div><div class="stat"><span class="muted">Gasto acumulado</span><b>${euro(cost)}</b></div><div class="stat"><span class="muted">Avisos pendientes</span><b>${due.length}</b></div></div></section>
+ m.innerHTML=renderNoticePanel()+`<section class="vehicle-signature-card">
+  <div class="vehicle-hero">
+    <div class="vehicle-hero-image ${v.type==='Moto'?'is-moto':''}" style="${v.type==='Moto'?'':'background-image:url(assets/vehicle-car-hero.jpg)'}">${v.type==='Moto'?'<div class="vehicle-moto-art">🏍️</div>':''}</div>
+    <div class="vehicle-hero-overlay"></div>
+    <div class="vehicle-hero-content">
+      <div class="vehicle-type-badge">${v.type==='Moto'?'🏍️':'🚗'} ${v.type}</div>
+      <h2>${v.name}</h2>
+      <div class="vehicle-model">${[v.brand,v.model].filter(Boolean).join(' · ')||'Vehículo sin marca/modelo'}</div>
+      <div class="vehicle-spec-line">${v.year?`<span>📅 ${v.year}</span>`:''}${v.fuel?`<span>⛽ ${v.fuel}</span>`:''}<span>🚗 ${v.type}</span></div>
+    </div>
+  </div>
+  <div class="vehicle-mileage"><div><span class="eyebrow">KILOMETRAJE ACTUAL</span><strong>${Number(v.km||0).toLocaleString('es-ES')} km</strong></div><button class="vehicle-link" onclick="document.querySelector('.history-card')?.scrollIntoView({behavior:'smooth'})">Ver historial ›</button></div>
+  <div class="vehicle-stats-pro"><div class="vstat vstat-blue"><span>🔧</span><div><b>${ints.length}</b><small>Intervenciones</small></div></div><div class="vstat vstat-green"><span>€</span><div><b>${euro(cost)}</b><small>Gasto acumulado</small></div></div><div class="vstat vstat-red"><span>🔔</span><div><b>${due.length}</b><small>Avisos pendientes</small></div></div></div>
+  <div class="vehicle-data-panel"><div class="vehicle-data-head"><h3>🚘 Datos del vehículo</h3><button class="soft" onclick="openVehicle(${v.id})">✎ Editar</button></div><div class="vehicle-data-grid">
+    <div><span>Marca</span><b>${v.brand||'—'}</b></div><div><span>Tipo de vehículo</span><b>${v.type||'—'}</b></div>
+    <div><span>Modelo</span><b>${v.model||'—'}</b></div><div><span>Año de matriculación</span><b>${v.year||'—'}</b></div>
+    <div><span>Combustible</span><b>${v.fuel||'—'}</b></div><div><span>Kilometraje</span><b>${Number(v.km||0).toLocaleString('es-ES')} km</b></div>
+  </div></div>
+  <div class="vehicle-actions-pro"><button class="soft" onclick="openVehicle(${v.id})">✎ Editar vehículo</button><button class="primary" onclick="openIntervention()">＋ Nueva intervención</button></div>
+</section>
  ${due.map(i=>`<div class="alert">⚠️ <b>${i.type}</b> requiere atención. Próximo objetivo: ${i.nextKm.toLocaleString('es-ES')} km.</div>`).join('')}
  <section class="card history-card"><div class="top"><div><h2>Historial de intervenciones</h2><div class="muted history-subtitle">Mantenimiento y actuaciones registradas</div></div><span class="history-count">${ints.length} ${ints.length===1?'registro':'registros'}</span></div><div class="intervention-list">${ints.length?ints.map(i=>{
  let meta={Mantenimiento:['🛢️','Cambio de aceite y filtro','mantenimiento'],Neumáticos:['🛞','Neumáticos','neumaticos'],'Correa/Cadena':['⚙️','Correa de distribución','correa'],Varios:['🔧','Intervención general','varios'],ITV:['📋','ITV','itv'],Seguro:['🛡️','Seguro','seguro'],Impuestos:['🏛️','Impuestos','impuestos']}[i.type]||['🔧',i.type,'varios'];
@@ -510,8 +538,8 @@ function render(){
  </article>`}).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></section>`;
 }
 function selectVehicle(id){data.selected=id;save();render()}
-function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);$('vehicleModal').classList.add('show');window.editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vkm').value=v?.km||''}
-function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),{name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0)})}else{let v={id:Date.now(),name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,km:Number($('vkm').value||0),interventions:[]};data.vehicles.push(v);data.selected=v.id;}save();closeModal('vehicleModal');render()}
+function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);$('vehicleModal').classList.add('show');window.editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vyear').value=v?.year||'';$('vfuel').value=v?.fuel||'';$('vkm').value=v?.km||''}
+function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');const vehicleFields={name,type:$('vtype').value,brand:$('vbrand').value,model:$('vmodel').value,year:$('vyear').value.trim(),fuel:$('vfuel').value,km:Number($('vkm').value||0)};if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),vehicleFields)}else{let v={id:Date.now(),...vehicleFields,interventions:[]};data.vehicles.push(v);data.selected=v.id;}save();closeModal('vehicleModal');render()}
 function openIntervention(id){
  let v=data.vehicles.find(x=>x.id===data.selected);
  let item=id?(v.interventions||[]).find(x=>x.id===id):null;
