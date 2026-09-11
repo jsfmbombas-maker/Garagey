@@ -674,18 +674,62 @@ html,body{width:100%!important;min-width:0!important;max-width:100%!important;ov
 /* GARAGEY — organización de pantalla y desplegables */
 .layout{display:block!important;margin-top:20px}.content{width:100%!important;max-width:none!important}.garagey-bottom{margin-top:4px;margin-bottom:0}.vehicle-expand-wrap{margin-top:16px;padding-top:14px;border-top:1px solid #173d5c}.vehicle-expand-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding:0 4px}.vehicle-expand-head strong{display:block;color:#fff;font-size:19px}.vehicle-expand-head small{display:block;color:#91b0c8;font-size:12px;margin-top:2px}.vehicle-collapse{background:#0a2338;color:#bfe2ff;border:1px solid #2e79ad;border-radius:11px;padding:9px 11px;font-weight:800}.vehicle-detail-dropdown{margin-top:0;border:1px solid #1b547c;box-shadow:0 16px 35px #0005}.history-launch{width:100%;margin-top:12px;padding:15px 16px;border-radius:15px;background:linear-gradient(90deg,#0a3150,#123f63);color:#dff2ff;border:1px solid #2e8ac8;font-weight:900;display:flex;align-items:center;justify-content:space-between;font-size:14px}.history-dropdown{margin-top:12px;border:1px solid #d8deea;animation:garageyDrop .22s ease-out}.vehicle-detail-alerts .alert{margin-top:12px}@keyframes garageyDrop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 @media(max-width:900px),(pointer:coarse) and (max-width:1100px){.app{padding:0 0 70px}.layout{margin-top:0}.content{padding:0 0!important}.notice-panel,.vehicle-list-panel,.garagey-bottom{border-radius:0!important}.notice-panel{margin-bottom:10px!important;padding:18px 14px!important}.vehicle-list-panel{padding:14px 12px!important;margin-bottom:10px!important}.vehicle-expand-head{align-items:flex-start}.vehicle-collapse{font-size:11px;padding:8px 9px}.history-launch{font-size:13px}.garagey-bottom{margin-top:10px;padding:20px 14px!important}.garagey-bottom .quick{grid-template-columns:1fr 1fr}}
+
+/* GARAGEY v14 — modales de ficha e historial totalmente adaptados a Chrome Android */
+html,body{overflow-x:hidden}
+*,*::before,*::after{box-sizing:border-box}
+.vehicle-detail-modal{position:fixed;inset:0;width:100vw;height:100dvh;padding:12px;overflow:hidden}
+.vehicle-detail-dialog{width:min(900px,100%);height:min(92dvh,900px);max-height:92dvh;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.vehicle-detail-modal-top{flex:0 0 auto;min-width:0}
+.vehicle-detail-scroll{flex:1 1 auto;min-height:0;min-width:0;width:100%;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.vehicle-detail-dialog .vehicle-signature-card{min-width:0;width:100%;overflow:hidden}
+.vehicle-detail-dialog .vehicle-hero,.vehicle-detail-dialog .vehicle-hero-content,.vehicle-detail-dialog .vehicle-spec-line,.vehicle-detail-dialog .vehicle-data-grid,.vehicle-detail-dialog .vehicle-stats-pro{min-width:0;max-width:100%}
+.vehicle-detail-dialog .vehicle-spec-line{grid-template-columns:repeat(3,minmax(0,1fr))}
+.vehicle-detail-dialog .vehicle-spec-line>span{min-width:0;overflow:hidden}
+.vehicle-detail-dialog .vehicle-spec-line b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.history-modal{position:fixed;inset:0;width:100vw;height:100dvh;padding:12px;overflow:hidden;background:rgba(1,10,20,.88);backdrop-filter:blur(5px);z-index:40}
+.history-dialog{width:min(900px,100%);height:min(92dvh,900px);max-height:92dvh;padding:0;background:#031a2b;border:1px solid #1d587f;border-radius:26px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.55);display:flex;flex-direction:column;min-width:0}
+.history-modal-top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;background:linear-gradient(135deg,#061a2c,#0b2942);color:#fff;border-bottom:1px solid #174c6e;flex:0 0 auto;min-width:0}
+.history-modal-top strong{display:block;font-size:20px;margin-top:2px}.history-modal-top small{display:block;color:#91b0c8;font-size:12px;margin-top:2px}.history-modal-close{background:#0b314d;color:#dff2ff;border:1px solid #2b79a8;border-radius:12px;padding:9px 12px;font-weight:900;white-space:nowrap}
+.history-modal-scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;width:100%}
+.history-modal-body{padding:14px;min-width:0}
+.history-modal-summary{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.history-modal-summary>div{background:linear-gradient(135deg,#082c47,#0a2034);border:1px solid #245e85;border-radius:16px;padding:13px 15px;color:#fff}.history-modal-summary b{display:block;font-size:22px}.history-modal-summary span{display:block;color:#9eb8cc;font-size:11px;margin-top:3px}
+.history-modal .intervention-list{min-width:0}.history-modal .intervention-card{width:100%;max-width:100%;min-width:0}
+@media(max-width:900px),(pointer:coarse) and (max-width:1100px){
+ .vehicle-detail-modal,.history-modal{padding:0}
+ .vehicle-detail-dialog,.history-dialog{width:100%;height:100dvh;max-height:100dvh;border-radius:0;border:0}
+ .vehicle-detail-modal-top,.history-modal-top{padding:14px 14px;gap:8px}
+ .vehicle-detail-modal-top strong,.history-modal-top strong{font-size:18px}
+ .vehicle-detail-close,.history-modal-close{padding:8px 10px;font-size:12px}
+ .vehicle-detail-dialog .vehicle-hero{min-height:360px}
+ .vehicle-detail-dialog .vehicle-hero-content{min-height:360px;padding:16px 16px 20px}
+ .vehicle-detail-dialog .vehicle-spec-line{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .vehicle-detail-dialog .vehicle-spec-line>span{font-size:11px;padding:9px 7px}
+ .vehicle-detail-dialog .vehicle-stats-pro{grid-template-columns:1fr}
+ .vehicle-detail-dialog .vehicle-data-panel{margin-left:12px;margin-right:12px}
+ .vehicle-detail-dialog .vehicle-actions-pro{padding:0 12px 14px}
+ .history-modal-body{padding:12px}
+}
+@media(max-width:520px){
+ .vehicle-detail-dialog .vehicle-spec-line{grid-template-columns:1fr}
+ .vehicle-detail-dialog .vehicle-spec-line>span{font-size:12px}
+ .history-modal-summary{grid-template-columns:1fr 1fr}
+ .history-modal-summary>div{padding:11px 12px}
+}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v13 · Ficha de vehículo emergente · Centro de avisos</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v14 · Fichas e historial en ventanas emergentes · Centro de avisos</div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog"><div class="top"><h2>🚘 Tu vehículo</h2><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
 <div class="form"><div><label>Nombre</label><input id="vname" placeholder="Ej. Qashqai familiar"></div><div><label>Tipo de vehículo</label><select id="vtype"><option>Coche</option><option>Moto</option></select></div><div><label>Marca</label><input id="vbrand" placeholder="Nissan"></div><div><label>Modelo</label><input id="vmodel" placeholder="Qashqai"></div><div><label>Año de matriculación</label><input id="vyear" type="number" min="1886" max="2100" placeholder="2016"></div><div><label>Combustible</label><select id="vfuel"><option value="">Seleccionar</option><option>Gasolina</option><option>Diésel</option><option>Híbrido</option><option>Híbrido enchufable</option><option>Eléctrico</option><option>GLP</option><option>GNC</option><option>Otro</option></select></div><div><label>Versión / motor</label><input id="vversion" placeholder="2.0 dCi 150 CV"></div><div><label>Potencia</label><input id="vpower" placeholder="150 CV (110 kW)"></div><div><label>Transmisión</label><select id="vtransmission"><option value="">Seleccionar</option><option>Manual</option><option>Automática</option><option>Automatizada</option><option>CVT</option><option>Otra</option></select></div><div><label>Matrícula</label><input id="vplate" placeholder="1234 ABC" maxlength="12"></div><div><label>Bastidor (VIN)</label><input id="vvin" placeholder="VIN / número de bastidor" maxlength="32"></div><div><label>Color</label><input id="vcolor" placeholder="Gris oscuro metalizado"></div><div><label>Fecha de compra</label><input id="vpurchase" type="date"></div><div class="full"><label>Kilometraje actual</label><input id="vkm" type="number" min="0"></div></div>
 <div class="actions" style="margin-top:20px"><button class="primary" onclick="saveVehicle()">Guardar vehículo</button></div></div></div>
 
 <div class="modal vehicle-detail-modal" id="vehicleDetailModal"><div class="dialog vehicle-detail-dialog" id="vehicleDetailContent"></div></div>
+<div class="modal history-modal" id="historyModal"><div class="dialog history-dialog" id="historyModalContent"></div></div>
 
 <div class="modal" id="interventionModal"><div class="dialog"><div class="top"><h2>🔧 Nueva intervención</h2><button class="soft" onclick="closeModal('interventionModal')">Cerrar</button></div>
 <div class="form"><div><label>Tipo de intervención</label><select id="itype" onchange="typeFields()"><option value="Mantenimiento">🛢️ Mantenimiento</option><option value="Neumáticos">🛞 Cambio de neumáticos</option><option value="Correa/Cadena">⚙️ Cambio correa/cadena</option><option value="Varios">🔧 Intervenciones varias</option>
@@ -873,28 +917,32 @@ function renderVehicleDetailModal(){
  if(!v){modal.classList.remove('show');return}
  const ints=[...(v.interventions||[])].sort((a,b)=>b.id-a.id), cost=ints.reduce((a,x)=>a+Number(x.totalCost||0),0);
  const alerts=getAlerts().filter(a=>a.vehicle===v.name); const due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm)); const allAlerts=[...alerts];
- let html=`<div class="vehicle-detail-modal-top"><div><span class="eyebrow">FICHA DEL VEHÍCULO</span><strong>${v.name||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'}</small></div><button class="vehicle-detail-close" onclick="closeModal('vehicleDetailModal')">Cerrar ×</button></div>
+ let html=`<div class="vehicle-detail-modal-top"><div><span class="eyebrow">FICHA DEL VEHÍCULO</span><strong>${v.name||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'}</small></div><button class="vehicle-detail-close" onclick="closeModal('vehicleDetailModal')">Cerrar ×</button></div><div class="vehicle-detail-scroll">
  <section class="vehicle-signature-card vehicle-detail-dropdown">
    <div class="vehicle-hero"><div class="vehicle-hero-image ${v.type==='Moto'?'is-moto':''}" style="${v.type==='Moto'?'':'background-image:url(assets/vehicle-car-hero.jpg)'}">${v.type==='Moto'?'<div class="vehicle-moto-art">🏍️</div>':''}</div>
     <div class="vehicle-hero-content"><div class="vehicle-page-title"><span>Mi vehículo</span><button class="vehicle-menu" onclick="openVehicle(${v.id})">⋮</button></div><div class="vehicle-type-badge">${v.type==='Moto'?'🏍️':'🚗'} ${v.type}</div><h2>${v.name} <button class="hero-edit" onclick="openVehicle(${v.id})">✎</button></h2><div class="vehicle-model">${[v.brand,v.model].filter(Boolean).join(' · ')||'Vehículo sin marca/modelo'}</div><div class="vehicle-spec-line"><span>📅 Año matriculación <b>${v.year||'—'}</b></span><span>⛽ Combustible <b>${v.fuel||'—'}</b></span><span>🚗 Tipo vehículo <b>${v.type||'—'}</b></span></div></div></div>
-    <div class="vehicle-mileage"><div><span class="eyebrow">KILOMETRAJE ACTUAL</span><strong>${Number(v.km||0).toLocaleString('es-ES')} km</strong></div><button class="vehicle-link" onclick="toggleHistory()">${historyOpen?'Ocultar historial':'Ver historial ›'}</button></div>
+    <div class="vehicle-mileage"><div><span class="eyebrow">KILOMETRAJE ACTUAL</span><strong>${Number(v.km||0).toLocaleString('es-ES')} km</strong></div><button class="vehicle-link" onclick="openHistoryModal()">Ver historial ›</button></div>
     <div class="vehicle-stats-pro"><div class="vstat vstat-blue"><span>🔧</span><div><b>${ints.length}</b><small>Intervenciones</small></div><i>›</i></div><div class="vstat vstat-green"><span>€</span><div><b>${euro(cost)}</b><small>Gasto acumulado</small></div><i>›</i></div><div class="vstat vstat-red"><span>🔔</span><div><b>${allAlerts.length}</b><small>Avisos pendientes</small></div><i>›</i></div></div>
     <div class="vehicle-data-panel"><div class="vehicle-data-head"><h3>🚘 Datos del vehículo</h3><button class="soft" onclick="openVehicle(${v.id})">✎ Editar</button></div><div class="vehicle-data-grid"><div><span>Marca</span><b>${v.brand||'—'}</b></div><div><span>Tipo vehículo</span><b>${v.type||'—'}</b></div><div><span>Modelo</span><b>${v.model||'—'}</b></div><div><span>Año de matriculación</span><b>${v.year||'—'}</b></div><div><span>Versión</span><b>${v.version||'—'}</b></div><div><span>Potencia</span><b>${v.power||'—'}</b></div><div><span>Combustible</span><b>${v.fuel||'—'}</b></div><div><span>Transmisión</span><b>${v.transmission||'—'}</b></div><div class="data-full"><span>Kilometraje</span><b>${Number(v.km||0).toLocaleString('es-ES')} km</b></div></div></div>
     <div class="vehicle-data-panel additional"><div class="vehicle-data-head"><h3>▣ &nbsp;Detalles adicionales</h3></div><div class="vehicle-data-grid"><div><span>Matrícula</span><b>${v.plate||'—'}</b></div><div><span>Bastidor (VIN)</span><b>${v.vin||'—'}</b></div><div><span>Color</span><b>${v.color||'—'}</b></div><div><span>Fecha de compra</span><b>${v.purchaseDate||'—'}</b></div></div></div>
     <div class="vehicle-actions-pro"><button class="soft" onclick="openVehicle(${v.id})">✎ Editar vehículo</button><button class="primary" onclick="openIntervention()">＋ Nueva intervención</button></div>
- </section>`;
+ </section></div>`;
  if(due.length) html+=`<div class="vehicle-detail-alerts">${due.map(i=>`<div class="alert red">⚠️ <b>${i.type}</b> requiere atención. Próximo objetivo: ${Number(i.nextKm).toLocaleString('es-ES')} km.</div>`).join('')}</div>`;
- if(historyOpen){
-   html+=`<section class="card history-card history-dropdown"><div class="top"><div><h2>Historial de intervenciones</h2><div class="muted history-subtitle">Mantenimiento y actuaciones registradas</div></div><span class="history-count">${ints.length} ${ints.length===1?'registro':'registros'}</span></div><div class="intervention-list">${ints.length?ints.map(i=>{
-     let meta={Mantenimiento:['🛢️','Cambio de aceite y filtro','mantenimiento'],Neumáticos:['🛞','Neumáticos','neumaticos'], 'Correa/Cadena':['⚙️','Correa de distribución','correa'],Varios:['🔧','Intervención general','varios'],ITV:['📋','ITV','itv'],Seguro:['🛡️','Seguro','seguro'],Impuestos:['🏛️','Impuestos','impuestos']}[i.type]||['🔧',i.type,'varios'];
-     let raw=(i.details||'Sin descripción').split(' · ').filter(Boolean); let detailLines=raw.length?raw:['Sin descripción']; let parts=(i.parts||[]).filter(p=>p.name||p.cost); let items=parts.length?parts.map(p=>`<div class="detail-item"><span class="dot"></span><span>${p.name||'Elemento'}</span>${p.cost?`<span class="item-cost">${euro(p.cost)}</span>`:''}</div>`).join(''):detailLines.map(x=>`<div class="detail-item"><span class="dot"></span><span>${x}</span></div>`).join('');
-     return `<article class="intervention-card"><div class="detail-hero ${meta[2]}"><div class="detail-icon">${meta[0]}</div><div class="detail-heading"><div class="detail-title">${meta[1]}</div><span class="detail-status">✓ Realizada</span><div class="detail-date">${i.date||'Fecha no indicada'}</div></div></div><div class="detail-body"><div class="detail-meta"><div class="detail-meta-item">📅 Fecha<b>${i.date||'—'}</b></div><div class="detail-meta-item">🚗 Kilómetros<b>${Number(i.km||0).toLocaleString('es-ES')} km</b></div></div><div class="detail-label">Detalles</div><div class="detail-items">${items}</div>${i.nextKm?`<div class="detail-meta" style="margin-top:8px;margin-bottom:0"><div class="detail-meta-item">↗ Próxima intervención<b>${Number(i.nextKm).toLocaleString('es-ES')} km</b></div><div class="detail-meta-item">📏 Intervalo<b>${Number(i.interval||0).toLocaleString('es-ES')} km</b></div></div>`:''}<div class="detail-cost"><span>€ &nbsp; Coste total</span><strong>${euro(i.totalCost)}</strong></div><div class="detail-actions"><button class="edit" onclick="openIntervention(${i.id})">✎ Editar</button><button class="delete" onclick="deleteIntervention(${i.id})">▣ Eliminar</button></div></div></article>`;
-   }).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></section>`;
- } else html+=`<button class="history-launch" onclick="toggleHistory()">📚 Abrir historial de intervenciones <span>›</span></button>`;
+ html+=`<button class="history-launch" onclick="openHistoryModal()">📚 Abrir historial de intervenciones <span>›</span></button>`;
  box.innerHTML=html;
 }
-function toggleHistory(){historyOpen=!historyOpen;renderVehicleDetailModal()}
-let historyOpen=false;
+function renderHistoryModal(){
+ const modal=$('historyModal'), box=$('historyModalContent'); if(!modal||!box)return;
+ const v=data.vehicles.find(x=>x.id===data.selected); if(!v){modal.classList.remove('show');return}
+ const ints=[...(v.interventions||[])].sort((a,b)=>b.id-a.id);
+ let html=`<div class="history-modal-top"><div><span class="eyebrow">HISTORIAL DE INTERVENCIONES</span><strong>${v.name||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'} · ${Number(v.km||0).toLocaleString('es-ES')} km</small></div><button class="history-modal-close" onclick="closeModal('historyModal')">Cerrar ×</button></div><div class="history-modal-scroll"><div class="history-modal-body"><div class="history-modal-summary"><div><b>${ints.length}</b><span>intervenciones</span></div><div><b>${euro(ints.reduce((a,x)=>a+Number(x.totalCost||0),0))}</b><span>gasto acumulado</span></div></div><div class="intervention-list">${ints.length?ints.map(i=>{
+   let meta={Mantenimiento:['🛢️','Cambio de aceite y filtro','mantenimiento'],Neumáticos:['🛞','Neumáticos','neumaticos'],'Correa/Cadena':['⚙️','Correa de distribución','correa'],Varios:['🔧','Intervención general','varios'],ITV:['📋','ITV','itv'],Seguro:['🛡️','Seguro','seguro'],Impuestos:['🏛️','Impuestos','impuestos']}[i.type]||['🔧',i.type,'varios'];
+   let raw=(i.details||'Sin descripción').split(' · ').filter(Boolean); let detailLines=raw.length?raw:['Sin descripción']; let parts=(i.parts||[]).filter(p=>p.name||p.cost); let items=parts.length?parts.map(p=>`<div class="detail-item"><span class="dot"></span><span>${p.name||'Elemento'}</span>${p.cost?`<span class="item-cost">${euro(p.cost)}</span>`:''}</div>`).join(''):detailLines.map(x=>`<div class="detail-item"><span class="dot"></span><span>${x}</span></div>`).join('');
+   return `<article class="intervention-card"><div class="detail-hero ${meta[2]}"><div class="detail-icon">${meta[0]}</div><div class="detail-heading"><div class="detail-title">${meta[1]}</div><span class="detail-status">✓ Realizada</span><div class="detail-date">${i.date||'Fecha no indicada'}</div></div></div><div class="detail-body"><div class="detail-meta"><div class="detail-meta-item">📅 Fecha<b>${i.date||'—'}</b></div><div class="detail-meta-item">🚗 Kilómetros<b>${Number(i.km||0).toLocaleString('es-ES')} km</b></div></div><div class="detail-label">Detalles</div><div class="detail-items">${items}</div>${i.nextKm?`<div class="detail-meta" style="margin-top:8px;margin-bottom:0"><div class="detail-meta-item">↗ Próxima intervención<b>${Number(i.nextKm).toLocaleString('es-ES')} km</b></div><div class="detail-meta-item">📏 Intervalo<b>${Number(i.interval||0).toLocaleString('es-ES')} km</b></div></div>`:''}<div class="detail-cost"><span>€ &nbsp; Coste total</span><strong>${euro(i.totalCost)}</strong></div><div class="detail-actions"><button class="edit" onclick="openIntervention(${i.id})">✎ Editar</button><button class="delete" onclick="deleteIntervention(${i.id})">▣ Eliminar</button></div></div></article>`;
+ }).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></div></div>`;
+ box.innerHTML=html;
+}
+function openHistoryModal(){renderHistoryModal();$('historyModal').classList.add('show')}
 
 function render(){
  if($('qVehicles'))$('qVehicles').textContent=data.vehicles.length;
@@ -906,7 +954,7 @@ function render(){
  if($('vehicleDetailModal')?.classList.contains('show')) renderVehicleDetailModal();
  const filter=$('vehicleFilter'); if(filter) filter.title=vehicleListType==='all'?'Todos':vehicleListType;
 }
-function selectVehicle(id){data.selected=id;historyOpen=false;save();render();renderVehicleDetailModal();$('vehicleDetailModal').classList.add('show')}
+function selectVehicle(id){closeModal('historyModal');data.selected=id;save();render();renderVehicleDetailModal();$('vehicleDetailModal').classList.add('show')}
 function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);$('vehicleModal').classList.add('show');window.editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vyear').value=v?.year||'';$('vfuel').value=v?.fuel||'';$('vversion').value=v?.version||'';$('vpower').value=v?.power||'';$('vtransmission').value=v?.transmission||'';$('vplate').value=v?.plate||'';$('vvin').value=v?.vin||'';$('vcolor').value=v?.color||'';$('vpurchase').value=v?.purchaseDate||'';$('vkm').value=v?.km||''}
 function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');const vehicleFields={name,type:$('vtype').value,brand:$('vbrand').value.trim(),model:$('vmodel').value.trim(),year:$('vyear').value.trim(),fuel:$('vfuel').value,version:$('vversion').value.trim(),power:$('vpower').value.trim(),transmission:$('vtransmission').value,plate:$('vplate').value.trim().toUpperCase(),vin:$('vvin').value.trim().toUpperCase(),color:$('vcolor').value.trim(),purchaseDate:$('vpurchase').value,km:Number($('vkm').value||0)};if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),vehicleFields)}else{let v={id:Date.now(),...vehicleFields,interventions:[]};data.vehicles.push(v);data.selected=v.id;}save();closeModal('vehicleModal');render()}
 function openIntervention(id){
@@ -967,10 +1015,10 @@ function saveIntervention(){
  }
  window.editIntervention=null;
  if(km>Number(v.km||0))v.km=km;
- save();closeModal('interventionModal');render();
+ save();closeModal('interventionModal');render();if($('historyModal')?.classList.contains('show'))renderHistoryModal();
 }
-function deleteIntervention(id){let v=data.vehicles.find(x=>x.id===data.selected);if(confirm('¿Eliminar esta intervención?')){v.interventions=v.interventions.filter(x=>x.id!==id);save();render()}}
-function deleteVehicle(id){if(confirm('¿Eliminar vehículo y todo su historial?')){data.vehicles=data.vehicles.filter(x=>x.id!==id);data.selected=data.vehicles[0]?.id||null;historyOpen=false;save();render()}}
+function deleteIntervention(id){let v=data.vehicles.find(x=>x.id===data.selected);if(confirm('¿Eliminar esta intervención?')){v.interventions=v.interventions.filter(x=>x.id!==id);save();render();if($('historyModal')?.classList.contains('show'))renderHistoryModal()}}
+function deleteVehicle(id){if(confirm('¿Eliminar vehículo y todo su historial?')){data.vehicles=data.vehicles.filter(x=>x.id!==id);data.selected=data.vehicles[0]?.id||null;closeModal('historyModal');save();render()}}
 function closeModal(id){$(id).classList.remove('show')}
 function openSettings(){$('settingsModal').classList.add('show');$('schemaVersion').textContent='v'+data.schemaVersion}
 function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='garagey_backup.json';a.click();URL.revokeObjectURL(a.href)}
