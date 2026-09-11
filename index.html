@@ -51,6 +51,22 @@ opacity:1
 .dialog h2{margin-top:0}.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}label{font-size:13px;font-weight:800;display:block;margin-bottom:6px}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}textarea{min-height:90px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.check{padding:10px;border:1px solid var(--line);border-radius:12px;font-weight:500}
 .hidden{display:none}.cost-row{display:grid;grid-template-columns:1fr 120px auto;gap:8px;margin-bottom:7px}.footer-note{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
 
+
+/* GARAGEY — Fichas de intervención profesionales */
+.history-card{overflow:hidden}
+.history-subtitle{font-size:13px;margin-top:4px}
+.history-count{background:#f3f1ff;color:#5a4bd7;padding:7px 11px;border-radius:999px;font-size:12px;font-weight:800;white-space:nowrap}
+.intervention-list{display:grid;gap:12px;margin-top:18px}
+.intervention-card{position:relative;border:1px solid #e9eaf2;border-radius:18px;background:linear-gradient(135deg,#ffffff 0%,#fafaff 100%);box-shadow:0 7px 20px rgba(40,35,80,.07);overflow:hidden;transition:transform .18s,box-shadow .18s,border-color .18s}
+.intervention-card:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(40,35,80,.11);border-color:#ddd9f7}
+.intervention-card:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--primary)}
+.type-Neumticos:before{background:#00a6a0}.type-CorreaCadena:before{background:#ff9f43}.type-Varios:before{background:#64748b}.type-ITV:before{background:#3b82f6}.type-Seguro:before{background:#10b981}.type-Impuestos:before{background:#8b5cf6}
+.intervention-main{display:grid;grid-template-columns:48px 1fr auto;gap:13px;align-items:center;padding:15px 16px 15px 18px}
+.intervention-icon{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:#f0edff;font-size:23px;box-shadow:inset 0 0 0 1px #e5e0ff}
+.type-Neumticos .intervention-icon{background:#e8fbfa}.type-CorreaCadena .intervention-icon{background:#fff4e5}.type-Varios .intervention-icon{background:#f1f5f9}.type-ITV .intervention-icon{background:#eaf3ff}.type-Seguro .intervention-icon{background:#eafaf2}.type-Impuestos .intervention-icon{background:#f3efff}
+.intervention-info{min-width:0}.intervention-title-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.intervention-type{font-weight:900;font-size:14px;color:#263247}.intervention-date{font-size:11px;color:#7c8496;background:#f3f4f8;border-radius:999px;padding:4px 8px}.intervention-details{font-size:15px;font-weight:700;line-height:1.35;margin-top:6px;word-break:break-word}.intervention-meta{display:flex;flex-wrap:wrap;gap:7px 12px;margin-top:8px;color:#7a8395;font-size:12px}.intervention-side{text-align:right;min-width:118px}.intervention-cost{font-size:18px;font-weight:900;color:#20283a}.intervention-actions{display:flex;justify-content:flex-end;gap:6px;margin-top:9px}.intervention-actions button{padding:7px 9px;font-size:11px;border-radius:9px}
+@media(max-width:780px){.intervention-main{grid-template-columns:42px 1fr;gap:10px;padding:13px 12px 13px 15px}.intervention-icon{width:40px;height:40px;border-radius:12px;font-size:20px}.intervention-side{grid-column:2;display:flex;align-items:center;justify-content:space-between;text-align:left;min-width:0;margin-top:2px;padding-top:9px;border-top:1px solid #eeeef4}.intervention-actions{margin-top:0;justify-content:flex-end}.intervention-cost{font-size:17px}.intervention-details{font-size:14px}.intervention-meta{font-size:11px}.history-count{font-size:11px}}
+
 /* GARAGEY v4.2 - Optimización específica para Chrome Android */
 @media(max-width:780px){
   html{width:100%;overflow-x:hidden}
@@ -143,7 +159,7 @@ opacity:1
 <section class="hero"><div class="brand"><div><h1>Garagey ✨</h1><p>Tu garaje, siempre bajo control.</p></div><button class="gear" onclick="openSettings()">⚙️</button></div>
 <div class="quick"><div class="q">Vehículos<b id="qVehicles">0</b></div><div class="q">Intervenciones<b id="qInterventions">0</b></div><div class="q">Gasto total<b id="qCost">0 €</b></div><div class="q">Avisos<b id="qAlerts">0</b></div></div></section>
 <div class="layout"><aside class="panel sidebar"><div class="section-title">MIS VEHÍCULOS <span>🚘</span></div><div id="vehicles"></div><button class="add" onclick="openVehicle()">＋ Añadir vehículo</button></aside><main class="content" id="main"></main></div>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v5.2.4 · Botón Añadir vehículo solo en pantalla principal</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v5.2.4 · Avisos y fichas profesionales</div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog"><div class="top"><h2>🚘 Tu vehículo</h2><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
 <div class="form"><div><label>Nombre</label><input id="vname" placeholder="Ej. Qashqai familiar"></div><div><label>Tipo</label><select id="vtype"><option>Coche</option><option>Moto</option></select></div><div><label>Marca</label><input id="vbrand" placeholder="Opcional"></div><div><label>Modelo</label><input id="vmodel" placeholder="Opcional"></div><div class="full"><label>Kilometraje actual</label><input id="vkm" type="number" min="0"></div></div>
@@ -229,6 +245,15 @@ function daysUntil(dateString){
  const target=new Date(dateString+'T00:00:00');
  return Math.ceil((target-today)/86400000);
 }
+function addMonths(date, months){
+ const d=new Date(date);
+ const day=d.getDate();
+ d.setDate(1); d.setMonth(d.getMonth()+months);
+ const last=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();
+ d.setDate(Math.min(day,last));
+ d.setHours(0,0,0,0);
+ return d;
+}
 function getAlerts(){
  const alerts=[];
  data.vehicles.forEach(v=>{
@@ -246,7 +271,7 @@ function getAlerts(){
        if(match){
          const d=daysUntil(match[1]);
          if(d!==null && d<0) alerts.push({level:'red',icon:'🔴',vehicle:v.name,title:'ITV caducada',detail:`Venció hace ${Math.abs(d)} días`,id:i.id});
-         else if(d!==null && d<=30) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'ITV próxima',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
+         else if(d!==null && d<=daysUntil(addMonths(new Date(),3).toISOString().slice(0,10))) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'ITV próxima',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
        }
      }
      // Insurance dates
@@ -255,7 +280,7 @@ function getAlerts(){
        if(match){
          const d=daysUntil(match[1]);
          if(d!==null && d<0) alerts.push({level:'red',icon:'🔴',vehicle:v.name,title:'Seguro vencido',detail:`Venció hace ${Math.abs(d)} días`,id:i.id});
-         else if(d!==null && d<=30) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'Seguro próximo a vencer',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
+         else if(d!==null && d<=daysUntil(addMonths(new Date(),3).toISOString().slice(0,10))) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'Seguro próximo a vencer',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
        }
      }
      // Tax dates
@@ -277,7 +302,7 @@ function renderNoticePanel(){
  const upcoming=alerts.filter(a=>a.level==='orange').length;
  const panel=`<section class="card notice-panel">
  <div class="top"><div><h2>🔔 Centro de avisos</h2><div style="color:#cbd5e1">Todo lo que necesita tu atención, en un solo lugar.</div></div><span class="badge" style="background:#ffffff22;color:white">${alerts.length} activos</span></div>
- <div class="notice-grid" style="margin-top:16px"><div class="notice">Críticos<b>${critical}</b><small>Caducados o vencidos</small></div><div class="notice">Próximos<b>${upcoming}</b><small>Próximos 30 días / 1.500 km</small></div><div class="notice">Vehículos<b>${new Set(alerts.map(a=>a.vehicle)).size}</b><small>Con avisos activos</small></div></div>
+ <div class="notice-grid" style="margin-top:16px"><div class="notice">Críticos<b>${critical}</b><small>Caducados o vencidos</small></div><div class="notice">Próximos<b>${upcoming}</b><small>Próximos 3 meses / 1.500 km</small></div><div class="notice">Vehículos<b>${new Set(alerts.map(a=>a.vehicle)).size}</b><small>Con avisos activos</small></div></div>
  ${alerts.length?`<div style="margin-top:16px">${alerts.map(a=>`<div class="alert ${a.level}">${a.icon} <b>${a.vehicle} · ${a.title}</b><br><small>${a.detail}</small></div>`).join('')}</div>`:'<div class="alert blue" style="margin-top:16px">✨ <b>Todo bajo control.</b><br><small>No tienes avisos pendientes actualmente.</small></div>'}
  </section>`;
  return panel;
@@ -294,7 +319,7 @@ function render(){
  m.innerHTML=renderNoticePanel()+`<section class="card"><div class="top"><div><h2>${v.type==='Moto'?'🏍️':'🚗'} ${v.name}</h2><div class="muted">${[v.brand,v.model,v.type].filter(Boolean).join(' · ')} · ${v.km||0} km</div></div><div class="actions"><button class="soft" onclick="openVehicle(${v.id})">Editar</button><button class="primary" onclick="openIntervention()">＋ Intervención</button><button class="danger" onclick="deleteVehicle(${v.id})">Eliminar</button></div></div>
  <div class="stats"><div class="stat"><span class="muted">Intervenciones</span><b>${ints.length}</b></div><div class="stat"><span class="muted">Gasto acumulado</span><b>${euro(cost)}</b></div><div class="stat"><span class="muted">Avisos pendientes</span><b>${due.length}</b></div></div></section>
  ${due.map(i=>`<div class="alert">⚠️ <b>${i.type}</b> requiere atención. Próximo objetivo: ${i.nextKm.toLocaleString('es-ES')} km.</div>`).join('')}
- <section class="card"><div class="top"><h2>Historial</h2><span class="muted">${ints.length} registros</span></div><div class="timeline">${ints.length?ints.map(i=>`<div class="item"><div class="item-head"><div><span class="badge">${i.type}</span><p style="margin:8px 0 3px"><b>${i.details}</b></p><small class="muted">${i.date||'Sin fecha'} · ${Number(i.km).toLocaleString('es-ES')} km${i.nextKm?' · Próxima: '+Number(i.nextKm).toLocaleString('es-ES')+' km':''}</small></div><div style="text-align:right"><b>${euro(i.totalCost)}</b><br><button class="soft" style="margin-top:8px" onclick="openIntervention(${i.id})">Editar</button><br><button class="danger" style="margin-top:8px" onclick="deleteIntervention(${i.id})">Eliminar</button></div></div></div>`).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></section>`;
+ <section class="card history-card"><div class="top"><div><h2>Historial de intervenciones</h2><div class="muted history-subtitle">Mantenimiento y actuaciones registradas</div></div><span class="history-count">${ints.length} ${ints.length===1?'registro':'registros'}</span></div><div class="intervention-list">${ints.length?ints.map(i=>{let meta={Mantenimiento:['🛢️','Mantenimiento'],Neumáticos:['🛞','Neumáticos'],'Correa/Cadena':['⚙️','Distribución / correa'],Varios:['🔧','Intervención'],ITV:['📋','ITV'],Seguro:['🛡️','Seguro'],Impuestos:['🏛️','Impuestos']}[i.type]||['🔧',i.type];return `<article class="intervention-card type-${i.type.replace(/[^a-zA-Z0-9]/g,'')}"><div class="intervention-main"><div class="intervention-icon">${meta[0]}</div><div class="intervention-info"><div class="intervention-title-row"><span class="intervention-type">${meta[1]}</span>${i.date?`<span class="intervention-date">${i.date}</span>`:''}</div><div class="intervention-details">${i.details||'Sin descripción'}</div><div class="intervention-meta"><span>📍 ${Number(i.km||0).toLocaleString('es-ES')} km</span>${i.nextKm?`<span>↗ Próxima ${Number(i.nextKm).toLocaleString('es-ES')} km</span>`:''}${i.parts?.length?`<span>🧩 ${i.parts.length} ${i.parts.length===1?'elemento':'elementos'}</span>`:''}</div></div><div class="intervention-side"><div class="intervention-cost">${euro(i.totalCost)}</div><div class="intervention-actions"><button class="soft" onclick="openIntervention(${i.id})">Editar</button><button class="danger" onclick="deleteIntervention(${i.id})">Eliminar</button></div></div></div></article>`}).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></section>`;
 }
 function selectVehicle(id){data.selected=id;save();render()}
 function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);$('vehicleModal').classList.add('show');window.editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vkm').value=v?.km||''}
