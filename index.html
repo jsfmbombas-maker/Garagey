@@ -44,12 +44,12 @@ opacity:1
 color:#40556b !important;
 font-weight:600;
 opacity:1
-}.notice-panel{background:linear-gradient(135deg,#1f2937,#334155);color:white}.notice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.notice{padding:14px;border-radius:16px;background:#ffffff12;border:1px solid #ffffff18}.notice b{font-size:22px;display:block}.notice small{color:#cbd5e1}.mobile-add-vehicle{display:none;position:fixed;right:18px;bottom:18px;z-index:20;border:0;border-radius:999px;padding:15px 22px;font-weight:900;font-size:16px;box-shadow:0 10px 24px rgba(33,150,243,.35);background:#2196F3;color:#000000}
+}.notice-panel{background:linear-gradient(135deg,#1f2937,#334155);color:white}.notice-panel .alert{color:#243043;font-weight:600}.notice-panel .alert b{color:#18212f;font-weight:900}.notice-panel .alert small{color:#4b5563;font-weight:600}.notice-panel .alert.orange{background:#fff7ed;border-color:#fdba74}.notice-panel .alert.red{background:#fff1f2;border-color:#fda4af}.notice-panel .alert.blue{background:#e8f3ff;border-color:#9fc9ef;color:#123a63}.notice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.notice{padding:14px;border-radius:16px;background:#ffffff12;border:1px solid #ffffff18}.notice b{font-size:22px;display:block}.notice small{color:#cbd5e1}.mobile-add-vehicle{display:none;position:fixed;right:18px;bottom:18px;z-index:20;border:0;border-radius:999px;padding:15px 22px;font-weight:900;font-size:16px;box-shadow:0 10px 24px rgba(33,150,243,.35);background:#2196F3;color:#000000}
 .timeline{margin-top:8px}.item{border-left:3px solid #ded9ff;padding:0 0 18px 18px;margin-left:8px;position:relative}.item:before{content:"";position:absolute;width:12px;height:12px;background:var(--primary);border-radius:50%;left:-7px;top:3px}.item:last-child{padding-bottom:0}.item-head{display:flex;justify-content:space-between;gap:12px}.badge{background:#f0edff;color:#5848d6;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:700}
 .empty{text-align:center;padding:50px 15px;color:var(--muted)}.empty .big{font-size:52px}
 .modal{display:none;position:fixed;inset:0;background:#10142699;z-index:10;padding:18px;overflow:auto}.modal.show{display:block}.dialog{max-width:780px;background:white;margin:25px auto;border-radius:24px;padding:24px;box-shadow:0 20px 60px #0005}
 .dialog h2{margin-top:0}.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.full{grid-column:1/-1}label{font-size:13px;font-weight:800;display:block;margin-bottom:6px}input,select,textarea{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;background:#fff}textarea{min-height:90px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.check{padding:10px;border:1px solid var(--line);border-radius:12px;font-weight:500}
-.hidden{display:none}.cost-row{display:grid;grid-template-columns:1fr 120px auto;gap:8px;margin-bottom:7px}.footer-note{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
+.hidden{display:none}.dialog{border:1px solid #ececf4}.dialog .top{margin-bottom:18px}.dialog .top h2{letter-spacing:-.02em}.dialog .form>div,.dialog .full{min-width:0}.dialog .form>div:not(.full){position:relative}.dialog label{color:#263247}.dialog input,.dialog select,.dialog textarea{border:1px solid #dfe3ec;background:#fbfcff;box-shadow:inset 0 1px 2px rgba(20,30,55,.03);transition:.18s}.dialog input:focus,.dialog select:focus,.dialog textarea:focus{outline:none;border-color:#9a8ff0;box-shadow:0 0 0 3px rgba(108,92,231,.12);background:#fff}.checks{gap:10px}.check{display:flex;align-items:center;gap:11px;min-height:56px;padding:13px 14px;background:linear-gradient(135deg,#fff,#fafaff);border:1px solid #e4e7ef;border-radius:15px;cursor:pointer;transition:.18s}.check:hover{border-color:#cfc8ff;background:#f8f7ff}.check input[type="checkbox"]{width:20px!important;height:20px!important;min-height:20px!important;flex:0 0 20px;padding:0!important;margin:0;accent-color:var(--primary)}.check input[type="checkbox"]+*{margin:0}.dialog #maintenanceFields>label,.dialog #tireFields>div>label,.dialog #beltFields>div>label,.dialog #otherFields>label,.dialog #itvFields>div>label,.dialog #insuranceFields>div>label,.dialog #taxFields>div>label,.dialog .full>label{margin-bottom:8px}.dialog #maintenanceFields,.dialog #tireFields,.dialog #beltFields,.dialog #otherFields,.dialog #itvFields,.dialog #insuranceFields,.dialog #taxFields{background:#fafaff;border:1px solid #ececf5;border-radius:18px;padding:14px}.dialog #maintenanceFields{background:linear-gradient(135deg,#faf9ff,#f5f7ff)}.dialog .actions{padding-top:2px}.dialog .actions .primary{box-shadow:0 8px 18px rgba(108,92,231,.22)}.cost-row{display:grid;grid-template-columns:1fr 120px auto;gap:8px;margin-bottom:7px}.footer-note{font-size:12px;color:var(--muted);text-align:center;margin-top:18px}
 
 
 /* GARAGEY — Fichas de intervención profesionales */
@@ -117,7 +117,9 @@ opacity:1
   .dialog .top{flex-direction:row;align-items:center;justify-content:space-between}
   .dialog .top h2{font-size:21px}
   .form,.checks{grid-template-columns:1fr;gap:12px}
-  input,select,textarea{font-size:16px;min-height:46px;padding:12px}
+  .check{min-height:58px;padding:12px 13px;font-size:15px}
+  .check input[type="checkbox"]{width:21px!important;height:21px!important;min-height:21px!important;flex-basis:21px}
+  input,select,textarea{font-size:16px;min-height:48px;padding:12px}
   textarea{min-height:110px}
   .cost-row{grid-template-columns:1fr;gap:7px;padding:10px;background:#fafafe;border:1px solid #edf0f6;border-radius:14px}
   .cost-row button{min-height:40px}
@@ -159,7 +161,7 @@ opacity:1
 <section class="hero"><div class="brand"><div><h1>Garagey ✨</h1><p>Tu garaje, siempre bajo control.</p></div><button class="gear" onclick="openSettings()">⚙️</button></div>
 <div class="quick"><div class="q">Vehículos<b id="qVehicles">0</b></div><div class="q">Intervenciones<b id="qInterventions">0</b></div><div class="q">Gasto total<b id="qCost">0 €</b></div><div class="q">Avisos<b id="qAlerts">0</b></div></div></section>
 <div class="layout"><aside class="panel sidebar"><div class="section-title">MIS VEHÍCULOS <span>🚘</span></div><div id="vehicles"></div><button class="add" onclick="openVehicle()">＋ Añadir vehículo</button></aside><main class="content" id="main"></main></div>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v5.2.4 · Avisos y fichas profesionales</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v5.2.4 · Avisos 3 meses · Diseño profesional</div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog"><div class="top"><h2>🚘 Tu vehículo</h2><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
 <div class="form"><div><label>Nombre</label><input id="vname" placeholder="Ej. Qashqai familiar"></div><div><label>Tipo</label><select id="vtype"><option>Coche</option><option>Moto</option></select></div><div><label>Marca</label><input id="vbrand" placeholder="Opcional"></div><div><label>Modelo</label><input id="vmodel" placeholder="Opcional"></div><div class="full"><label>Kilometraje actual</label><input id="vkm" type="number" min="0"></div></div>
@@ -271,7 +273,7 @@ function getAlerts(){
        if(match){
          const d=daysUntil(match[1]);
          if(d!==null && d<0) alerts.push({level:'red',icon:'🔴',vehicle:v.name,title:'ITV caducada',detail:`Venció hace ${Math.abs(d)} días`,id:i.id});
-         else if(d!==null && d<=daysUntil(addMonths(new Date(),3).toISOString().slice(0,10))) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'ITV próxima',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
+         else if(d!==null && new Date(match[1]+'T00:00:00')<=addMonths(new Date(),3)) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'ITV próxima',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
        }
      }
      // Insurance dates
@@ -280,7 +282,7 @@ function getAlerts(){
        if(match){
          const d=daysUntil(match[1]);
          if(d!==null && d<0) alerts.push({level:'red',icon:'🔴',vehicle:v.name,title:'Seguro vencido',detail:`Venció hace ${Math.abs(d)} días`,id:i.id});
-         else if(d!==null && d<=daysUntil(addMonths(new Date(),3).toISOString().slice(0,10))) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'Seguro próximo a vencer',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
+         else if(d!==null && new Date(match[1]+'T00:00:00')<=addMonths(new Date(),3)) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'Seguro próximo a vencer',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
        }
      }
      // Tax dates
