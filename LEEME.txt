@@ -1,11 +1,8 @@
-Garagey v5.2.4 · Formulario de intervención profesional
+GARAGEY v10 — RECURSOS VISUALES DE MARCAS
 
-Base: última versión estable con todas las mejoras existentes.
+Partida: v9 Mis vehículos Premium Chrome Android.
+Se añaden recursos visuales locales para 24 marcas: Toyota, Volkswagen, Renault, SEAT, Peugeot, Kia, Hyundai, Dacia, Mercedes-Benz, Ford, Citroën, Škoda, Opel, MG, Volvo, CUPRA, Mazda, Honda, Suzuki, Jeep, Fiat, Tesla, Lexus y Mitsubishi.
 
-Cambios de esta versión:
-- Rediseño visual de la ficha «Nueva intervención».
-- Campos organizados en tarjetas profesionales y adaptados a móvil.
-- Acciones de mantenimiento en tarjetas compactas con selección visual.
-- Costes y campos específicos con mejor jerarquía visual.
-- No se modifican los IDs, datos, Google Drive ni la lógica de guardado.
-- Centro de avisos y resto de mejoras se conservan sin cambios.
+Se incluyen imágenes locales de vehículos y recursos gráficos de marca. Se conservan Nissan, BMW y Audi.
+
+Sube a GitHub la carpeta assets completa junto con index.html, manifest.json, sw.js y LEEME.txt.
