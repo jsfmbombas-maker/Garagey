@@ -1,9 +1,11 @@
-Garagey v5.2.4
+Garagey v5.2.4 · Formulario de intervención profesional
 
-Corrección del botón flotante «Añadir vehículo»:
-- En móvil aparece en la pantalla principal.
-- Se oculta mientras cualquier ventana/modal esté abierta.
-- Vuelve a aparecer automáticamente al cerrar el modal.
-- No modifica los datos, Google Drive, sincronización ni el resto de funciones.
+Base: última versión estable con todas las mejoras existentes.
 
-Sustituir los archivos de la versión anterior en GitHub y dejar que Vercel despliegue.
+Cambios de esta versión:
+- Rediseño visual de la ficha «Nueva intervención».
+- Campos organizados en tarjetas profesionales y adaptados a móvil.
+- Acciones de mantenimiento en tarjetas compactas con selección visual.
+- Costes y campos específicos con mejor jerarquía visual.
+- No se modifican los IDs, datos, Google Drive ni la lógica de guardado.
+- Centro de avisos y resto de mejoras se conservan sin cambios.
