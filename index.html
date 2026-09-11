@@ -675,7 +675,7 @@ html,body{width:100%!important;min-width:0!important;max-width:100%!important;ov
 .layout{display:block!important;margin-top:20px}.content{width:100%!important;max-width:none!important}.garagey-bottom{margin-top:4px;margin-bottom:0}.vehicle-expand-wrap{margin-top:16px;padding-top:14px;border-top:1px solid #173d5c}.vehicle-expand-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding:0 4px}.vehicle-expand-head strong{display:block;color:#fff;font-size:19px}.vehicle-expand-head small{display:block;color:#91b0c8;font-size:12px;margin-top:2px}.vehicle-collapse{background:#0a2338;color:#bfe2ff;border:1px solid #2e79ad;border-radius:11px;padding:9px 11px;font-weight:800}.vehicle-detail-dropdown{margin-top:0;border:1px solid #1b547c;box-shadow:0 16px 35px #0005}.history-launch{width:100%;margin-top:12px;padding:15px 16px;border-radius:15px;background:linear-gradient(90deg,#0a3150,#123f63);color:#dff2ff;border:1px solid #2e8ac8;font-weight:900;display:flex;align-items:center;justify-content:space-between;font-size:14px}.history-dropdown{margin-top:12px;border:1px solid #d8deea;animation:garageyDrop .22s ease-out}.vehicle-detail-alerts .alert{margin-top:12px}@keyframes garageyDrop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 @media(max-width:900px),(pointer:coarse) and (max-width:1100px){.app{padding:0 0 70px}.layout{margin-top:0}.content{padding:0 0!important}.notice-panel,.vehicle-list-panel,.garagey-bottom{border-radius:0!important}.notice-panel{margin-bottom:10px!important;padding:18px 14px!important}.vehicle-list-panel{padding:14px 12px!important;margin-bottom:10px!important}.vehicle-expand-head{align-items:flex-start}.vehicle-collapse{font-size:11px;padding:8px 9px}.history-launch{font-size:13px}.garagey-bottom{margin-top:10px;padding:20px 14px!important}.garagey-bottom .quick{grid-template-columns:1fr 1fr}}
 
-/* GARAGEY v14 — modales de ficha e historial totalmente adaptados a Chrome Android */
+/* GARAGEY v14/v15 — modales de ficha e historial adaptados a Chrome Android */
 html,body{overflow-x:hidden}
 *,*::before,*::after{box-sizing:border-box}
 .vehicle-detail-modal{position:fixed;inset:0;width:100vw;height:100dvh;padding:12px;overflow:hidden}
@@ -717,12 +717,43 @@ html,body{overflow-x:hidden}
  .history-modal-summary{grid-template-columns:1fr 1fr}
  .history-modal-summary>div{padding:11px 12px}
 }
+/* GARAGEY v15 — ajuste definitivo de ficha emergente en Android
+   El contenido completo (incluidos avisos e historial) vive dentro del área desplazable.
+   Se evita cualquier anchura intrínseca que pueda provocar recorte horizontal. */
+.vehicle-detail-modal{padding:0!important;overflow:hidden!important;display:none;align-items:stretch;justify-content:stretch}
+.vehicle-detail-modal.show{display:flex!important}
+.vehicle-detail-dialog{width:100%!important;max-width:100%!important;height:100dvh!important;max-height:100dvh!important;margin:0!important;padding:0!important;border-radius:0!important;border:0!important;display:flex!important;flex-direction:column!important;min-width:0!important;min-height:0!important;overflow:hidden!important}
+.vehicle-detail-modal-top{width:100%!important;min-width:0!important;flex:0 0 auto!important;box-sizing:border-box!important}
+.vehicle-detail-scroll{display:block!important;width:100%!important;max-width:100%!important;min-width:0!important;min-height:0!important;flex:1 1 auto!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior:contain}
+.vehicle-detail-dialog .vehicle-signature-card{width:100%!important;max-width:100%!important;min-width:0!important;margin:0!important;box-sizing:border-box!important;overflow:hidden!important}
+.vehicle-detail-dialog .vehicle-hero{width:100%!important;max-width:100%!important;min-width:0!important}
+.vehicle-detail-dialog .vehicle-hero-content{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important}
+.vehicle-detail-dialog .vehicle-spec-line{width:100%!important;max-width:100%!important;min-width:0!important;grid-template-columns:1fr!important}
+.vehicle-detail-dialog .vehicle-spec-line>span{width:100%!important;min-width:0!important;box-sizing:border-box!important;overflow:hidden!important}
+.vehicle-detail-dialog .vehicle-stats-pro{width:100%!important;max-width:100%!important;min-width:0!important;grid-template-columns:1fr!important;box-sizing:border-box!important}
+.vehicle-detail-dialog .vstat{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important}
+.vehicle-detail-dialog .vstat>div{min-width:0!important;overflow:hidden!important}
+.vehicle-detail-dialog .vstat small{white-space:normal!important;overflow-wrap:anywhere!important}
+.vehicle-detail-dialog .vehicle-mileage{width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;flex-wrap:wrap!important}
+.vehicle-detail-dialog .vehicle-data-panel,.vehicle-detail-dialog .vehicle-actions-pro,.vehicle-detail-dialog .vehicle-detail-alerts,.vehicle-detail-dialog .history-launch{max-width:100%!important;min-width:0!important;box-sizing:border-box!important}
+.vehicle-detail-dialog .vehicle-data-grid{min-width:0!important;max-width:100%!important}
+.vehicle-detail-dialog .vehicle-data-grid>div{min-width:0!important;overflow-wrap:anywhere!important}
+.vehicle-detail-dialog .vehicle-actions-pro{grid-template-columns:1fr!important}
+.vehicle-detail-dialog .history-launch{margin:12px!important;width:calc(100% - 24px)!important}
+.vehicle-detail-dialog .vehicle-detail-alerts{padding:0 12px!important}
+@media(min-width:901px) and (pointer:fine){
+ .vehicle-detail-modal{padding:18px!important}
+ .vehicle-detail-dialog{width:min(900px,100%)!important;height:min(92dvh,900px)!important;max-height:92dvh!important;border-radius:26px!important;border:1px solid #1d587f!important}
+ .vehicle-detail-dialog .vehicle-spec-line{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .vehicle-detail-dialog .vehicle-stats-pro{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+ .vehicle-detail-dialog .vehicle-actions-pro{grid-template-columns:1fr 1fr!important}
+}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v14 · Fichas e historial en ventanas emergentes · Centro de avisos</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v15 · Ficha e historial en ventanas independientes · Centro de avisos</div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog"><div class="top"><h2>🚘 Tu vehículo</h2><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
 <div class="form"><div><label>Nombre</label><input id="vname" placeholder="Ej. Qashqai familiar"></div><div><label>Tipo de vehículo</label><select id="vtype"><option>Coche</option><option>Moto</option></select></div><div><label>Marca</label><input id="vbrand" placeholder="Nissan"></div><div><label>Modelo</label><input id="vmodel" placeholder="Qashqai"></div><div><label>Año de matriculación</label><input id="vyear" type="number" min="1886" max="2100" placeholder="2016"></div><div><label>Combustible</label><select id="vfuel"><option value="">Seleccionar</option><option>Gasolina</option><option>Diésel</option><option>Híbrido</option><option>Híbrido enchufable</option><option>Eléctrico</option><option>GLP</option><option>GNC</option><option>Otro</option></select></div><div><label>Versión / motor</label><input id="vversion" placeholder="2.0 dCi 150 CV"></div><div><label>Potencia</label><input id="vpower" placeholder="150 CV (110 kW)"></div><div><label>Transmisión</label><select id="vtransmission"><option value="">Seleccionar</option><option>Manual</option><option>Automática</option><option>Automatizada</option><option>CVT</option><option>Otra</option></select></div><div><label>Matrícula</label><input id="vplate" placeholder="1234 ABC" maxlength="12"></div><div><label>Bastidor (VIN)</label><input id="vvin" placeholder="VIN / número de bastidor" maxlength="32"></div><div><label>Color</label><input id="vcolor" placeholder="Gris oscuro metalizado"></div><div><label>Fecha de compra</label><input id="vpurchase" type="date"></div><div class="full"><label>Kilometraje actual</label><input id="vkm" type="number" min="0"></div></div>
@@ -926,9 +957,8 @@ function renderVehicleDetailModal(){
     <div class="vehicle-data-panel"><div class="vehicle-data-head"><h3>🚘 Datos del vehículo</h3><button class="soft" onclick="openVehicle(${v.id})">✎ Editar</button></div><div class="vehicle-data-grid"><div><span>Marca</span><b>${v.brand||'—'}</b></div><div><span>Tipo vehículo</span><b>${v.type||'—'}</b></div><div><span>Modelo</span><b>${v.model||'—'}</b></div><div><span>Año de matriculación</span><b>${v.year||'—'}</b></div><div><span>Versión</span><b>${v.version||'—'}</b></div><div><span>Potencia</span><b>${v.power||'—'}</b></div><div><span>Combustible</span><b>${v.fuel||'—'}</b></div><div><span>Transmisión</span><b>${v.transmission||'—'}</b></div><div class="data-full"><span>Kilometraje</span><b>${Number(v.km||0).toLocaleString('es-ES')} km</b></div></div></div>
     <div class="vehicle-data-panel additional"><div class="vehicle-data-head"><h3>▣ &nbsp;Detalles adicionales</h3></div><div class="vehicle-data-grid"><div><span>Matrícula</span><b>${v.plate||'—'}</b></div><div><span>Bastidor (VIN)</span><b>${v.vin||'—'}</b></div><div><span>Color</span><b>${v.color||'—'}</b></div><div><span>Fecha de compra</span><b>${v.purchaseDate||'—'}</b></div></div></div>
     <div class="vehicle-actions-pro"><button class="soft" onclick="openVehicle(${v.id})">✎ Editar vehículo</button><button class="primary" onclick="openIntervention()">＋ Nueva intervención</button></div>
- </section></div>`;
- if(due.length) html+=`<div class="vehicle-detail-alerts">${due.map(i=>`<div class="alert red">⚠️ <b>${i.type}</b> requiere atención. Próximo objetivo: ${Number(i.nextKm).toLocaleString('es-ES')} km.</div>`).join('')}</div>`;
- html+=`<button class="history-launch" onclick="openHistoryModal()">📚 Abrir historial de intervenciones <span>›</span></button>`;
+ </section>${due.length?`<div class="vehicle-detail-alerts">${due.map(i=>`<div class="alert red">⚠️ <b>${i.type}</b> requiere atención. Próximo objetivo: ${Number(i.nextKm).toLocaleString('es-ES')} km.</div>`).join('')}</div>`:''}
+ <button class="history-launch" onclick="openHistoryModal()">📚 Abrir historial de intervenciones <span>›</span></button></div>`;
  box.innerHTML=html;
 }
 function renderHistoryModal(){
