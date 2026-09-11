@@ -1,4 +1,4 @@
-const CACHE='garagey-v5-2-4-signature-exact-v7';
+const CACHE='garagey-v5-2-4-signature-chrome-android-v8';
 const CORE=['./','./index.html','./manifest.json'];
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));
