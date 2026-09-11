@@ -1,4 +1,4 @@
-const CACHE='garagey-v14-fichas-historial-popup';
+const CACHE='garagey-v16-ficha-signature-maestra';
 const CORE=['./','./index.html','./manifest.json'];
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));

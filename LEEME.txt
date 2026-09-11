@@ -1,11 +1,14 @@
-GARAGEY v12 — ORGANIZACIÓN DE PANTALLA
+Garagey v16 — Ficha Signature + Historial Popup
 
-Cambios organizativos:
-- Orden principal: Centro de avisos → Mis vehículos → Garagey.
-- La ficha del vehículo ya no aparece como contenido permanente de la pantalla principal.
-- Al seleccionar un vehículo se despliega su ficha dentro de “Mis vehículos”.
-- El historial de intervenciones queda oculto inicialmente.
-- El historial se abre desde la ficha del vehículo mediante “Ver historial” / “Abrir historial de intervenciones”.
-- Al seleccionar otro vehículo, el historial se cierra automáticamente.
-- Se mantienen los datos, Google Drive, avisos, diseño premium, marcas e imágenes de la versión anterior.
-- Caché del Service Worker actualizada para forzar la nueva organización en Chrome Android.
+Esta versión toma v15 como base y reproduce la ficha de vehículo según el diseño maestro aprobado.
+
+Cambios principales:
+- Ficha de vehículo en ventana independiente a pantalla completa en Chrome Android.
+- Imagen superior más alejada, mostrando más del vehículo.
+- Año / Combustible / Tipo en una sola fila con iconografía SVG premium.
+- Intervenciones / Gasto / Avisos en una sola fila.
+- Datos del vehículo en dos columnas con icono individual.
+- Detalles adicionales en dos columnas con icono individual.
+- Historial sigue abriéndose en ventana independiente con scroll propio.
+- Se restauran y conservan los recursos visuales de marcas y vehículos.
+- No se cambia la estructura de datos ni la sincronización.
