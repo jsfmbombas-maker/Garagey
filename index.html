@@ -660,13 +660,15 @@ html,body{width:100%!important;min-width:0!important;max-width:100%!important;ov
  .vehicle-card-premium{min-height:300px}.vehicle-card-inner{min-height:300px;padding:15px 11px 10px}.vehicle-card-name{font-size:24px}.vehicle-card-stats{gap:5px}.vehicle-card-stat{padding:8px 5px}.vehicle-card-stat .stat-icon{width:29px;height:29px;flex-basis:29px}.vehicle-card-stat b{font-size:15px}.vehicle-card-stat small{font-size:7px}
 }
 
+
+/* GARAGEY — organización de pantalla y desplegables */
+.layout{display:block!important;margin-top:20px}.content{width:100%!important;max-width:none!important}.garagey-bottom{margin-top:4px;margin-bottom:0}.vehicle-expand-wrap{margin-top:16px;padding-top:14px;border-top:1px solid #173d5c}.vehicle-expand-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding:0 4px}.vehicle-expand-head strong{display:block;color:#fff;font-size:19px}.vehicle-expand-head small{display:block;color:#91b0c8;font-size:12px;margin-top:2px}.vehicle-collapse{background:#0a2338;color:#bfe2ff;border:1px solid #2e79ad;border-radius:11px;padding:9px 11px;font-weight:800}.vehicle-detail-dropdown{margin-top:0;border:1px solid #1b547c;box-shadow:0 16px 35px #0005}.history-launch{width:100%;margin-top:12px;padding:15px 16px;border-radius:15px;background:linear-gradient(90deg,#0a3150,#123f63);color:#dff2ff;border:1px solid #2e8ac8;font-weight:900;display:flex;align-items:center;justify-content:space-between;font-size:14px}.history-dropdown{margin-top:12px;border:1px solid #d8deea;animation:garageyDrop .22s ease-out}.vehicle-detail-alerts .alert{margin-top:12px}@keyframes garageyDrop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media(max-width:900px),(pointer:coarse) and (max-width:1100px){.app{padding:0 0 70px}.layout{margin-top:0}.content{padding:0 0!important}.notice-panel,.vehicle-list-panel,.garagey-bottom{border-radius:0!important}.notice-panel{margin-bottom:10px!important;padding:18px 14px!important}.vehicle-list-panel{padding:14px 12px!important;margin-bottom:10px!important}.vehicle-expand-head{align-items:flex-start}.vehicle-collapse{font-size:11px;padding:8px 9px}.history-launch{font-size:13px}.garagey-bottom{margin-top:10px;padding:20px 14px!important}.garagey-bottom .quick{grid-template-columns:1fr 1fr}}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body><div class="app">
-<section class="hero"><div class="brand"><div><h1>Garagey ✨</h1><p>Tu garaje, siempre bajo control.</p></div><button class="gear" onclick="openSettings()">⚙️</button></div>
-<div class="quick"><div class="q">Vehículos<b id="qVehicles">0</b></div><div class="q">Intervenciones<b id="qInterventions">0</b></div><div class="q">Gasto total<b id="qCost">0 €</b></div><div class="q">Avisos<b id="qAlerts">0</b></div></div></section>
-<div class="layout"><aside class="panel sidebar vehicle-list-panel"><div class="section-title vehicle-list-title"><div><strong>MIS VEHÍCULOS</strong><small>Gestiona y controla todos tus vehículos</small></div><span>🚘</span></div><div class="vehicle-list-toolbar"><div class="vehicle-search"><span>⌕</span><input id="vehicleSearch" type="search" placeholder="Buscar vehículo…" oninput="filterVehicleList(this.value)"></div><button class="vehicle-filter" id="vehicleFilter" onclick="cycleVehicleFilter()">☷</button></div><div id="vehicles"></div><button class="add vehicle-add-premium" onclick="openVehicle()"><span>＋</span> Añadir vehículo</button></aside><main class="content" id="main"></main></div>
+<main class="content" id="main"></main>
 <button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v11 · Mis vehículos Premium · Centro de avisos</div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog"><div class="top"><h2>🚘 Tu vehículo</h2><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
@@ -846,64 +848,52 @@ function renderVehicleList(){
     </div></article>`
  }).join(''):'<div class="vehicle-empty-premium">🚘<br><br>No hay vehículos que coincidan con la búsqueda.</div>';
 }
-function render(){
- $('qVehicles').textContent=data.vehicles.length;
- let all=data.vehicles.flatMap(v=>v.interventions||[]);$('qInterventions').textContent=all.length;$('qCost').textContent=euro(all.reduce((a,x)=>a+Number(x.totalCost||0),0));$('qAlerts').textContent=getAlerts().length;
- renderVehicleList();
- const v=data.vehicles.find(x=>x.id===data.selected),m=$('main');
- if(!v){m.innerHTML=renderNoticePanel()+'<section class="card empty"><div class="big">🛠️</div><h2>Tu garaje está listo</h2><p>Empieza añadiendo un coche o una moto.</p><button class="primary" onclick="openVehicle()">Añadir mi primer vehículo</button></section>';return}
- let ints=[...(v.interventions||[])].sort((a,b)=>b.id-a.id),cost=ints.reduce((a,x)=>a+Number(x.totalCost||0),0);
- let due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm));
- m.innerHTML=`<section class="vehicle-signature-card">
-  <div class="vehicle-hero">
-    <div class="vehicle-hero-image ${v.type==='Moto'?'is-moto':''}" style="${v.type==='Moto'?'':'background-image:url(assets/vehicle-car-hero.jpg)'}">${v.type==='Moto'?'<div class="vehicle-moto-art">🏍️</div>':''}</div>
-    <div class="vehicle-hero-content">
-      <div class="vehicle-page-title"><button class="vehicle-back" onclick="data.selected=null;save();render()">‹</button><span>Mi vehículo</span><button class="vehicle-menu" onclick="openVehicle(${v.id})">⋮</button></div>
-      <div class="vehicle-type-badge">${v.type==='Moto'?'🏍️':'🚗'} ${v.type}</div>
-      <h2>${v.name} <button class="hero-edit" onclick="openVehicle(${v.id})">✎</button></h2>
-      <div class="vehicle-model">${[v.brand,v.model].filter(Boolean).join(' · ')||'Vehículo sin marca/modelo'}</div>
-      <div class="vehicle-spec-line"><span>📅 Año matriculación <b>${v.year||'—'}</b></span><span>⛽ Combustible <b>${v.fuel||'—'}</b></span><span>🚗 Tipo vehículo <b>${v.type||'—'}</b></span></div>
-    </div>
-  </div>
-  <div class="vehicle-mileage"><div><span class="eyebrow">KILOMETRAJE ACTUAL</span><strong>${Number(v.km||0).toLocaleString('es-ES')} km</strong></div><button class="vehicle-link" onclick="document.querySelector('.history-card')?.scrollIntoView({behavior:'smooth'})">Ver historial ›</button></div>
-  <div class="vehicle-stats-pro"><div class="vstat vstat-blue"><span>🔧</span><div><b>${ints.length}</b><small>Intervenciones</small></div><i>›</i></div><div class="vstat vstat-green"><span>€</span><div><b>${euro(cost)}</b><small>Gasto acumulado</small></div><i>›</i></div><div class="vstat vstat-red"><span>🔔</span><div><b>${due.length}</b><small>Aviso pendiente</small></div><i>›</i></div></div>
-  <div class="vehicle-data-panel"><div class="vehicle-data-head"><h3>🚘 Datos del vehículo</h3><button class="soft" onclick="openVehicle(${v.id})">✎ Editar</button></div><div class="vehicle-data-grid">
-    <div><span>Marca</span><b>${v.brand||'—'}</b></div><div><span>Tipo vehículo</span><b>${v.type||'—'}</b></div>
-    <div><span>Modelo</span><b>${v.model||'—'}</b></div><div><span>Año de matriculación</span><b>${v.year||'—'}</b></div>
-    <div><span>Versión</span><b>${v.version||'—'}</b></div><div><span>Potencia</span><b>${v.power||'—'}</b></div>
-    <div><span>Combustible</span><b>${v.fuel||'—'}</b></div><div><span>Transmisión</span><b>${v.transmission||'—'}</b></div>
-    <div class="data-full"><span>Kilometraje</span><b>${Number(v.km||0).toLocaleString('es-ES')} km</b></div>
-  </div></div>
-  <div class="vehicle-data-panel additional"><div class="vehicle-data-head"><h3>▣ &nbsp;Detalles adicionales</h3></div><div class="vehicle-data-grid">
-    <div><span>Matrícula</span><b>${v.plate||'—'}</b></div><div><span>Bastidor (VIN)</span><b>${v.vin||'—'}</b></div>
-    <div><span>Color</span><b>${v.color||'—'}</b></div><div><span>Fecha de compra</span><b>${v.purchaseDate||'—'}</b></div>
-  </div></div>
-  <div class="vehicle-actions-pro"><button class="soft" onclick="openVehicle(${v.id})">✎ Editar vehículo</button><button class="primary" onclick="openIntervention()">＋ Nueva intervención</button></div>
-</section>
- ${due.map(i=>`<div class="alert">⚠️ <b>${i.type}</b> requiere atención. Próximo objetivo: ${i.nextKm.toLocaleString('es-ES')} km.</div>`).join('')}
- ${renderNoticePanel()}
- <section class="card history-card"><div class="top"><div><h2>Historial de intervenciones</h2><div class="muted history-subtitle">Mantenimiento y actuaciones registradas</div></div><span class="history-count">${ints.length} ${ints.length===1?'registro':'registros'}</span></div><div class="intervention-list">${ints.length?ints.map(i=>{
- let meta={Mantenimiento:['🛢️','Cambio de aceite y filtro','mantenimiento'],Neumáticos:['🛞','Neumáticos','neumaticos'],'Correa/Cadena':['⚙️','Correa de distribución','correa'],Varios:['🔧','Intervención general','varios'],ITV:['📋','ITV','itv'],Seguro:['🛡️','Seguro','seguro'],Impuestos:['🏛️','Impuestos','impuestos']}[i.type]||['🔧',i.type,'varios'];
- let raw=(i.details||'Sin descripción').split(' · ').filter(Boolean);
- let detailLines=raw.length?raw: ['Sin descripción'];
- let parts=(i.parts||[]).filter(p=>p.name||p.cost);
- let items=parts.length?parts.map(p=>`<div class="detail-item"><span class="dot"></span><span>${p.name||'Elemento'}</span>${p.cost?`<span class="item-cost">${euro(p.cost)}</span>`:''}</div>`).join(''):detailLines.map(x=>`<div class="detail-item"><span class="dot"></span><span>${x}</span></div>`).join('');
- return `<article class="intervention-card">
-   <div class="detail-hero ${meta[2]}">
-     <div class="detail-icon">${meta[0]}</div>
-     <div class="detail-heading"><div class="detail-title">${meta[1]}</div><span class="detail-status">✓ Realizada</span><div class="detail-date">${i.date||'Fecha no indicada'}</div></div>
-   </div>
-   <div class="detail-body">
-     <div class="detail-meta"><div class="detail-meta-item">📅 Fecha<b>${i.date||'—'}</b></div><div class="detail-meta-item">🚗 Kilómetros<b>${Number(i.km||0).toLocaleString('es-ES')} km</b></div></div>
-     <div class="detail-label">Detalles</div>
-     <div class="detail-items">${items}</div>
-     ${i.nextKm?`<div class="detail-meta" style="margin-top:8px;margin-bottom:0"><div class="detail-meta-item">↗ Próxima intervención<b>${Number(i.nextKm).toLocaleString('es-ES')} km</b></div><div class="detail-meta-item">📏 Intervalo<b>${Number(i.interval||0).toLocaleString('es-ES')} km</b></div></div>`:''}
-     <div class="detail-cost"><span>€ &nbsp; Coste total</span><strong>${euro(i.totalCost)}</strong></div>
-     <div class="detail-actions"><button class="edit" onclick="openIntervention(${i.id})">✎ Editar</button><button class="delete" onclick="deleteIntervention(${i.id})">▣ Eliminar</button></div>
-   </div>
- </article>`}).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></section>`;
+function renderGarageyPanel(){
+ return `<section class="hero garagey-bottom"><div class="brand"><div><h1>Garagey ✨</h1><p>Tu garaje, siempre bajo control.</p></div><button class="gear" onclick="openSettings()">⚙️</button></div>
+ <div class="quick"><div class="q">Vehículos<b id="qVehicles">${data.vehicles.length}</b></div><div class="q">Intervenciones<b id="qInterventions">${data.vehicles.flatMap(v=>v.interventions||[]).length}</b></div><div class="q">Gasto total<b id="qCost">${euro(data.vehicles.flatMap(v=>v.interventions||[]).reduce((a,x)=>a+Number(x.totalCost||0),0))}</b></div><div class="q">Avisos<b id="qAlerts">${getAlerts().length}</b></div></div></section>`;
 }
-function selectVehicle(id){data.selected=id;save();render()}
+function renderVehicleSection(){
+ const v=data.vehicles.find(x=>x.id===data.selected);
+ let html=`<section class="panel vehicle-list-panel"><div class="section-title vehicle-list-title"><div><strong>MIS VEHÍCULOS</strong><small>Gestiona y controla todos tus vehículos</small></div><span>🚘</span></div><div class="vehicle-list-toolbar"><div class="vehicle-search"><span>⌕</span><input id="vehicleSearch" type="search" placeholder="Buscar vehículo…" value="${vehicleListQuery.replace(/"/g,'&quot;')}" oninput="filterVehicleList(this.value)"></div><button class="vehicle-filter" id="vehicleFilter" onclick="cycleVehicleFilter()">☷</button></div><div id="vehicles"></div><button class="add vehicle-add-premium" onclick="openVehicle()"><span>＋</span> Añadir vehículo</button>`;
+ if(v){
+   const ints=[...(v.interventions||[])].sort((a,b)=>b.id-a.id), cost=ints.reduce((a,x)=>a+Number(x.totalCost||0),0);
+   const alerts=getAlerts().filter(a=>a.vehicle===v.name); const due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm));
+   const allAlerts=[...alerts];
+   html+=`<div class="vehicle-expand-wrap">
+    <div class="vehicle-expand-head"><div><span class="eyebrow">VEHÍCULO SELECCIONADO</span><strong>${v.name||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'}</small></div><button class="vehicle-collapse" onclick="data.selected=null;historyOpen=false;save();render()">Cerrar ficha ×</button></div>
+    <section class="vehicle-signature-card vehicle-detail-dropdown">
+      <div class="vehicle-hero"><div class="vehicle-hero-image ${v.type==='Moto'?'is-moto':''}" style="${v.type==='Moto'?'':'background-image:url(assets/vehicle-car-hero.jpg)'}">${v.type==='Moto'?'<div class="vehicle-moto-art">🏍️</div>':''}</div>
+       <div class="vehicle-hero-content"><div class="vehicle-page-title"><span>Mi vehículo</span><button class="vehicle-menu" onclick="openVehicle(${v.id})">⋮</button></div><div class="vehicle-type-badge">${v.type==='Moto'?'🏍️':'🚗'} ${v.type}</div><h2>${v.name} <button class="hero-edit" onclick="openVehicle(${v.id})">✎</button></h2><div class="vehicle-model">${[v.brand,v.model].filter(Boolean).join(' · ')||'Vehículo sin marca/modelo'}</div><div class="vehicle-spec-line"><span>📅 Año matriculación <b>${v.year||'—'}</b></span><span>⛽ Combustible <b>${v.fuel||'—'}</b></span><span>🚗 Tipo vehículo <b>${v.type||'—'}</b></span></div></div></div>
+      <div class="vehicle-mileage"><div><span class="eyebrow">KILOMETRAJE ACTUAL</span><strong>${Number(v.km||0).toLocaleString('es-ES')} km</strong></div><button class="vehicle-link" onclick="toggleHistory()">${historyOpen?'Ocultar historial':'Ver historial ›'}</button></div>
+      <div class="vehicle-stats-pro"><div class="vstat vstat-blue"><span>🔧</span><div><b>${ints.length}</b><small>Intervenciones</small></div><i>›</i></div><div class="vstat vstat-green"><span>€</span><div><b>${euro(cost)}</b><small>Gasto acumulado</small></div><i>›</i></div><div class="vstat vstat-red"><span>🔔</span><div><b>${allAlerts.length}</b><small>Avisos pendientes</small></div><i>›</i></div></div>
+      <div class="vehicle-data-panel"><div class="vehicle-data-head"><h3>🚘 Datos del vehículo</h3><button class="soft" onclick="openVehicle(${v.id})">✎ Editar</button></div><div class="vehicle-data-grid"><div><span>Marca</span><b>${v.brand||'—'}</b></div><div><span>Tipo vehículo</span><b>${v.type||'—'}</b></div><div><span>Modelo</span><b>${v.model||'—'}</b></div><div><span>Año de matriculación</span><b>${v.year||'—'}</b></div><div><span>Versión</span><b>${v.version||'—'}</b></div><div><span>Potencia</span><b>${v.power||'—'}</b></div><div><span>Combustible</span><b>${v.fuel||'—'}</b></div><div><span>Transmisión</span><b>${v.transmission||'—'}</b></div><div class="data-full"><span>Kilometraje</span><b>${Number(v.km||0).toLocaleString('es-ES')} km</b></div></div></div>
+      <div class="vehicle-data-panel additional"><div class="vehicle-data-head"><h3>▣ &nbsp;Detalles adicionales</h3></div><div class="vehicle-data-grid"><div><span>Matrícula</span><b>${v.plate||'—'}</b></div><div><span>Bastidor (VIN)</span><b>${v.vin||'—'}</b></div><div><span>Color</span><b>${v.color||'—'}</b></div><div><span>Fecha de compra</span><b>${v.purchaseDate||'—'}</b></div></div></div>
+      <div class="vehicle-actions-pro"><button class="soft" onclick="openVehicle(${v.id})">✎ Editar vehículo</button><button class="primary" onclick="openIntervention()">＋ Nueva intervención</button></div>
+    </section>`;
+   if(due.length) html+=`<div class="vehicle-detail-alerts">${due.map(i=>`<div class="alert red">⚠️ <b>${i.type}</b> requiere atención. Próximo objetivo: ${Number(i.nextKm).toLocaleString('es-ES')} km.</div>`).join('')}</div>`;
+   if(historyOpen){
+     html+=`<section class="card history-card history-dropdown"><div class="top"><div><h2>Historial de intervenciones</h2><div class="muted history-subtitle">Mantenimiento y actuaciones registradas</div></div><span class="history-count">${ints.length} ${ints.length===1?'registro':'registros'}</span></div><div class="intervention-list">${ints.length?ints.map(i=>{
+       let meta={Mantenimiento:['🛢️','Cambio de aceite y filtro','mantenimiento'],Neumáticos:['🛞','Neumáticos','neumaticos'], 'Correa/Cadena':['⚙️','Correa de distribución','correa'],Varios:['🔧','Intervención general','varios'],ITV:['📋','ITV','itv'],Seguro:['🛡️','Seguro','seguro'],Impuestos:['🏛️','Impuestos','impuestos']}[i.type]||['🔧',i.type,'varios'];
+       let raw=(i.details||'Sin descripción').split(' · ').filter(Boolean); let detailLines=raw.length?raw:['Sin descripción']; let parts=(i.parts||[]).filter(p=>p.name||p.cost); let items=parts.length?parts.map(p=>`<div class="detail-item"><span class="dot"></span><span>${p.name||'Elemento'}</span>${p.cost?`<span class="item-cost">${euro(p.cost)}</span>`:''}</div>`).join(''):detailLines.map(x=>`<div class="detail-item"><span class="dot"></span><span>${x}</span></div>`).join('');
+       return `<article class="intervention-card"><div class="detail-hero ${meta[2]}"><div class="detail-icon">${meta[0]}</div><div class="detail-heading"><div class="detail-title">${meta[1]}</div><span class="detail-status">✓ Realizada</span><div class="detail-date">${i.date||'Fecha no indicada'}</div></div></div><div class="detail-body"><div class="detail-meta"><div class="detail-meta-item">📅 Fecha<b>${i.date||'—'}</b></div><div class="detail-meta-item">🚗 Kilómetros<b>${Number(i.km||0).toLocaleString('es-ES')} km</b></div></div><div class="detail-label">Detalles</div><div class="detail-items">${items}</div>${i.nextKm?`<div class="detail-meta" style="margin-top:8px;margin-bottom:0"><div class="detail-meta-item">↗ Próxima intervención<b>${Number(i.nextKm).toLocaleString('es-ES')} km</b></div><div class="detail-meta-item">📏 Intervalo<b>${Number(i.interval||0).toLocaleString('es-ES')} km</b></div></div>`:''}<div class="detail-cost"><span>€ &nbsp; Coste total</span><strong>${euro(i.totalCost)}</strong></div><div class="detail-actions"><button class="edit" onclick="openIntervention(${i.id})">✎ Editar</button><button class="delete" onclick="deleteIntervention(${i.id})">▣ Eliminar</button></div></div></article>`;
+     }).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></section>`;
+   } else html+=`<button class="history-launch" onclick="toggleHistory()">📚 Abrir historial de intervenciones <span>›</span></button>`;
+   html+=`</div>`;
+ }
+ html+=`</section>`; return html;
+}
+function toggleHistory(){historyOpen=!historyOpen;render()}
+let historyOpen=false;
+function render(){
+ if($('qVehicles'))$('qVehicles').textContent=data.vehicles.length;
+ const all=data.vehicles.flatMap(v=>v.interventions||[]);
+ if($('qInterventions'))$('qInterventions').textContent=all.length;if($('qCost'))$('qCost').textContent=euro(all.reduce((a,x)=>a+Number(x.totalCost||0),0));if($('qAlerts'))$('qAlerts').textContent=getAlerts().length;
+ const m=$('main');
+ m.innerHTML=renderNoticePanel()+renderVehicleSection()+renderGarageyPanel();
+ renderVehicleList();
+ const filter=$('vehicleFilter'); if(filter) filter.title=vehicleListType==='all'?'Todos':vehicleListType;
+}
+function selectVehicle(id){data.selected=id;historyOpen=false;save();render()}
 function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);$('vehicleModal').classList.add('show');window.editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vyear').value=v?.year||'';$('vfuel').value=v?.fuel||'';$('vversion').value=v?.version||'';$('vpower').value=v?.power||'';$('vtransmission').value=v?.transmission||'';$('vplate').value=v?.plate||'';$('vvin').value=v?.vin||'';$('vcolor').value=v?.color||'';$('vpurchase').value=v?.purchaseDate||'';$('vkm').value=v?.km||''}
 function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');const vehicleFields={name,type:$('vtype').value,brand:$('vbrand').value.trim(),model:$('vmodel').value.trim(),year:$('vyear').value.trim(),fuel:$('vfuel').value,version:$('vversion').value.trim(),power:$('vpower').value.trim(),transmission:$('vtransmission').value,plate:$('vplate').value.trim().toUpperCase(),vin:$('vvin').value.trim().toUpperCase(),color:$('vcolor').value.trim(),purchaseDate:$('vpurchase').value,km:Number($('vkm').value||0)};if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),vehicleFields)}else{let v={id:Date.now(),...vehicleFields,interventions:[]};data.vehicles.push(v);data.selected=v.id;}save();closeModal('vehicleModal');render()}
 function openIntervention(id){
@@ -967,7 +957,7 @@ function saveIntervention(){
  save();closeModal('interventionModal');render();
 }
 function deleteIntervention(id){let v=data.vehicles.find(x=>x.id===data.selected);if(confirm('¿Eliminar esta intervención?')){v.interventions=v.interventions.filter(x=>x.id!==id);save();render()}}
-function deleteVehicle(id){if(confirm('¿Eliminar vehículo y todo su historial?')){data.vehicles=data.vehicles.filter(x=>x.id!==id);data.selected=data.vehicles[0]?.id||null;save();render()}}
+function deleteVehicle(id){if(confirm('¿Eliminar vehículo y todo su historial?')){data.vehicles=data.vehicles.filter(x=>x.id!==id);data.selected=data.vehicles[0]?.id||null;historyOpen=false;save();render()}}
 function closeModal(id){$(id).classList.remove('show')}
 function openSettings(){$('settingsModal').classList.add('show');$('schemaVersion').textContent='v'+data.schemaVersion}
 function exportData(){let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='garagey_backup.json';a.click();URL.revokeObjectURL(a.href)}

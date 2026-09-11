@@ -1,11 +1,11 @@
-GARAGEY v10 — RECURSOS VISUALES DE MARCAS
+GARAGEY v12 — ORGANIZACIÓN DE PANTALLA
 
-Partida: v9 Mis vehículos Premium Chrome Android.
-Se añaden recursos visuales locales para 24 marcas: Toyota, Volkswagen, Renault, SEAT, Peugeot, Kia, Hyundai, Dacia, Mercedes-Benz, Ford, Citroën, Škoda, Opel, MG, Volvo, CUPRA, Mazda, Honda, Suzuki, Jeep, Fiat, Tesla, Lexus y Mitsubishi.
-
-Se incluyen imágenes locales de vehículos y recursos gráficos de marca. Se conservan Nissan, BMW y Audi.
-
-Sube a GitHub la carpeta assets completa junto con index.html, manifest.json, sw.js y LEEME.txt.
-
-
-VERSIÓN v11: se restaura el Centro de avisos también dentro de la ficha de cada vehículo, manteniendo los avisos ITV, Seguro, Impuestos y mantenimiento por kilometraje.
+Cambios organizativos:
+- Orden principal: Centro de avisos → Mis vehículos → Garagey.
+- La ficha del vehículo ya no aparece como contenido permanente de la pantalla principal.
+- Al seleccionar un vehículo se despliega su ficha dentro de “Mis vehículos”.
+- El historial de intervenciones queda oculto inicialmente.
+- El historial se abre desde la ficha del vehículo mediante “Ver historial” / “Abrir historial de intervenciones”.
+- Al seleccionar otro vehículo, el historial se cierra automáticamente.
+- Se mantienen los datos, Google Drive, avisos, diseño premium, marcas e imágenes de la versión anterior.
+- Caché del Service Worker actualizada para forzar la nueva organización en Chrome Android.
