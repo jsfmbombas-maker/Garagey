@@ -228,6 +228,99 @@ html,body{width:100%!important;min-width:0!important;max-width:100%!important;ov
 }
 @media (min-width:901px) and (pointer:fine){.layout{display:grid!important;grid-template-columns:280px minmax(0,1fr)!important;gap:20px!important}}
 
+
+/* GARAGEY — Móvil pantalla completa v6
+   En teléfono el contenido usa todo el ancho disponible.
+   Escritorio conserva su diseño original. */
+@media (max-width:900px), (pointer:coarse) and (max-width:1100px){
+  html,body{
+    width:100%!important;
+    min-width:0!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+    overflow-x:hidden!important;
+  }
+  .app{
+    display:block!important;
+    width:100vw!important;
+    max-width:none!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:8px 0 calc(86px + env(safe-area-inset-bottom))!important;
+  }
+  .hero{
+    width:100%!important;
+    max-width:none!important;
+    margin:0 0 10px!important;
+    padding:18px 16px!important;
+    border-radius:0 0 22px 22px!important;
+  }
+  .layout{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    gap:10px!important;
+    margin:0!important;
+  }
+  .layout>.sidebar,
+  .layout>.content{
+    display:block!important;
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    margin:0!important;
+    flex:none!important;
+  }
+  .sidebar{
+    padding:14px 12px!important;
+    border-radius:18px!important;
+  }
+  .content>.card,
+  .content>.notice-panel,
+  .content>section,
+  .content>div,
+  .card,.notice-panel{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    box-sizing:border-box!important;
+  }
+  .card,.notice-panel{
+    padding:15px 12px!important;
+    border-radius:18px!important;
+  }
+  .quick{
+    grid-template-columns:1fr 1fr!important;
+    gap:8px!important;
+  }
+  .stats,.notice-grid{
+    grid-template-columns:1fr!important;
+  }
+  .intervention-list{
+    grid-template-columns:1fr!important;
+  }
+  .intervention-card{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+  }
+  .vehicle{
+    width:100%!important;
+    box-sizing:border-box!important;
+  }
+}
+@media (max-width:380px){
+  .hero{padding-left:12px!important;padding-right:12px!important}
+  .sidebar{padding-left:9px!important;padding-right:9px!important}
+  .card,.notice-panel{padding-left:10px!important;padding-right:10px!important}
+}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
