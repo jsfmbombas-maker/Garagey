@@ -954,6 +954,22 @@ html,body{overflow-x:hidden}
 .vehicle-detail-dialog .vehicle-spec-line small{font-size:8px!important;color:#9bb5ca!important;line-height:1!important;}
 .vehicle-detail-dialog .vehicle-spec-line b{font-size:12px!important;color:#fff!important;line-height:1.1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:100%!important;}
 
+
+/* GARAGEY v20 — correcciones funcionales: foto, edición y cuadros de especificaciones */
+#vehicleModal{z-index:60!important;}
+#vehicleModal.show{display:block!important;}
+.vehicle-detail-dialog .vehicle-hero{position:relative!important;}
+.vehicle-detail-dialog .vehicle-hero-image{
+  background-image:none!important;
+  overflow:hidden!important;
+}
+.vehicle-detail-dialog .vehicle-hero-image img.vehicle-photo{
+  position:absolute!important;inset:0!important;width:100%!important;height:100%!important;
+  object-fit:cover!important;object-position:center center!important;display:block!important;
+}
+.vehicle-detail-dialog .vehicle-hero-image:after{z-index:1!important;}
+.vehicle-detail-dialog .vehicle-hero-content{z-index:2!important;}
+.vehicle-detail-dialog .vehicle-hero-content .vehicle-spec-line{display:grid!important;}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
@@ -1024,6 +1040,7 @@ const STORAGE_KEY='garagey_data';
 const CURRENT_SCHEMA=5; // Número de vehículos ilimitado
 function freshData(){return {schemaVersion:CURRENT_SCHEMA,vehicles:[],selected:null}}
 let data;
+let editVehicle=null;
 try{data=JSON.parse(localStorage.getItem(STORAGE_KEY))||freshData()}catch(e){data=freshData()}
 function migrate(){
  data.schemaVersion=data.schemaVersion||1;
@@ -1168,7 +1185,7 @@ function renderVehicleDetailModal(){
  const logo=key==='generic'?`<div class="vehicle-hero-brand-fallback">${(v.brand||'AUTO').slice(0,12)}</div>`:`<img class="vehicle-hero-brand" src="assets/brands/${key}.${ext}" alt="${v.brand||key}">`;
  let html=`<div class="vehicle-detail-modal-top"><div><span class="eyebrow">FICHA DEL VEHÍCULO</span><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'}</small></div><button class="vehicle-detail-close" onclick="closeModal('vehicleDetailModal')">Cerrar ×</button></div><div class="vehicle-detail-scroll">
  <section class="vehicle-signature-card vehicle-detail-dropdown">
-   <div class="vehicle-hero"><div class="vehicle-hero-image ${v.type==='Moto'?'is-moto':''}"></div>
+   <div class="vehicle-hero"><div class="vehicle-hero-image ${v.type==='Moto'?'is-moto':''}"><img class="vehicle-photo" src="assets/vehicles/nissan.jpg" alt="${[v.brand,v.model].filter(Boolean).join(' ')||'Vehículo'}"></div>
     <div class="vehicle-hero-content"><div class="vehicle-page-title"><span>Mi vehículo</span><button class="vehicle-menu" onclick="openVehicle(${v.id})">⋮</button></div><div class="vehicle-hero-bottom"><div class="vehicle-model vehicle-model-bottom">${[v.brand,v.model].filter(Boolean).join(' · ')||'Vehículo sin marca/modelo'} <button class="hero-edit" onclick="openVehicle(${v.id})">✎</button></div><div class="vehicle-spec-line"><span>📅 <small>Año matriculación</small><b>${v.year||'—'}</b></span><span>⛽ <small>Combustible</small><b>${v.fuel||'—'}</b></span><span>🚗 <small>Tipo vehículo</small><b>${v.type||'—'}</b></span></div></div></div></div>
     <div class="vehicle-mileage"><div><span class="eyebrow">KILOMETRAJE ACTUAL</span><strong>${Number(v.km||0).toLocaleString('es-ES')} km</strong></div><button class="vehicle-link" onclick="openHistoryModal()">Ver historial <span>›</span></button></div>
     <div class="vehicle-stats-pro"><div class="vstat vstat-blue"><span>${svgIcon('wrench')}</span><div><b>${ints.length}</b><small>Intervenciones</small></div><i>›</i></div><div class="vstat vstat-green"><span>${svgIcon('coins')}</span><div><b>${euro(cost)}</b><small>Gasto acumulado</small></div><i>›</i></div><div class="vstat vstat-red"><span>${svgIcon('bell')}</span><div><b>${allAlerts.length}</b><small>Avisos pendientes</small></div><i>›</i></div></div>
@@ -1203,7 +1220,7 @@ function render(){
  const filter=$('vehicleFilter'); if(filter) filter.title=vehicleListType==='all'?'Todos':vehicleListType;
 }
 function selectVehicle(id){closeModal('historyModal');data.selected=id;save();render();renderVehicleDetailModal();$('vehicleDetailModal').classList.add('show')}
-function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);$('vehicleModal').classList.add('show');window.editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vyear').value=v?.year||'';$('vfuel').value=v?.fuel||'';$('vversion').value=v?.version||'';$('vpower').value=v?.power||'';$('vtransmission').value=v?.transmission||'';$('vplate').value=v?.plate||'';$('vvin').value=v?.vin||'';$('vcolor').value=v?.color||'';$('vpurchase').value=v?.purchaseDate||'';$('vkm').value=v?.km||''}
+function openVehicle(id){let v=data.vehicles.find(x=>x.id===id);$('vehicleModal').classList.add('show');editVehicle=id||null;$('vname').value=v?.name||'';$('vtype').value=v?.type||'Coche';$('vbrand').value=v?.brand||'';$('vmodel').value=v?.model||'';$('vyear').value=v?.year||'';$('vfuel').value=v?.fuel||'';$('vversion').value=v?.version||'';$('vpower').value=v?.power||'';$('vtransmission').value=v?.transmission||'';$('vplate').value=v?.plate||'';$('vvin').value=v?.vin||'';$('vcolor').value=v?.color||'';$('vpurchase').value=v?.purchaseDate||'';$('vkm').value=v?.km||''}
 function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');const vehicleFields={name,type:$('vtype').value,brand:$('vbrand').value.trim(),model:$('vmodel').value.trim(),year:$('vyear').value.trim(),fuel:$('vfuel').value,version:$('vversion').value.trim(),power:$('vpower').value.trim(),transmission:$('vtransmission').value,plate:$('vplate').value.trim().toUpperCase(),vin:$('vvin').value.trim().toUpperCase(),color:$('vcolor').value.trim(),purchaseDate:$('vpurchase').value,km:Number($('vkm').value||0)};if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),vehicleFields)}else{let v={id:Date.now(),...vehicleFields,interventions:[]};data.vehicles.push(v);data.selected=v.id;}save();closeModal('vehicleModal');render()}
 function openIntervention(id){
  let v=data.vehicles.find(x=>x.id===data.selected);
