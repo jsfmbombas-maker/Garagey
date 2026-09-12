@@ -1,14 +1,11 @@
-Garagey v16 — Ficha Signature + Historial Popup
+Garagey v17 — Ficha Signature Android
 
-Esta versión toma v15 como base y reproduce la ficha de vehículo según el diseño maestro aprobado.
-
-Cambios principales:
-- Ficha de vehículo en ventana independiente a pantalla completa en Chrome Android.
-- Imagen superior más alejada, mostrando más del vehículo.
-- Año / Combustible / Tipo en una sola fila con iconografía SVG premium.
-- Intervenciones / Gasto / Avisos en una sola fila.
-- Datos del vehículo en dos columnas con icono individual.
-- Detalles adicionales en dos columnas con icono individual.
-- Historial sigue abriéndose en ventana independiente con scroll propio.
-- Se restauran y conservan los recursos visuales de marcas y vehículos.
-- No se cambia la estructura de datos ni la sincronización.
+Correcciones respecto a v16:
+- Se restaura una foto limpia del Nissan Qashqai en la cabecera.
+- Año / combustible / tipo permanecen en una sola fila en Android.
+- Intervenciones / gasto / avisos permanecen en una sola fila en Android.
+- Datos del vehículo permanecen en dos columnas con iconos.
+- Detalles adicionales permanecen en dos columnas con iconos.
+- La ficha sigue siendo una ventana independiente con scroll vertical.
+- Se fuerza overflow horizontal oculto para evitar recortes.
+- Se mantiene el resto de recursos y funciones de Garagey.

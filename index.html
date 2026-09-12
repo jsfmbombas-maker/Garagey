@@ -827,12 +827,77 @@ html,body{overflow-x:hidden}
  .vehicle-detail-dialog .vehicle-data-grid{column-gap:7px}
 }
 
+
+/* GARAGEY v17 — composición Signature Android definitiva */
+.vehicle-detail-dialog .vehicle-hero-image{
+  background-image:url(assets/vehicles/nissan.jpg) !important;
+  background-size:cover !important;
+  background-position:center center !important;
+  background-repeat:no-repeat !important;
+}
+@media (max-width:600px), (pointer:coarse){
+  .vehicle-detail-dialog .vehicle-hero{
+    min-height:410px !important;
+    height:410px !important;
+  }
+  .vehicle-detail-dialog .vehicle-hero-content{
+    min-height:410px !important;
+    height:410px !important;
+    padding:16px 14px 18px !important;
+  }
+  .vehicle-detail-dialog .vehicle-spec-line{
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:6px !important;
+  }
+  .vehicle-detail-dialog .vehicle-spec-line>span{
+    min-width:0 !important;
+    width:auto !important;
+  }
+  .vehicle-detail-dialog .vehicle-stats-pro{
+    display:grid !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+    gap:7px !important;
+    padding:12px 10px !important;
+  }
+  .vehicle-detail-dialog .vstat{
+    min-width:0 !important;
+    width:auto !important;
+    min-height:70px !important;
+    padding:10px 7px !important;
+  }
+  .vehicle-detail-dialog .vehicle-data-grid{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    column-gap:10px !important;
+    min-width:0 !important;
+  }
+  .vehicle-detail-dialog .vehicle-data-item{
+    min-width:0 !important;
+  }
+  .vehicle-detail-dialog .vehicle-actions-pro{
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+  }
+}
+@media (max-width:380px){
+  .vehicle-detail-dialog .vehicle-spec-line{gap:4px !important}
+  .vehicle-detail-dialog .vehicle-spec-line span{padding:7px 4px !important}
+  .vehicle-detail-dialog .vehicle-spec-line em{font-size:7px !important}
+  .vehicle-detail-dialog .vehicle-spec-line b{font-size:10px !important}
+  .vehicle-detail-dialog .vehicle-stats-pro{gap:5px !important;padding-left:7px !important;padding-right:7px !important}
+  .vehicle-detail-dialog .vstat{padding:8px 5px !important}
+  .vehicle-detail-dialog .vstat b{font-size:13px !important}
+  .vehicle-detail-dialog .vstat small{font-size:7px !important}
+  .vehicle-detail-dialog .vehicle-data-grid{column-gap:7px !important}
+}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v16 · Ficha e historial en ventanas independientes · Centro de avisos</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v17 · Ficha e historial en ventanas independientes · Centro de avisos</div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog"><div class="top"><h2>🚘 Tu vehículo</h2><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
 <div class="form"><div><label>Nombre</label><input id="vname" placeholder="Ej. Qashqai familiar"></div><div><label>Tipo de vehículo</label><select id="vtype"><option>Coche</option><option>Moto</option></select></div><div><label>Marca</label><input id="vbrand" placeholder="Nissan"></div><div><label>Modelo</label><input id="vmodel" placeholder="Qashqai"></div><div><label>Año de matriculación</label><input id="vyear" type="number" min="1886" max="2100" placeholder="2016"></div><div><label>Combustible</label><select id="vfuel"><option value="">Seleccionar</option><option>Gasolina</option><option>Diésel</option><option>Híbrido</option><option>Híbrido enchufable</option><option>Eléctrico</option><option>GLP</option><option>GNC</option><option>Otro</option></select></div><div><label>Versión / motor</label><input id="vversion" placeholder="2.0 dCi 150 CV"></div><div><label>Potencia</label><input id="vpower" placeholder="150 CV (110 kW)"></div><div><label>Transmisión</label><select id="vtransmission"><option value="">Seleccionar</option><option>Manual</option><option>Automática</option><option>Automatizada</option><option>CVT</option><option>Otra</option></select></div><div><label>Matrícula</label><input id="vplate" placeholder="1234 ABC" maxlength="12"></div><div><label>Bastidor (VIN)</label><input id="vvin" placeholder="VIN / número de bastidor" maxlength="32"></div><div><label>Color</label><input id="vcolor" placeholder="Gris oscuro metalizado"></div><div><label>Fecha de compra</label><input id="vpurchase" type="date"></div><div class="full"><label>Kilometraje actual</label><input id="vkm" type="number" min="0"></div></div>
@@ -1041,7 +1106,7 @@ function renderVehicleDetailModal(){
  const logo=key==='generic'?`<div class="vehicle-hero-brand-fallback">${(v.brand||'AUTO').slice(0,12)}</div>`:`<img class="vehicle-hero-brand" src="assets/brands/${key}.${ext}" alt="${v.brand||key}">`;
  let html=`<div class="vehicle-detail-modal-top"><div><span class="eyebrow">FICHA DEL VEHÍCULO</span><strong>${v.name||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'}</small></div><button class="vehicle-detail-close" onclick="closeModal('vehicleDetailModal')">Cerrar ×</button></div><div class="vehicle-detail-scroll">
  <section class="vehicle-signature-card vehicle-detail-dropdown">
-   <div class="vehicle-hero"><div class="vehicle-hero-image ${v.type==='Moto'?'is-moto':''}" style="${v.type==='Moto'?'':'background-image:url(assets/vehicle-car-hero-portrait.jpg)'}"></div>
+   <div class="vehicle-hero"><div class="vehicle-hero-image ${v.type==='Moto'?'is-moto':''}" style="${v.type==='Moto'?'':'background-image:url(assets/vehicles/nissan.jpg)'}"></div>
     <div class="vehicle-hero-content"><div class="vehicle-page-title"><span>Mi vehículo</span><button class="vehicle-menu" onclick="openVehicle(${v.id})">⋮</button></div>${logo}<div class="vehicle-type-badge">${svgIcon(v.type==='Moto'?'car':'car')} ${v.type||'Coche'}</div><h2>${v.name||'Mi coche'} <button class="hero-edit" onclick="openVehicle(${v.id})">✎</button></h2><div class="vehicle-model">${[v.brand,v.model].filter(Boolean).join(' · ')||'Vehículo sin marca/modelo'}</div><div class="vehicle-spec-line"><span>${svgIcon('calendar')}<em>Año matriculación</em><b>${v.year||'—'}</b></span><span>${svgIcon('fuel')}<em>Combustible</em><b>${v.fuel||'—'}</b></span><span>${svgIcon('car')}<em>Tipo vehículo</em><b>${v.type||'—'}</b></span></div></div></div>
     <div class="vehicle-mileage"><div><span class="eyebrow">KILOMETRAJE ACTUAL</span><strong>${Number(v.km||0).toLocaleString('es-ES')} km</strong></div><button class="vehicle-link" onclick="openHistoryModal()">Ver historial <span>›</span></button></div>
     <div class="vehicle-stats-pro"><div class="vstat vstat-blue"><span>${svgIcon('wrench')}</span><div><b>${ints.length}</b><small>Intervenciones</small></div><i>›</i></div><div class="vstat vstat-green"><span>${svgIcon('coins')}</span><div><b>${euro(cost)}</b><small>Gasto acumulado</small></div><i>›</i></div><div class="vstat vstat-red"><span>${svgIcon('bell')}</span><div><b>${allAlerts.length}</b><small>Avisos pendientes</small></div><i>›</i></div></div>
