@@ -892,6 +892,68 @@ html,body{overflow-x:hidden}
   .vehicle-detail-dialog .vehicle-data-grid{column-gap:7px !important}
 }
 
+
+/* GARAGEY v18 — cabecera definitiva de ficha Android */
+.vehicle-detail-dialog .vehicle-detail-modal-top{
+  width:100%!important; box-sizing:border-box!important; margin:0!important;
+  padding:14px 14px 12px!important; display:flex!important; align-items:flex-start!important;
+  justify-content:space-between!important; gap:12px!important;
+}
+.vehicle-detail-dialog .vehicle-detail-modal-top>div{min-width:0!important; flex:1 1 auto!important;}
+.vehicle-detail-dialog .vehicle-detail-modal-top .eyebrow{margin:0 0 5px!important;}
+.vehicle-detail-dialog .vehicle-detail-modal-top small{
+  display:block!important; margin:0!important; color:#91b0c8!important; font-size:12px!important;
+}
+.vehicle-detail-dialog .vehicle-detail-modal-top strong{display:none!important;}
+.vehicle-detail-dialog .vehicle-detail-close{flex:0 0 auto!important; margin:0!important;}
+.vehicle-detail-dialog .vehicle-hero{
+  position:relative!important; width:100%!important; min-height:360px!important; height:360px!important;
+  overflow:hidden!important; background:#041426!important;
+}
+.vehicle-detail-dialog .vehicle-hero-image{
+  position:absolute!important; inset:0!important; display:block!important;
+  background-image:url(assets/nissan.jpg)!important; background-size:cover!important;
+  background-position:center center!important; background-repeat:no-repeat!important;
+  filter:none!important;
+}
+.vehicle-detail-dialog .vehicle-hero-image:after{
+  content:""!important; position:absolute!important; inset:0!important;
+  background:linear-gradient(180deg,rgba(2,17,31,.12) 0%,rgba(2,17,31,0) 45%,rgba(2,17,31,.52) 100%)!important;
+}
+.vehicle-detail-dialog .vehicle-hero-content{
+  position:relative!important; z-index:2!important; width:100%!important; height:100%!important;
+  min-height:360px!important; padding:12px 14px 20px!important; box-sizing:border-box!important;
+  display:flex!important; flex-direction:column!important; justify-content:space-between!important;
+}
+.vehicle-detail-dialog .vehicle-page-title{
+  position:relative!important; top:auto!important; left:auto!important; right:auto!important;
+  margin:0!important; font-size:17px!important; text-shadow:0 2px 8px #0008!important;
+}
+.vehicle-detail-dialog .vehicle-page-title .vehicle-menu{margin:0!important;}
+.vehicle-detail-dialog .vehicle-model-bottom{
+  margin:0!important; color:#fff!important; font-size:18px!important; font-weight:700!important;
+  text-shadow:0 2px 8px #000!important; display:flex!important; align-items:center!important;
+  gap:7px!important; align-self:flex-start!important;
+}
+.vehicle-detail-dialog .vehicle-model-bottom .hero-edit{font-size:22px!important; color:#20a5ff!important; padding:0!important;}
+.vehicle-detail-dialog .vehicle-hero-content .vehicle-hero-brand,
+.vehicle-detail-dialog .vehicle-hero-content .vehicle-hero-brand-fallback,
+.vehicle-detail-dialog .vehicle-hero-content .vehicle-type-badge,
+.vehicle-detail-dialog .vehicle-hero-content h2,
+.vehicle-detail-dialog .vehicle-hero-content .vehicle-spec-line{display:none!important;}
+@media(max-width:600px),(pointer:coarse){
+  .vehicle-detail-dialog .vehicle-detail-modal-top{padding:14px 14px 12px!important;}
+  .vehicle-detail-dialog .vehicle-hero{min-height:360px!important;height:360px!important;}
+  .vehicle-detail-dialog .vehicle-hero-content{min-height:360px!important;height:360px!important;padding:12px 14px 20px!important;}
+}
+
+
+.vehicle-detail-dialog .vehicle-hero-bottom{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:12px!important;width:100%!important;}
+.vehicle-detail-dialog .vehicle-spec-line{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important;width:100%!important;}
+.vehicle-detail-dialog .vehicle-spec-line span{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:2px!important;background:#061b2fcc!important;border:1px solid #4a8bc766!important;border-radius:12px!important;padding:8px 9px!important;min-width:0!important;box-sizing:border-box!important;}
+.vehicle-detail-dialog .vehicle-spec-line small{font-size:8px!important;color:#9bb5ca!important;line-height:1!important;}
+.vehicle-detail-dialog .vehicle-spec-line b{font-size:12px!important;color:#fff!important;line-height:1.1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important;max-width:100%!important;}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
@@ -1104,10 +1166,10 @@ function renderVehicleDetailModal(){
  const alerts=getAlerts().filter(a=>a.vehicle===v.name); const due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm)); const allAlerts=[...alerts];
  const key=vehicleAssetKey(v); const ext=(key==='nissan'||key==='bmw'||key==='audi')?'png':'svg';
  const logo=key==='generic'?`<div class="vehicle-hero-brand-fallback">${(v.brand||'AUTO').slice(0,12)}</div>`:`<img class="vehicle-hero-brand" src="assets/brands/${key}.${ext}" alt="${v.brand||key}">`;
- let html=`<div class="vehicle-detail-modal-top"><div><span class="eyebrow">FICHA DEL VEHÍCULO</span><strong>${v.name||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'}</small></div><button class="vehicle-detail-close" onclick="closeModal('vehicleDetailModal')">Cerrar ×</button></div><div class="vehicle-detail-scroll">
+ let html=`<div class="vehicle-detail-modal-top"><div><span class="eyebrow">FICHA DEL VEHÍCULO</span><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'}</small></div><button class="vehicle-detail-close" onclick="closeModal('vehicleDetailModal')">Cerrar ×</button></div><div class="vehicle-detail-scroll">
  <section class="vehicle-signature-card vehicle-detail-dropdown">
-   <div class="vehicle-hero"><div class="vehicle-hero-image ${v.type==='Moto'?'is-moto':''}" style="${v.type==='Moto'?'':'background-image:url(assets/vehicles/nissan.jpg)'}"></div>
-    <div class="vehicle-hero-content"><div class="vehicle-page-title"><span>Mi vehículo</span><button class="vehicle-menu" onclick="openVehicle(${v.id})">⋮</button></div>${logo}<div class="vehicle-type-badge">${svgIcon(v.type==='Moto'?'car':'car')} ${v.type||'Coche'}</div><h2>${v.name||'Mi coche'} <button class="hero-edit" onclick="openVehicle(${v.id})">✎</button></h2><div class="vehicle-model">${[v.brand,v.model].filter(Boolean).join(' · ')||'Vehículo sin marca/modelo'}</div><div class="vehicle-spec-line"><span>${svgIcon('calendar')}<em>Año matriculación</em><b>${v.year||'—'}</b></span><span>${svgIcon('fuel')}<em>Combustible</em><b>${v.fuel||'—'}</b></span><span>${svgIcon('car')}<em>Tipo vehículo</em><b>${v.type||'—'}</b></span></div></div></div>
+   <div class="vehicle-hero"><div class="vehicle-hero-image ${v.type==='Moto'?'is-moto':''}"></div>
+    <div class="vehicle-hero-content"><div class="vehicle-page-title"><span>Mi vehículo</span><button class="vehicle-menu" onclick="openVehicle(${v.id})">⋮</button></div><div class="vehicle-hero-bottom"><div class="vehicle-model vehicle-model-bottom">${[v.brand,v.model].filter(Boolean).join(' · ')||'Vehículo sin marca/modelo'} <button class="hero-edit" onclick="openVehicle(${v.id})">✎</button></div><div class="vehicle-spec-line"><span>📅 <small>Año matriculación</small><b>${v.year||'—'}</b></span><span>⛽ <small>Combustible</small><b>${v.fuel||'—'}</b></span><span>🚗 <small>Tipo vehículo</small><b>${v.type||'—'}</b></span></div></div></div></div>
     <div class="vehicle-mileage"><div><span class="eyebrow">KILOMETRAJE ACTUAL</span><strong>${Number(v.km||0).toLocaleString('es-ES')} km</strong></div><button class="vehicle-link" onclick="openHistoryModal()">Ver historial <span>›</span></button></div>
     <div class="vehicle-stats-pro"><div class="vstat vstat-blue"><span>${svgIcon('wrench')}</span><div><b>${ints.length}</b><small>Intervenciones</small></div><i>›</i></div><div class="vstat vstat-green"><span>${svgIcon('coins')}</span><div><b>${euro(cost)}</b><small>Gasto acumulado</small></div><i>›</i></div><div class="vstat vstat-red"><span>${svgIcon('bell')}</span><div><b>${allAlerts.length}</b><small>Avisos pendientes</small></div><i>›</i></div></div>
     <div class="vehicle-data-panel"><div class="vehicle-data-head"><h3>${svgIcon('car')} Datos del vehículo</h3><button class="soft" onclick="openVehicle(${v.id})">✎ Editar</button></div><div class="vehicle-data-grid">${dataItem('car','Marca',v.brand)}${dataItem('car','Tipo vehículo',v.type)}${dataItem('car','car'==='x'?'':'Modelo',v.model)}${dataItem('calendar','Año de matriculación',v.year)}${dataItem('engine','Versión',v.version)}${dataItem('engine','Potencia',v.power)}${dataItem('fuel','Combustible',v.fuel)}${dataItem('transmission','Transmisión',v.transmission)}${dataItem('car','Kilometraje',Number(v.km||0).toLocaleString('es-ES')+' km')}</div></div>
