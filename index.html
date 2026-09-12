@@ -1084,6 +1084,46 @@ html,body{overflow-x:hidden}
  .vehicle-detail-dialog .vehicle-data-item .data-icon .premium-svg{width:23px!important;height:23px!important;}
  .vehicle-detail-dialog .vehicle-data-item b{font-size:14px!important;}
 }
+
+/* v24 — iconos de especificaciones superiores alineados como el resto de la ficha */
+.vehicle-detail-dialog .vehicle-spec-line>span{
+  display:grid!important;
+  grid-template-columns:32px minmax(0,1fr)!important;
+  grid-template-rows:auto auto!important;
+  align-items:center!important;
+  column-gap:9px!important;
+  row-gap:2px!important;
+  padding:9px 10px!important;
+  box-sizing:border-box!important;
+}
+.vehicle-detail-dialog .vehicle-spec-line .spec-icon{
+  grid-column:1; grid-row:1 / 3;
+  width:30px; height:30px; border-radius:50%;
+  display:grid; place-items:center;
+  background:linear-gradient(145deg,#123e64,#071f35);
+  border:1px solid #2d76a7;
+  color:#dff3ff; font-style:normal;
+}
+.vehicle-detail-dialog .vehicle-spec-line .spec-icon .premium-svg{
+  width:18px!important; height:18px!important; stroke-width:1.9!important;
+}
+.vehicle-detail-dialog .vehicle-spec-line small{
+  grid-column:2!important; grid-row:1!important;
+  margin:0!important; line-height:1.1!important;
+}
+.vehicle-detail-dialog .vehicle-spec-line b{
+  grid-column:2!important; grid-row:2!important;
+  margin:0!important; line-height:1.1!important;
+}
+@media(max-width:520px){
+ .vehicle-detail-dialog .vehicle-spec-line{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;}
+ .vehicle-detail-dialog .vehicle-spec-line>span{grid-template-columns:29px minmax(0,1fr)!important;column-gap:7px!important;padding:8px 7px!important;}
+ .vehicle-detail-dialog .vehicle-spec-line .spec-icon{width:28px;height:28px;}
+ .vehicle-detail-dialog .vehicle-spec-line .spec-icon .premium-svg{width:16px!important;height:16px!important;}
+ .vehicle-detail-dialog .vehicle-spec-line small{font-size:9px!important;}
+ .vehicle-detail-dialog .vehicle-spec-line b{font-size:12px!important;}
+}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
@@ -1300,7 +1340,7 @@ function renderVehicleDetailModal(){
  let html=`<div class="vehicle-detail-modal-top"><div><span class="eyebrow">FICHA DEL VEHÍCULO</span><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'}</small></div><button class="vehicle-detail-close" onclick="closeModal('vehicleDetailModal')">Cerrar ×</button></div><div class="vehicle-detail-scroll">
  <section class="vehicle-signature-card vehicle-detail-dropdown">
    <div class="vehicle-hero"><div class="vehicle-hero-image ${v.type==='Moto'?'is-moto':''}"><img class="vehicle-photo" src="assets/nissan_hero_tall.jpg" alt="${[v.brand,v.model].filter(Boolean).join(' ')||'Vehículo'}"></div>
-    <div class="vehicle-hero-content"><div class="vehicle-page-title"><span>Mi vehículo</span></div><div class="vehicle-hero-bottom"><div class="vehicle-model vehicle-model-bottom">${[v.brand,v.model].filter(Boolean).join(' · ')||'Vehículo sin marca/modelo'} <button class="hero-edit" onclick="openVehicle(${v.id})">✎</button></div><div class="vehicle-spec-line"><span>📅 <small>Año matriculación</small><b>${v.year||'—'}</b></span><span>⛽ <small>Combustible</small><b>${v.fuel||'—'}</b></span><span>🚗 <small>Tipo vehículo</small><b>${v.type||'—'}</b></span></div></div></div></div>
+    <div class="vehicle-hero-content"><div class="vehicle-page-title"><span>Mi vehículo</span></div><div class="vehicle-hero-bottom"><div class="vehicle-model vehicle-model-bottom">${[v.brand,v.model].filter(Boolean).join(' · ')||'Vehículo sin marca/modelo'} <button class="hero-edit" onclick="openVehicle(${v.id})">✎</button></div><div class="vehicle-spec-line"><span><i class="spec-icon">${svgIcon('calendar')}</i><small>Año matriculación</small><b>${v.year||'—'}</b></span><span><i class="spec-icon">${svgIcon('fuel')}</i><small>Combustible</small><b>${v.fuel||'—'}</b></span><span><i class="spec-icon">${svgIcon('car')}</i><small>Tipo vehículo</small><b>${v.type||'—'}</b></span></div></div></div></div>
     <div class="vehicle-mileage"><div><span class="eyebrow">KILOMETRAJE ACTUAL</span><strong>${Number(v.km||0).toLocaleString('es-ES')} km</strong></div><button class="vehicle-link" onclick="openHistoryModal()">Ver historial <span>›</span></button></div>
     <div class="vehicle-stats-pro"><div class="vstat vstat-blue"><span>${svgIcon('wrench')}</span><div><b>${ints.length}</b><small>Intervenciones</small></div><i>›</i></div><div class="vstat vstat-green"><span>${svgIcon('coins')}</span><div><b>${euro(cost)}</b><small>Gasto acumulado</small></div><i>›</i></div><div class="vstat vstat-red"><span>${svgIcon('bell')}</span><div><b>${allAlerts.length}</b><small>Avisos pendientes</small></div><i>›</i></div></div>
     <div class="vehicle-data-panel"><div class="vehicle-data-head"><h3>${svgIcon('car')} Datos del vehículo</h3><button class="soft" onclick="openVehicle(${v.id})">✎ Editar</button></div><div class="vehicle-data-grid">${dataItem('brand','Marca',v.brand)}${dataItem('car','Tipo vehículo',v.type)}${dataItem('car','car'==='x'?'':'Modelo',v.model)}${dataItem('calendar','Año de matriculación',v.year)}${dataItem('engine','Versión',v.version)}${dataItem('power','Potencia',v.power)}${dataItem('fuel','Combustible',v.fuel)}${dataItem('transmission','Transmisión',v.transmission)}${dataItem('gauge','Kilometraje',Number(v.km||0).toLocaleString('es-ES')+' km')}</div></div>
