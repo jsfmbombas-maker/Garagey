@@ -678,8 +678,8 @@ html,body{width:100%!important;min-width:0!important;max-width:100%!important;ov
 .vehicle-card-premium:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,13,25,.98) 0%,rgba(2,13,25,.84) 34%,rgba(2,13,25,.28) 64%,rgba(2,13,25,.12) 100%),linear-gradient(0deg,rgba(2,13,25,.92) 0%,rgba(2,13,25,.02) 65%);z-index:-1}
 .vehicle-card-inner{position:relative;z-index:2;min-height:285px;padding:18px 16px 13px;display:flex;flex-direction:column;justify-content:space-between}
 .vehicle-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.vehicle-brand-logo{width:128px;height:104px;object-fit:contain;object-position:center center;filter:drop-shadow(0 2px 8px #0008);border-radius:8px}
-.vehicle-brand-fallback{height:104px;min-width:128px;padding:0 8px;display:flex;align-items:center;font-size:14px;font-weight:900;color:#fff;border:1px solid #75bfff88;border-radius:12px;background:#06213a}
+.vehicle-brand-logo{width:64px;height:52px;object-fit:contain;object-position:center center;filter:drop-shadow(0 2px 8px #0008);border-radius:8px}
+.vehicle-brand-fallback{height:52px;min-width:64px;padding:0 8px;display:flex;align-items:center;font-size:14px;font-weight:900;color:#fff;border:1px solid #75bfff88;border-radius:12px;background:#06213a}
 .vehicle-card-arrow{font-size:34px;line-height:1;color:#fff;text-shadow:0 2px 9px #0009;margin-top:3px}
 .vehicle-card-name{font-size:27px;line-height:1.04;font-weight:900;letter-spacing:-.03em;margin-top:2px;text-shadow:0 2px 12px #000}
 .vehicle-card-meta{font-size:15px;color:#c4dfff;margin-top:6px;font-weight:600}
@@ -1231,7 +1231,7 @@ html,body{overflow-x:hidden}
 }
 .brand-preview-photo,.brand-preview-label{display:none!important}
 .brand-logo-preview{width:100%;height:100%;display:flex;align-items:center;justify-content:center;gap:12px;color:#172033}
-.brand-logo-preview img{width:150px!important;height:120px!important;max-width:150px!important;max-height:120px!important;object-fit:contain!important;filter:none!important;border-radius:0!important}
+.brand-logo-preview img{width:75px!important;height:60px!important;max-width:75px!important;max-height:60px!important;object-fit:contain!important;filter:none!important;border-radius:0!important}
 .brand-logo-preview b{display:none!important}
 
 /* La fotografía solo aparece en la ficha, no en el formulario. */
@@ -1266,7 +1266,7 @@ html,body{overflow-x:hidden}
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v28.4.1 · Coches y motos · Logotipos por marca · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v28.5 · Coches y motos · Logotipos por marca · Diseño Android</div></div>
 
 <div class="modal" id="vehicleTypeModal"><div class="dialog"><div class="top"><h2>🚘🏍️ Añadir vehículo</h2><button class="soft" onclick="closeModal('vehicleTypeModal')">Cerrar</button></div><p class="vehicle-type-intro">Primero elige qué tipo de vehículo quieres añadir.</p><div class="vehicle-type-grid"><button class="vehicle-type-choice" onclick="chooseVehicleType('Coche')"><span class="choice-icon">🚘</span><b>Coche</b><small>Ficha completa de automóvil</small></button><button class="vehicle-type-choice" onclick="chooseVehicleType('Moto')"><span class="choice-icon">🏍️</span><b>Moto</b><small>Ficha adaptada a motocicleta</small></button></div></div></div>
 
@@ -1919,7 +1919,7 @@ render();
 </script>
 
 <style id="garagey-v28-fixes">
-/* Garagey v28.4 — logos reales de referencia + motos con encuadre completo */
+/* Garagey v28.5 — logos reducidos al 50% + motos con encuadre completo */
 .vehicle-detail-dialog .vehicle-hero-image{background-repeat:no-repeat!important;background-position:center center!important;background-color:#061827!important;background-size:cover!important;}
 .vehicle-detail-dialog .vehicle-hero-image.is-moto{background-size:contain!important;background-position:center center!important;background-color:#071827!important;}
 .vehicle-detail-dialog .vehicle-hero-image.is-moto img.vehicle-photo{object-fit:contain!important;object-position:center center!important;background:#071827!important;padding:22px 34px!important;box-sizing:border-box!important;}
