@@ -1255,7 +1255,7 @@ html,body{overflow-x:hidden}
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v26 · Coches y motos · Imágenes limpias por marca · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v28 · Coches y motos · Logotipos por marca · Diseño Android</div></div>
 
 <div class="modal" id="vehicleTypeModal"><div class="dialog"><div class="top"><h2>🚘🏍️ Añadir vehículo</h2><button class="soft" onclick="closeModal('vehicleTypeModal')">Cerrar</button></div><p class="vehicle-type-intro">Primero elige qué tipo de vehículo quieres añadir.</p><div class="vehicle-type-grid"><button class="vehicle-type-choice" onclick="chooseVehicleType('Coche')"><span class="choice-icon">🚘</span><b>Coche</b><small>Ficha completa de automóvil</small></button><button class="vehicle-type-choice" onclick="chooseVehicleType('Moto')"><span class="choice-icon">🏍️</span><b>Moto</b><small>Ficha adaptada a motocicleta</small></button></div></div></div>
 
@@ -1334,7 +1334,7 @@ html,body{overflow-x:hidden}
    La interfaz puede cambiar sin modificar ni perder los datos.
    Cada futura actualización incrementará schemaVersion y aplicará migraciones. */
 const STORAGE_KEY='garagey_data';
-const CURRENT_SCHEMA=8; // Vehículos ilimitados + tipo estructurado + campos de moto + costes de piezas normalizados
+const CURRENT_SCHEMA=9; // v28: logotipos de marca actualizados + fotos de moto con encuadre completo
 function freshData(){return {schemaVersion:CURRENT_SCHEMA,vehicles:[],selected:null}}
 let data;
 let editVehicle=null;
@@ -1462,11 +1462,43 @@ const CAR_HERO_MAP={Toyota:'toyota',Mitsubishi:'mitsubishi',Honda:'honda','Citro
 function vehicleAssetKey(v){const exact=Object.keys(CAR_HERO_MAP).find(k=>normBrand(k)===normBrand(v?.brand)); if(exact)return CAR_HERO_MAP[exact]; let b=normBrand(v?.brand); for(const k of Object.keys(CAR_HERO_MAP)){if(b.includes(normBrand(k)))return CAR_HERO_MAP[k]} return 'generic'}
 function motorcycleBrandKey(v){const found=MOTO_BRANDS.find(x=>normBrand(x[0])===normBrand(v?.brand)); return found?found[1]:'generic'}
 function motorcycleHeroKey(v){return MOTO_HERO[v?.brand]||'naked'}
-function heroPhoto(v){if(vehicleTypeOf(v)==='motorcycle'){const key=motorcycleBrandKey(v); return key==='generic'?'assets/moto_heroes/moto_naked.jpg':`assets/moto_heroes/brands/${key}.jpg`} const key=vehicleAssetKey(v); return key==='nissan'?'assets/nissan_hero_tall.jpg':`assets/vehicles/${key}.jpg`}
-function brandLogo(v){if(vehicleTypeOf(v)==='motorcycle'){const key=motorcycleBrandKey(v); if(key==='generic')return `<div class="vehicle-brand-fallback">${(v.brand||'MOTO').slice(0,12)}</div>`; return `<img class="vehicle-brand-logo" src="assets/brands_moto/${key}.svg" alt="${v.brand||key}" loading="lazy">`} const key=vehicleAssetKey(v); if(key==='generic'){let s=(v.brand||'AUTO').trim(); return `<div class="vehicle-brand-fallback">${s.slice(0,12)}</div>`} const ext=(key==='nissan'||key==='bmw'||key==='audi')?'png':'svg'; return `<img class="vehicle-brand-logo" src="assets/brands/${key}.${ext}" alt="${v.brand||key}" loading="lazy">`}
+function heroPhoto(v){
+  if(vehicleTypeOf(v)==='motorcycle'){
+    const key=motorcycleBrandKey(v);
+    return key==='generic'?'assets/moto_heroes/moto_naked.jpg':`assets/moto_heroes/brands/${key}.jpg`;
+  }
+  const key=vehicleAssetKey(v);
+  return key==='nissan'?'assets/nissan_hero_tall.jpg':`assets/vehicles/${key}.jpg`;
+}
+const BRAND_LOGO_SLUGS={
+  'Toyota':'toyota','Mitsubishi':'mitsubishi','Honda':'honda','Citroën':'citroen','Suzuki':'suzuki','Volvo':'volvo','Nissan':'nissan','Mazda':'mazda','Fiat':'fiat','SEAT':'seat','Lexus':'lexus','Dacia':'dacia','Ford':'ford','Kia':'kia','Audi':'audi','Škoda':'skoda','Tesla':'tesla','Renault':'renault','Hyundai':'hyundai','Peugeot':'peugeot','CUPRA':'cupra','Mercedes-Benz':'mercedes','BMW':'bmw','Jeep':'jeep','Volkswagen':'volkswagen','MG':'mg','Opel':'opel',
+  'Aprilia':'aprilia','Benda':'benda','Benelli':'benelli','BMW Motorrad':'bmw','CFMoto':'cfmoto','Ducati':'ducati','GasGas':'gasgas','Harley-Davidson':'harleydavidson','Hero MotoCorp':'heromotocorp','Husqvarna':'husqvarna','Indian':'indianmotorcycle','Kawasaki':'kawasaki','Keeway':'keeway','Kove':'kove','KTM':'ktm','Kymco':'kymco','Macbor':'macbor','Mash':'mash','Mitt':'mitt','Moto Guzzi':'motoguzzi','Moto Morini':'motomorini','MV Agusta':'mvagusta','Piaggio':'piaggio','QJ Motor':'qjmotor','Rieju':'rieju','Royal Enfield':'royalenfield','SYM':'sym','Triumph':'triumph','Vespa':'vespa','Voge':'voge','Yamaha':'yamahamotorcorporation','Zontes':'zontes','Zero':'zero'
+};
+const AUTH_LOGOS={
+  'Honda':'assets/brand_logos_auth/honda.png',
+  'Kawasaki':'assets/brand_logos_auth/kawasaki.png',
+  'Ducati':'assets/brand_logos_auth/ducati.png'
+};
+const BRAND_LOGO_COLORS={
+  'Toyota':'EB0A1E','Mitsubishi':'E60012','Honda':'CC0000','Citroën':'E0002A','Suzuki':'E30613','Volvo':'111111','Nissan':'C3002F','Mazda':'111111','Fiat':'8B1E2D','SEAT':'111111','Lexus':'111111','Dacia':'646B72','Ford':'003478','Kia':'111111','Audi':'BB0A30','Škoda':'4BA82E','Tesla':'E82127','Renault':'111111','Hyundai':'002C5F','Peugeot':'111111','CUPRA':'111111','Mercedes-Benz':'111111','BMW':'0066B1','Jeep':'111111','Volkswagen':'001E50','MG':'A6192E','Opel':'F2A900',
+  'Aprilia':'D71920','Benda':'111111','Benelli':'008C44','BMW Motorrad':'0066B1','CFMoto':'00AEEF','Ducati':'D50000','GasGas':'E30613','Harley-Davidson':'F58220','Hero MotoCorp':'E31837','Husqvarna':'006F9B','Indian':'111111','Kawasaki':'5A9E1B','Keeway':'111111','Kove':'E30613','KTM':'FF6600','Kymco':'111111','Macbor':'E30613','Mash':'111111','Mitt':'E30613','Moto Guzzi':'111111','Moto Morini':'B40000','MV Agusta':'E30613','Peugeot':'111111','Piaggio':'0066A1','QJ Motor':'D71920','Rieju':'E30613','Royal Enfield':'C62828','SYM':'D71920','Triumph':'111111','Vespa':'008C95','Voge':'111111','Yamaha':'E60012','Zontes':'111111','Zero':'111111'
+};
+function logoSlug(brand){return BRAND_LOGO_SLUGS[brand]||''}
+function logoRemote(brand){const slug=logoSlug(brand); if(!slug)return ''; const color=BRAND_LOGO_COLORS[brand]||'111111'; return `https://cdn.simpleicons.org/${slug}/${color}`;}
+function brandLogo(v){
+  const brand=(v?.brand||'').trim();
+  const slug=logoSlug(brand);
+  const key=vehicleTypeOf(v)==='motorcycle'?motorcycleBrandKey(v):vehicleAssetKey(v);
+  const local=vehicleTypeOf(v)==='motorcycle'?`assets/brands_moto/${key}.svg`:(key==='nissan'||key==='bmw'||key==='audi'?`assets/brands/${key}.png`:`assets/brands/${key}.svg`);
+  if(!brand) return '<div class="vehicle-brand-fallback">MARCA</div>';
+  const auth=AUTH_LOGOS[brand]||'';
+  const remote=auth?'':logoRemote(brand);
+  const src=auth||remote||local;
+  return `<img class="vehicle-brand-logo real-brand-logo" src="${src}" data-fallback="${local}" alt="Logotipo ${brand}" loading="lazy" onerror="if(this.dataset.fallback && this.src!==this.dataset.fallback){this.src=this.dataset.fallback}else{this.replaceWith(Object.assign(document.createElement('span'),{className:'vehicle-brand-fallback',textContent:'${brand.replace("'","\'")}' }))}">`;
+}
 function vehicleBg(v){return heroPhoto(v)}
 function populateBrandSelect(type,current){const sel=$('vbrand');if(!sel)return;const list=type==='Moto'?MOTO_BRANDS:CAR_BRANDS;sel.innerHTML='<option value="">Seleccionar marca</option>'+list.map(x=>`<option value="${x[0].replace(/&/g,'&amp;').replace(/"/g,'&quot;')}">${x[0]}</option>`).join('');sel.value=current||'';updateBrandPreview()}
-function updateBrandPreview(){const sel=$('vbrand'),box=$('brandPreview');if(!sel||!box)return;const b=sel.value;if(!b){box.innerHTML='<span>Selecciona una marca</span>';return}const isMoto=$('vehicleFormDialog').classList.contains('moto-mode');const key=isMoto?motorcycleBrandKey({brand:b}):vehicleAssetKey({brand:b});const logo=isMoto?`assets/brands_moto/${key}.svg`:(()=>{const row=CAR_BRANDS.find(x=>x[0]===b);return row?`assets/brands/${row[1]}.${row[2]}`:''})();box.innerHTML=logo?`<div class="brand-logo-preview"><img src="${logo}" alt="Logotipo ${b}" loading="eager"></div>`:`<div class="brand-logo-preview"><span>${b}</span></div>`}
+function updateBrandPreview(){const sel=$('vbrand'),box=$('brandPreview');if(!sel||!box)return;const b=sel.value;if(!b){box.innerHTML='<span>Selecciona una marca</span>';return}const isMoto=$('vehicleFormDialog').classList.contains('moto-mode');const key=isMoto?motorcycleBrandKey({brand:b}):vehicleAssetKey({brand:b});const local=isMoto?`assets/brands_moto/${key}.svg`:(()=>{const row=CAR_BRANDS.find(x=>x[0]===b);return row?`assets/brands/${row[1]}.${row[2]}`:''})();const auth=AUTH_LOGOS[b]||'';const remote=auth?'':logoRemote(b);const src=auth||remote||local;box.innerHTML=`<div class="brand-logo-preview"><img src="${src}" data-fallback="${local}" alt="Logotipo ${b}" loading="eager" onerror="if(this.dataset.fallback && this.src!==this.dataset.fallback){this.src=this.dataset.fallback}"></div>`}
 function filterVehicleList(q){vehicleListQuery=(q||'').toLowerCase().trim(); renderVehicleList()}
 function cycleVehicleFilter(){vehicleListType=vehicleListType==='all'?'Coche':vehicleListType==='Coche'?'Moto':'all'; const b=$('vehicleFilter'); if(b)b.title=vehicleListType==='all'?'Todos':vehicleListType; renderVehicleList()}
 function renderVehicleList(){
@@ -1519,13 +1551,13 @@ function renderVehicleDetailModal(){
  }
  let html=`<div class="vehicle-detail-modal-top"><div><span class="eyebrow">FICHA DEL VEHÍCULO</span><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'}</small></div><button class="vehicle-detail-close" onclick="closeModal('vehicleDetailModal')">Cerrar ×</button></div><div class="vehicle-detail-scroll">
  <section class="vehicle-signature-card vehicle-detail-dropdown">
-   <div class="vehicle-hero"><div class="vehicle-hero-image ${isMoto?'is-moto':''}"><img class="vehicle-photo" src="${heroPhoto(v)}" onerror="this.onerror=null;this.src='${isMoto?'assets/moto_heroes/moto_naked.jpg':'assets/vehicle-car-hero.jpg'}';" alt="${[v.brand,v.model].filter(Boolean).join(' ')||'Vehículo'}"></div>
+   <div class="vehicle-hero"><div class="vehicle-hero-image ${isMoto?'is-moto':'is-car'}" style="background-image:url('${heroPhoto(v)}')"><img class="vehicle-photo" src="${heroPhoto(v)}" onerror="this.style.display='none';this.parentElement.classList.add('photo-fallback');" alt="${[v.brand,v.model].filter(Boolean).join(' ')||'Vehículo'}"></div>
     <div class="vehicle-hero-content"><div class="vehicle-page-title"><span>Mi vehículo</span></div><div class="vehicle-hero-bottom"><div class="vehicle-model vehicle-model-bottom">${[v.brand,v.model].filter(Boolean).join(' · ')||'Vehículo sin marca/modelo'} <button class="hero-edit" onclick="openVehicle(${v.id})">✎</button></div><div class="vehicle-spec-line"><span><i class="spec-icon">${svgIcon('calendar')}</i><small>Año matriculación</small><b>${v.year||'—'}</b></span><span><i class="spec-icon">${svgIcon('fuel')}</i><small>Combustible</small><b>${v.fuel||'—'}</b></span><span><i class="spec-icon">${svgIcon('car')}</i><small>Tipo vehículo</small><b>${detailType}</b></span></div></div></div></div>
     <div class="vehicle-mileage"><div><span class="eyebrow">KILOMETRAJE ACTUAL</span><strong>${Number(v.km||0).toLocaleString('es-ES')} km</strong></div><button class="vehicle-link" onclick="openHistoryModal()">Ver historial <span>›</span></button></div>
     <div class="vehicle-stats-pro"><div class="vstat vstat-blue"><span>${svgIcon('wrench')}</span><div><b>${ints.length}</b><small>Intervenciones</small></div><i>›</i></div><div class="vstat vstat-green"><span>${svgIcon('coins')}</span><div><b>${euro(cost)}</b><small>Gasto acumulado</small></div><i>›</i></div><div class="vstat vstat-red"><span>${svgIcon('bell')}</span><div><b>${allAlerts.length}</b><small>Avisos pendientes</small></div><i>›</i></div></div>
     <div class="vehicle-data-panel"><div class="vehicle-data-head"><h3>${svgIcon('car')} Datos del vehículo</h3><button class="soft" onclick="openVehicle(${v.id})">✎ Editar</button></div><div class="vehicle-data-grid">${dataHtml}</div></div>
     <div class="vehicle-data-panel additional"><div class="vehicle-data-head"><h3>${svgIcon('gear')} Detalles adicionales</h3></div><div class="vehicle-data-grid">${dataItem('license','Matrícula',v.plate,v)}${dataItem('id','Bastidor (VIN)',v.vin,v)}${dataItem('palette','Color',v.color,v)}${dataItem('calendar','Fecha de compra',v.purchaseDate,v)}</div></div>
-    <div class="vehicle-actions-pro"><button class="soft" onclick="openVehicle(${v.id})">✎ Editar vehículo</button><button class="primary" onclick="openIntervention()">＋ Nueva intervención</button></div>
+    <div class="vehicle-actions-pro"><button class="delete-vehicle-btn" onclick="deleteVehicle(${v.id})">🗑️ Eliminar vehículo</button><button class="primary" onclick="openIntervention()">＋ Nueva intervención</button></div>
  </section>${due.length?`<div class="vehicle-detail-alerts">${due.map(i=>`<div class="alert red">⚠️ <b>${i.type}</b> requiere atención. Próximo objetivo: ${Number(i.nextKm).toLocaleString('es-ES')} km.</div>`).join('')}</div>`:''}
  <button class="history-launch" onclick="openHistoryModal()">📚 Abrir historial de intervenciones <span>›</span></button></div>`;
  box.innerHTML=html;
@@ -1860,5 +1892,38 @@ render();
     }, 900);
   });
 })();
+</script>
+
+<style id="garagey-v28-fixes">
+/* Garagey v28 — logos reales de referencia + motos con encuadre completo */
+.vehicle-detail-dialog .vehicle-hero-image{background-repeat:no-repeat!important;background-position:center center!important;background-color:#061827!important;background-size:cover!important;}
+.vehicle-detail-dialog .vehicle-hero-image.is-moto{background-size:contain!important;background-position:center center!important;background-color:#071827!important;}
+.vehicle-detail-dialog .vehicle-hero-image.is-moto img.vehicle-photo{object-fit:contain!important;object-position:center center!important;background:#071827!important;padding:22px 34px!important;box-sizing:border-box!important;}
+.vehicle-detail-dialog .vehicle-hero-image.is-car img.vehicle-photo{object-fit:cover!important;object-position:center center!important;background:#061827!important;}
+.vehicle-detail-dialog .vehicle-hero-image.photo-fallback img.vehicle-photo{display:none!important;}
+.vehicle-detail-dialog .vehicle-hero-image.photo-fallback{background-size:cover!important;}
+.vehicle-detail-dialog .vehicle-actions-pro{grid-template-columns:1fr 1fr!important;gap:10px!important;}
+.vehicle-detail-dialog .vehicle-actions-pro .delete-vehicle-btn{display:flex!important;align-items:center!important;justify-content:center!important;min-height:48px!important;border:1px solid #ff5c6c!important;border-radius:14px!important;background:linear-gradient(180deg,#7d1f2c,#551521)!important;color:#fff!important;font-weight:800!important;box-shadow:0 6px 18px rgba(120,20,35,.25)!important;}
+.vehicle-brand-logo.real-brand-logo{background:#fff!important;border-radius:10px!important;padding:4px!important;filter:none!important;}
+.brand-logo-preview img{background:#fff!important;border-radius:12px!important;padding:8px!important;}
+@media(max-width:600px),(pointer:coarse){
+ .vehicle-detail-dialog .vehicle-hero-image.is-moto img.vehicle-photo{object-fit:contain!important;padding:28px 18px!important;}
+ .vehicle-detail-dialog .vehicle-actions-pro .delete-vehicle-btn{font-size:13px!important;}
+}
+</style>
+<script>
+/* v27: after changing vehicle, ensure the current detail sheet is redrawn */
+const _deleteVehicleV27=window.deleteVehicle;
+window.deleteVehicle=function(id){
+  const v=data.vehicles.find(x=>x.id===id);
+  if(!v)return;
+  if(!confirm(`¿Eliminar «${v.name||[v.brand,v.model].filter(Boolean).join(' ')||'este vehículo'}» y todo su historial?`))return;
+  data.vehicles=data.vehicles.filter(x=>x.id!==id);
+  data.selected=data.vehicles[0]?.id||null;
+  closeModal('vehicleDetailModal');
+  closeModal('historyModal');
+  save();
+  render();
+};
 </script>
 </body></html>
