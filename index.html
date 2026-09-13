@@ -1266,7 +1266,7 @@ html,body{overflow-x:hidden}
 </div></div>
 <div class="full"><label>Descripción editable de la intervención</label>
 <textarea id="manualDetails" placeholder="Opcional. Permite corregir o ampliar la descripción de una intervención existente."></textarea></div>
-<div class="full cost-panel"><div class="cost-header"><div><label>Coste de piezas y elementos</label><div class="cost-help">Añade cada pieza o elemento y su importe. Garagey calcula automáticamente el coste total.</div></div><span class="badge">€</span></div><div id="costItems"></div><button class="soft" type="button" onclick="addCost()">＋ Añadir pieza</button><div class="cost-total-box"><label>Coste total de la intervención</label><input id="totalCost" type="number" step=".01" min="0" readonly></div></div></div>
+<div class="full cost-panel"><div class="cost-header"><div><label>Coste de piezas y elementos</label><div class="cost-help">Añade cada pieza o elemento y su importe. Garagey calcula automáticamente el coste total.</div></div><span class="badge">€</span></div><div id="costItems"></div><button class="soft" type="button" onclick="addCost()">＋ Añadir pieza</button><div class="cost-total-box"><label>Coste total de la intervención</label><input id="totalCost" type="text" inputmode="decimal" readonly></div></div></div>
 <div class="actions" style="margin-top:20px"><button class="primary" onclick="saveIntervention()">Guardar intervención</button></div></div></div>
 
 <div class="modal" id="settingsModal"><div class="dialog"><div class="top"><h2>⚙️ Ajustes y evolución</h2><button class="soft" onclick="closeModal('settingsModal')">Cerrar</button></div>
@@ -1326,7 +1326,7 @@ function migrate(){
 }
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data));if(window.garageyScheduleAutoBackup)window.garageyScheduleAutoBackup();}
 migrate();
-const $=id=>document.getElementById(id), euro=n=>new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(n||0));
+const $=id=>document.getElementById(id), euro=n=>new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(n||0));
 function interventionCost(i){const parts=Array.isArray(i?.parts)?i.parts:[];const partsTotal=parts.reduce((a,p)=>a+Number(p?.cost||0),0);return partsTotal>0?partsTotal:Number(i?.totalCost||0)}
 
 
@@ -1549,8 +1549,9 @@ function typeFields(){
  let map={'Mantenimiento':'maintenanceFields','Neumáticos':'tireFields','Correa/Cadena':'beltFields','Varios':'otherFields','ITV':'itvFields','Seguro':'insuranceFields','Impuestos':'taxFields'};
  $(map[t]).classList.remove('hidden');
 }
-function updateTotalCost(){const total=[...document.querySelectorAll('#costItems .cost-row input[type=number]')].reduce((a,x)=>a+Number(x.value||0),0);$('totalCost').value=total.toFixed(2);return total}
-function addCost(){let d=document.createElement('div');d.className='cost-row';d.innerHTML='<input placeholder="Pieza o elemento"><input type="number" step=".01" min="0" placeholder="Coste €"><button class="danger" type="button" onclick="this.parentElement.remove();updateTotalCost()">×</button>';d.querySelector('input[type=number]').addEventListener('input',updateTotalCost);$('costItems').appendChild(d);updateTotalCost()}
+function parseMoney(v){if(v==null)return 0;let s=String(v).trim().replace(/\s/g,'');if(!s)return 0;if(s.includes(',')&&s.includes('.')){s=s.lastIndexOf(',')>s.lastIndexOf('.')?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,'')}else{s=s.replace(',','.')}const n=Number(s);return Number.isFinite(n)?n:0}
+function updateTotalCost(){const total=[...document.querySelectorAll('#costItems .cost-row .cost-value')].reduce((a,x)=>a+parseMoney(x.value),0);$('totalCost').value=total.toFixed(2);return total}
+function addCost(){let d=document.createElement('div');d.className='cost-row';d.innerHTML='<input placeholder="Pieza o elemento"><input class="cost-value" type="text" inputmode="decimal" placeholder="Coste €"><button class="danger" type="button" onclick="this.parentElement.remove();updateTotalCost()">×</button>';d.querySelector('.cost-value').addEventListener('input',updateTotalCost);$('costItems').appendChild(d);updateTotalCost()}
 function saveIntervention(){
  let v=data.vehicles.find(x=>x.id===data.selected),type=$('itype').value,details='';
  if(type==='Mantenimiento')details=[...document.querySelectorAll('#maintenanceFields input:checked')].map(x=>x.value).join(', ')||'Mantenimiento general';
@@ -1562,7 +1563,7 @@ function saveIntervention(){
  if(type==='Impuestos')details=`${$('taxType').value}${$('taxDueDate').value?' · Pago: '+$('taxDueDate').value:''}${$('taxNotes').value?' · '+$('taxNotes').value:''}`;
  let manual=$('manualDetails').value.trim(); if(manual)details=manual;
  let km=Number($('ikm').value||0),interval=Number($('inext').value||0);
- let parts=[...document.querySelectorAll('.cost-row')].map(r=>({name:r.querySelectorAll('input')[0].value,cost:Number(r.querySelectorAll('input')[1].value||0)})).filter(x=>x.name||x.cost);
+ let parts=[...document.querySelectorAll('.cost-row')].map(r=>({name:r.querySelectorAll('input')[0].value,cost:parseMoney(r.querySelectorAll('input')[1].value)})).filter(x=>x.name||x.cost);
  let partsTotal=parts.reduce((a,p)=>a+Number(p.cost||0),0);let record={type,date:$('idate').value,km,nextKm:interval?km+interval:null,interval,details,parts,totalCost:partsTotal};
  if(window.editIntervention){
    let existing=(v.interventions||[]).find(x=>x.id===window.editIntervention);
