@@ -1252,10 +1252,21 @@ html,body{overflow-x:hidden}
   .brand-preview{height:72px!important;min-height:72px!important}
 }
 </style>
+
+<style id="garagey-v28-3-asset-fixes">
+.vehicle-card-premium{position:relative!important;overflow:hidden!important;background:#071a2b!important;background-image:none!important}
+.vehicle-card-photo{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;z-index:0!important;opacity:.9!important}
+.vehicle-card-premium:after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(3,18,31,.18),rgba(3,18,31,.9))!important;pointer-events:none}
+.vehicle-card-inner{position:relative!important;z-index:2!important}
+.vehicle-hero-image{position:absolute!important;inset:0!important;overflow:hidden!important}
+.vehicle-hero-image .vehicle-photo{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+.vehicle-hero-image.is-moto .vehicle-photo{object-fit:contain!important;padding:10px!important;box-sizing:border-box!important}
+.vehicle-hero-image.photo-fallback{background:#071a2b!important}
+</style>
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v28.1 · Coches y motos · Logotipos por marca · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v28.3.1 · Coches y motos · Logotipos por marca · Diseño Android</div></div>
 
 <div class="modal" id="vehicleTypeModal"><div class="dialog"><div class="top"><h2>🚘🏍️ Añadir vehículo</h2><button class="soft" onclick="closeModal('vehicleTypeModal')">Cerrar</button></div><p class="vehicle-type-intro">Primero elige qué tipo de vehículo quieres añadir.</p><div class="vehicle-type-grid"><button class="vehicle-type-choice" onclick="chooseVehicleType('Coche')"><span class="choice-icon">🚘</span><b>Coche</b><small>Ficha completa de automóvil</small></button><button class="vehicle-type-choice" onclick="chooseVehicleType('Moto')"><span class="choice-icon">🏍️</span><b>Moto</b><small>Ficha adaptada a motocicleta</small></button></div></div></div>
 
@@ -1470,6 +1481,14 @@ function heroPhoto(v){
   const key=vehicleAssetKey(v);
   return key==='nissan'?'assets/vehicle_images/cars/nissan_hero_tall.jpg':`assets/vehicle_images/cars/${key}.jpg`;
 }
+function heroPhotoFallback(v){
+  if(vehicleTypeOf(v)==='motorcycle') return 'assets/vehicle_images/motos/generic/moto_naked.jpg';
+  return 'assets/vehicle_images/cars/generic.jpg';
+}
+function safePhotoMarkup(v, extraClass=''){
+  const src=heroPhoto(v), fallback=heroPhotoFallback(v);
+  return `<img class="vehicle-photo ${extraClass}" src="${src}" data-fallback="${fallback}" onerror="if(this.dataset.fallback && this.src!==this.dataset.fallback){this.src=this.dataset.fallback}else{this.style.display='none';this.parentElement.classList.add('photo-fallback')}" alt="${[v.brand,v.model].filter(Boolean).join(' ')||'Vehículo'}">`;
+}
 const BRAND_LOGO_SLUGS={
   'Toyota':'toyota','Mitsubishi':'mitsubishi','Honda':'honda','Citroën':'citroen','Suzuki':'suzuki','Volvo':'volvo','Nissan':'nissan','Mazda':'mazda','Fiat':'fiat','SEAT':'seat','Lexus':'lexus','Dacia':'dacia','Ford':'ford','Kia':'kia','Audi':'audi','Škoda':'skoda','Tesla':'tesla','Renault':'renault','Hyundai':'hyundai','Peugeot':'peugeot','CUPRA':'cupra','Mercedes-Benz':'mercedes','BMW':'bmw','Jeep':'jeep','Volkswagen':'volkswagen','MG':'mg','Opel':'opel',
   'Aprilia':'aprilia','Benda':'benda','Benelli':'benelli','BMW Motorrad':'bmw','CFMoto':'cfmoto','Ducati':'ducati','GasGas':'gasgas','Harley-Davidson':'harleydavidson','Hero MotoCorp':'heromotocorp','Husqvarna':'husqvarna','Indian':'indianmotorcycle','Kawasaki':'kawasaki','Keeway':'keeway','Kove':'kove','KTM':'ktm','Kymco':'kymco','Macbor':'macbor','Mash':'mash','Mitt':'mitt','Moto Guzzi':'motoguzzi','Moto Morini':'motomorini','MV Agusta':'mvagusta','Piaggio':'piaggio','QJ Motor':'qjmotor','Rieju':'rieju','Royal Enfield':'royalenfield','SYM':'sym','Triumph':'triumph','Vespa':'vespa','Voge':'voge','Yamaha':'yamahamotorcorporation','Zontes':'zontes','Zero':'zero'
@@ -1511,7 +1530,8 @@ function renderVehicleList(){
  box.innerHTML=list.length?list.map(v=>{
    const ints=[...(v.interventions||[])]; const cost=ints.reduce((a,x)=>a+interventionCost(x),0); const due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm)).length;
    const meta=[v.year||'—',v.fuel||'—',v.type||'—'].join(' · ');
-   return `<article class="vehicle-card-premium ${v.id===data.selected?'selected':''}" style="background-image:url('${vehicleBg(v)}')" onclick="selectVehicle(${v.id})">
+   return `<article class="vehicle-card-premium ${v.id===data.selected?'selected':''}" onclick="selectVehicle(${v.id})">
+    ${safePhotoMarkup(v,'vehicle-card-photo')}
     <div class="vehicle-card-inner">
       <div><div class="vehicle-card-top">${brandLogo(v)}<span class="vehicle-card-arrow">›</span></div>
       <div class="vehicle-card-name">${v.name||[v.brand,v.model].filter(Boolean).join(' ')||'Mi vehículo'}</div>
@@ -1555,7 +1575,7 @@ function renderVehicleDetailModal(){
  }
  let html=`<div class="vehicle-detail-modal-top"><div><span class="eyebrow">FICHA DEL VEHÍCULO</span><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'}</small></div><button class="vehicle-detail-close" onclick="closeModal('vehicleDetailModal')">Cerrar ×</button></div><div class="vehicle-detail-scroll">
  <section class="vehicle-signature-card vehicle-detail-dropdown">
-   <div class="vehicle-hero"><div class="vehicle-hero-image ${isMoto?'is-moto':'is-car'}" style="background-image:url('${heroPhoto(v)}')"><img class="vehicle-photo" src="${heroPhoto(v)}" onerror="this.style.display='none';this.parentElement.classList.add('photo-fallback');" alt="${[v.brand,v.model].filter(Boolean).join(' ')||'Vehículo'}"></div>
+   <div class="vehicle-hero"><div class="vehicle-hero-image ${isMoto?'is-moto':'is-car'}">${safePhotoMarkup(v)}</div>
     <div class="vehicle-hero-content"><div class="vehicle-page-title"><span>Mi vehículo</span></div><div class="vehicle-hero-bottom"><div class="vehicle-model vehicle-model-bottom">${[v.brand,v.model].filter(Boolean).join(' · ')||'Vehículo sin marca/modelo'} <button class="hero-edit" onclick="openVehicle(${v.id})">✎</button></div><div class="vehicle-spec-line"><span><i class="spec-icon">${svgIcon('calendar')}</i><small>Año matriculación</small><b>${v.year||'—'}</b></span><span><i class="spec-icon">${svgIcon('fuel')}</i><small>Combustible</small><b>${v.fuel||'—'}</b></span><span><i class="spec-icon">${svgIcon('car')}</i><small>Tipo vehículo</small><b>${detailType}</b></span></div></div></div></div>
     <div class="vehicle-mileage"><div><span class="eyebrow">KILOMETRAJE ACTUAL</span><strong>${Number(v.km||0).toLocaleString('es-ES')} km</strong></div><button class="vehicle-link" onclick="openHistoryModal()">Ver historial <span>›</span></button></div>
     <div class="vehicle-stats-pro"><div class="vstat vstat-blue"><span>${svgIcon('wrench')}</span><div><b>${ints.length}</b><small>Intervenciones</small></div><i>›</i></div><div class="vstat vstat-green"><span>${svgIcon('coins')}</span><div><b>${euro(cost)}</b><small>Gasto acumulado</small></div><i>›</i></div><div class="vstat vstat-red"><span>${svgIcon('bell')}</span><div><b>${allAlerts.length}</b><small>Avisos pendientes</small></div><i>›</i></div></div>
@@ -1899,7 +1919,7 @@ render();
 </script>
 
 <style id="garagey-v28-fixes">
-/* Garagey v28 — logos reales de referencia + motos con encuadre completo */
+/* Garagey v28.3 — logos reales de referencia + motos con encuadre completo */
 .vehicle-detail-dialog .vehicle-hero-image{background-repeat:no-repeat!important;background-position:center center!important;background-color:#061827!important;background-size:cover!important;}
 .vehicle-detail-dialog .vehicle-hero-image.is-moto{background-size:contain!important;background-position:center center!important;background-color:#071827!important;}
 .vehicle-detail-dialog .vehicle-hero-image.is-moto img.vehicle-photo{object-fit:contain!important;object-position:center center!important;background:#071827!important;padding:22px 34px!important;box-sizing:border-box!important;}
