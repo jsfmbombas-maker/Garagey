@@ -186,6 +186,51 @@ opacity:1
 #interventionModal .dialog>.actions .primary{
   min-width:230px;padding:14px 20px;border-radius:15px;font-size:15px;box-shadow:0 10px 24px rgba(108,92,231,.25);
 }
+/* GARAGEY v25.2 — Fichas de intervención Signature */
+.intervention-card{border:1px solid #dfe5ee;border-radius:24px;box-shadow:0 12px 30px rgba(22,35,59,.10);background:#fff}
+.intervention-card .detail-hero{min-height:124px;padding:17px 18px 18px;background-image:linear-gradient(135deg,#13243a,#244d72);}
+.intervention-card .detail-hero.mantenimiento{background-image:linear-gradient(135deg,#253a75,#6c5ce7)}
+.intervention-card .detail-hero.neumaticos{background-image:linear-gradient(135deg,#075b93,#1699e6)}
+.intervention-card .detail-hero.correa{background-image:linear-gradient(135deg,#7c263e,#dc4668)}
+.intervention-card .detail-hero.varios{background-image:linear-gradient(135deg,#253346,#5c6d82)}
+.intervention-card .detail-hero.itv{background-image:linear-gradient(135deg,#14547f,#2d92d2)}
+.intervention-card .detail-hero.seguro{background-image:linear-gradient(135deg,#075d3b,#16a15f)}
+.intervention-card .detail-hero.impuestos{background-image:linear-gradient(135deg,#4c3788,#805bcf)}
+.detail-icon{width:52px;height:52px;border-radius:16px;font-size:26px;background:#ffffff20;border-color:#ffffff35;box-shadow:inset 0 1px 0 #ffffff20}
+.detail-title{font-size:18px;letter-spacing:-.015em}
+.detail-date{font-size:11px;letter-spacing:.04em;text-transform:uppercase;opacity:.78}
+.detail-status{margin-top:6px;padding:5px 9px}
+.detail-body{padding:15px 16px 16px}
+.detail-meta{gap:9px;margin-bottom:13px}
+.detail-meta-item{border-radius:13px;padding:10px 11px;background:linear-gradient(135deg,#f8fafc,#f3f6fa);border-color:#e5eaf1}
+.detail-label{display:flex;align-items:center;gap:8px;margin:5px 0 8px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#68758a}
+.detail-label:before{content:"";width:6px;height:18px;border-radius:6px;background:linear-gradient(180deg,#6c5ce7,#9d90f4)}
+.detail-items{gap:7px}
+.detail-item{min-height:39px;padding:9px 10px;border-radius:12px;background:#fbfcfe;border-color:#e8edf3}
+.detail-item .dot{width:8px;height:8px;flex-basis:8px;background:#6c5ce7}
+.detail-description{background:#f7f9fc;border-color:#e4e9f1}
+.detail-cost{margin-top:14px;padding:12px 13px;border-radius:14px;background:linear-gradient(135deg,#f1efff,#f5f7ff);border:1px solid #ded9fb;color:#5949d5}
+.detail-cost strong{font-size:19px}
+.detail-cost-parts{display:flex;justify-content:space-between;align-items:center;margin-top:7px;font-size:11px;color:#69758a;font-weight:700}
+.detail-actions{gap:9px;margin-top:11px}
+.detail-actions button{padding:11px 12px;border-radius:12px;font-size:13px}
+.detail-actions .edit{border:1px solid #cfe1f5;background:#edf6ff}
+.detail-actions .delete{border:1px solid #f5cfd7;background:#fff3f5}
+.history-modal-summary>div{border-radius:18px}
+#interventionModal .dialog>.form>.full.cost-panel{background:linear-gradient(145deg,#ffffff,#f7f8fc);border-color:#dfe4ed}
+#interventionModal .cost-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px}
+#interventionModal .cost-header label{margin:0!important}
+#interventionModal .cost-help{font-size:11px;color:#7b8798;line-height:1.35;margin-top:3px}
+#interventionModal .cost-total-box{margin-top:12px;padding:12px;border-radius:15px;background:linear-gradient(135deg,#eef0ff,#f7f8ff);border:1px solid #d9d8f5}
+#interventionModal .cost-total-box label{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#68738a;margin-bottom:6px}
+#interventionModal #totalCost{font-size:21px;font-weight:900;background:#fff;border:0;color:#33257f;box-shadow:0 4px 12px rgba(80,65,170,.08)}
+#interventionModal #totalCost[readonly]{cursor:default}
+#interventionModal .cost-row{grid-template-columns:minmax(0,1fr) 112px 40px;padding:8px;background:#f8fafc;border:1px solid #e7ebf1;border-radius:13px}
+#interventionModal .cost-row input{background:#fff;border:1px solid #e1e6ee}
+#interventionModal .cost-row .danger{border:1px solid #f1ccd5}
+#interventionModal .dialog>.top .top-kicker{display:block;font-size:10px;letter-spacing:.09em;text-transform:uppercase;color:#c8d8eb;font-weight:900;margin-bottom:3px}
+#interventionModal .dialog>.top .top-title{display:block}
+
 @media(max-width:600px){
   #interventionModal{padding:0;background:rgba(11,18,32,.72)}
   #interventionModal .dialog{margin:0;border-radius:0;min-height:100%;box-shadow:none}
@@ -1193,7 +1238,7 @@ html,body{overflow-x:hidden}
 <div class="modal vehicle-detail-modal" id="vehicleDetailModal"><div class="dialog vehicle-detail-dialog" id="vehicleDetailContent"></div></div>
 <div class="modal history-modal" id="historyModal"><div class="dialog history-dialog" id="historyModalContent"></div></div>
 
-<div class="modal" id="interventionModal"><div class="dialog"><div class="top"><h2>🔧 Nueva intervención</h2><button class="soft" onclick="closeModal('interventionModal')">Cerrar</button></div>
+<div class="modal" id="interventionModal"><div class="dialog"><div class="top"><div><span class="top-kicker">GARAGEY · FICHA DE INTERVENCIÓN</span><h2>🔧 Nueva intervención</h2></div><button class="soft" onclick="closeModal('interventionModal')">Cerrar</button></div>
 <div class="form"><div><label>Tipo de intervención</label><select id="itype" onchange="typeFields()"><option value="Mantenimiento">🛢️ Mantenimiento</option><option value="Neumáticos">🛞 Cambio de neumáticos</option><option value="Correa/Cadena">⚙️ Cambio correa/cadena</option><option value="Varios">🔧 Intervenciones varias</option>
 <option value="ITV">📋 ITV</option>
 <option value="Seguro">🛡️ Seguro</option>
@@ -1221,7 +1266,7 @@ html,body{overflow-x:hidden}
 </div></div>
 <div class="full"><label>Descripción editable de la intervención</label>
 <textarea id="manualDetails" placeholder="Opcional. Permite corregir o ampliar la descripción de una intervención existente."></textarea></div>
-<div class="full"><label>Coste de piezas y elementos</label><div id="costItems"></div><button class="soft" type="button" onclick="addCost()">＋ Añadir pieza</button><div style="margin-top:12px"><label>Coste total de la intervención (€)</label><input id="totalCost" type="number" step=".01" min="0"></div></div></div>
+<div class="full cost-panel"><div class="cost-header"><div><label>Coste de piezas y elementos</label><div class="cost-help">Añade cada pieza o elemento y su importe. Garagey calcula automáticamente el coste total.</div></div><span class="badge">€</span></div><div id="costItems"></div><button class="soft" type="button" onclick="addCost()">＋ Añadir pieza</button><div class="cost-total-box"><label>Coste total de la intervención</label><input id="totalCost" type="number" step=".01" min="0" readonly></div></div></div>
 <div class="actions" style="margin-top:20px"><button class="primary" onclick="saveIntervention()">Guardar intervención</button></div></div></div>
 
 <div class="modal" id="settingsModal"><div class="dialog"><div class="top"><h2>⚙️ Ajustes y evolución</h2><button class="soft" onclick="closeModal('settingsModal')">Cerrar</button></div>
@@ -1246,7 +1291,7 @@ html,body{overflow-x:hidden}
    La interfaz puede cambiar sin modificar ni perder los datos.
    Cada futura actualización incrementará schemaVersion y aplicará migraciones. */
 const STORAGE_KEY='garagey_data';
-const CURRENT_SCHEMA=6; // Vehículos ilimitados + tipo estructurado + campos de moto
+const CURRENT_SCHEMA=7; // Vehículos ilimitados + tipo estructurado + campos de moto + costes de piezas normalizados
 function freshData(){return {schemaVersion:CURRENT_SCHEMA,vehicles:[],selected:null}}
 let data;
 let editVehicle=null;
@@ -1269,11 +1314,20 @@ function migrate(){
    data.vehicles=(data.vehicles||[]).map(v=>({...v,vehicleType:v.vehicleType||(v.type==='Moto'?'motorcycle':'car'),motoType:v.motoType||'',displacement:v.displacement||''}));
    data.schemaVersion=6;
  }
+ if(data.schemaVersion<7){
+   data.vehicles=(data.vehicles||[]).map(v=>({...v,interventions:(v.interventions||[]).map(i=>{
+     const parts=Array.isArray(i.parts)?i.parts:[];
+     const partsTotal=parts.reduce((a,p)=>a+Number(p?.cost||0),0);
+     return {...i,parts,totalCost:partsTotal>0?partsTotal:Number(i.totalCost||0)};
+   })}));
+   data.schemaVersion=7;
+ }
  save();
 }
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data));if(window.garageyScheduleAutoBackup)window.garageyScheduleAutoBackup();}
 migrate();
 const $=id=>document.getElementById(id), euro=n=>new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(n||0));
+function interventionCost(i){const parts=Array.isArray(i?.parts)?i.parts:[];const partsTotal=parts.reduce((a,p)=>a+Number(p?.cost||0),0);return partsTotal>0?partsTotal:Number(i?.totalCost||0)}
 
 
 function daysUntil(dateString){
@@ -1371,7 +1425,7 @@ function renderVehicleList(){
  const box=$('vehicles'); if(!box)return;
  const list=data.vehicles.filter(v=>{const text=[v.name,v.brand,v.model,v.year,v.fuel,v.type].join(' ').toLowerCase(); const q=!vehicleListQuery||text.includes(vehicleListQuery); const t=vehicleListType==='all'||v.type===vehicleListType; return q&&t;});
  box.innerHTML=list.length?list.map(v=>{
-   const ints=[...(v.interventions||[])]; const cost=ints.reduce((a,x)=>a+Number(x.totalCost||0),0); const due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm)).length;
+   const ints=[...(v.interventions||[])]; const cost=ints.reduce((a,x)=>a+interventionCost(x),0); const due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm)).length;
    const meta=[v.year||'—',v.fuel||'—',v.type||'—'].join(' · ');
    return `<article class="vehicle-card-premium ${v.id===data.selected?'selected':''}" style="background-image:url('${vehicleBg(v)}')" onclick="selectVehicle(${v.id})">
     <div class="vehicle-card-inner">
@@ -1407,7 +1461,7 @@ function dataItem(icon,label,value,v){const mark=icon==='brand'?brandLogo(v):svg
 function renderVehicleDetailModal(){
  const modal=$('vehicleDetailModal'),box=$('vehicleDetailContent'); if(!modal||!box)return;
  const v=data.vehicles.find(x=>x.id===data.selected); if(!v){modal.classList.remove('show');return}
- const ints=[...(v.interventions||[])]; const cost=ints.reduce((a,x)=>a+Number(x.totalCost||0),0); const due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm)); const allAlerts=getAlerts().filter(a=>a.vehicle===v.name); const isMoto=vehicleTypeOf(v)==='motorcycle';
+ const ints=[...(v.interventions||[])]; const cost=ints.reduce((a,x)=>a+interventionCost(x),0); const due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm)); const allAlerts=getAlerts().filter(a=>a.vehicle===v.name); const isMoto=vehicleTypeOf(v)==='motorcycle';
  const detailType=isMoto?'Moto':'Coche';
  let dataHtml;
  if(isMoto){
@@ -1432,10 +1486,11 @@ function renderHistoryModal(){
  const modal=$('historyModal'), box=$('historyModalContent'); if(!modal||!box)return;
  const v=data.vehicles.find(x=>x.id===data.selected); if(!v){modal.classList.remove('show');return}
  const ints=[...(v.interventions||[])].sort((a,b)=>b.id-a.id);
- let html=`<div class="history-modal-top"><div><span class="eyebrow">HISTORIAL DE INTERVENCIONES</span><strong>${v.name||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'} · ${Number(v.km||0).toLocaleString('es-ES')} km</small></div><button class="history-modal-close" onclick="closeModal('historyModal')">Cerrar ×</button></div><div class="history-modal-scroll"><div class="history-modal-body"><div class="history-modal-summary"><div><b>${ints.length}</b><span>intervenciones</span></div><div><b>${euro(ints.reduce((a,x)=>a+Number(x.totalCost||0),0))}</b><span>gasto acumulado</span></div></div><div class="intervention-list">${ints.length?ints.map(i=>{
+ let html=`<div class="history-modal-top"><div><span class="eyebrow">HISTORIAL DE INTERVENCIONES</span><strong>${v.name||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'} · ${Number(v.km||0).toLocaleString('es-ES')} km</small></div><button class="history-modal-close" onclick="closeModal('historyModal')">Cerrar ×</button></div><div class="history-modal-scroll"><div class="history-modal-body"><div class="history-modal-summary"><div><b>${ints.length}</b><span>intervenciones</span></div><div><b>${euro(ints.reduce((a,x)=>a+interventionCost(x),0))}</b><span>gasto acumulado</span></div></div><div class="intervention-list">${ints.length?ints.map(i=>{
    let meta={Mantenimiento:['🛢️','Cambio de aceite y filtro','mantenimiento'],Neumáticos:['🛞','Neumáticos','neumaticos'],'Correa/Cadena':['⚙️','Correa de distribución','correa'],Varios:['🔧','Intervención general','varios'],ITV:['📋','ITV','itv'],Seguro:['🛡️','Seguro','seguro'],Impuestos:['🏛️','Impuestos','impuestos']}[i.type]||['🔧',i.type,'varios'];
    let raw=(i.details||'Sin descripción').split(' · ').filter(Boolean); let detailLines=raw.length?raw:['Sin descripción']; let parts=(i.parts||[]).filter(p=>p.name||p.cost); let items=parts.length?parts.map(p=>`<div class="detail-item"><span class="dot"></span><span>${p.name||'Elemento'}</span>${p.cost?`<span class="item-cost">${euro(p.cost)}</span>`:''}</div>`).join(''):detailLines.map(x=>`<div class="detail-item"><span class="dot"></span><span>${x}</span></div>`).join('');
-   return `<article class="intervention-card"><div class="detail-hero ${meta[2]}"><div class="detail-icon">${meta[0]}</div><div class="detail-heading"><div class="detail-title">${meta[1]}</div><span class="detail-status">✓ Realizada</span><div class="detail-date">${i.date||'Fecha no indicada'}</div></div></div><div class="detail-body"><div class="detail-meta"><div class="detail-meta-item">📅 Fecha<b>${i.date||'—'}</b></div><div class="detail-meta-item">🚗 Kilómetros<b>${Number(i.km||0).toLocaleString('es-ES')} km</b></div></div><div class="detail-label">Detalles</div><div class="detail-items">${items}</div>${i.nextKm?`<div class="detail-meta" style="margin-top:8px;margin-bottom:0"><div class="detail-meta-item">↗ Próxima intervención<b>${Number(i.nextKm).toLocaleString('es-ES')} km</b></div><div class="detail-meta-item">📏 Intervalo<b>${Number(i.interval||0).toLocaleString('es-ES')} km</b></div></div>`:''}<div class="detail-cost"><span>€ &nbsp; Coste total</span><strong>${euro(i.totalCost)}</strong></div><div class="detail-actions"><button class="edit" onclick="openIntervention(${i.id})">✎ Editar</button><button class="delete" onclick="deleteIntervention(${i.id})">▣ Eliminar</button></div></div></article>`;
+   const partsTotal=(i.parts||[]).reduce((a,p)=>a+Number(p?.cost||0),0);
+   return `<article class="intervention-card"><div class="detail-hero ${meta[2]}"><div class="detail-icon">${meta[0]}</div><div class="detail-heading"><div class="detail-title">${meta[1]}</div><span class="detail-status">✓ Realizada</span><div class="detail-date">${i.date||'Fecha no indicada'}</div></div></div><div class="detail-body"><div class="detail-meta"><div class="detail-meta-item">📅 Fecha<b>${i.date||'—'}</b></div><div class="detail-meta-item">🚗 Kilómetros<b>${Number(i.km||0).toLocaleString('es-ES')} km</b></div></div><div class="detail-label">Detalles de la intervención</div><div class="detail-items">${items}</div>${i.nextKm?`<div class="detail-meta" style="margin-top:10px;margin-bottom:0"><div class="detail-meta-item">↗ Próxima intervención<b>${Number(i.nextKm).toLocaleString('es-ES')} km</b></div><div class="detail-meta-item">📏 Intervalo<b>${Number(i.interval||0).toLocaleString('es-ES')} km</b></div></div>`:''}<div class="detail-cost"><div><span>Coste total</span>${partsTotal>0?`<div class="detail-cost-parts"><span>✓ Piezas y elementos</span><b>${euro(partsTotal)}</b></div>`:''}</div><strong>${euro(interventionCost(i))}</strong></div><div class="detail-actions"><button class="edit" onclick="openIntervention(${i.id})">✎ Editar</button><button class="delete" onclick="deleteIntervention(${i.id})">▣ Eliminar</button></div></div></article>`;
  }).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></div></div>`;
  box.innerHTML=html;
 }
@@ -1444,7 +1499,7 @@ function openHistoryModal(){renderHistoryModal();$('historyModal').classList.add
 function render(){
  if($('qVehicles'))$('qVehicles').textContent=data.vehicles.length;
  const all=data.vehicles.flatMap(v=>v.interventions||[]);
- if($('qInterventions'))$('qInterventions').textContent=all.length;if($('qCost'))$('qCost').textContent=euro(all.reduce((a,x)=>a+Number(x.totalCost||0),0));if($('qAlerts'))$('qAlerts').textContent=getAlerts().length;
+ if($('qInterventions'))$('qInterventions').textContent=all.length;if($('qCost'))$('qCost').textContent=euro(all.reduce((a,x)=>a+interventionCost(x),0));if($('qAlerts'))$('qAlerts').textContent=getAlerts().length;
  const m=$('main');
  m.innerHTML=renderNoticePanel()+renderVehicleSection()+renderGarageyPanel();
  renderVehicleList();
@@ -1466,7 +1521,7 @@ function openIntervention(id){
  $('ikm').value=item?.km??v.km??'';
  $('itype').value=item?.type||'Mantenimiento';
  $('inext').value=item?.interval||'';
- $('totalCost').value=item?.totalCost??'';
+ $('totalCost').value=item?interventionCost(item):0;
  $('manualDetails').value=item?.details||'';
  $('costItems').innerHTML='';
  (item?.parts?.length?item.parts:[{name:'',cost:''}]).forEach(p=>{
@@ -1484,6 +1539,7 @@ function openIntervention(id){
    if(item.type==='Varios')$('otherDescription').value=d;
  }
  typeFields();
+ updateTotalCost();
  document.querySelector('#interventionModal h2').textContent=item?'✏️ Editar intervención':'🔧 Nueva intervención';
  document.querySelector('#interventionModal .primary').textContent=item?'Guardar cambios':'Guardar intervención';
 }
@@ -1493,7 +1549,8 @@ function typeFields(){
  let map={'Mantenimiento':'maintenanceFields','Neumáticos':'tireFields','Correa/Cadena':'beltFields','Varios':'otherFields','ITV':'itvFields','Seguro':'insuranceFields','Impuestos':'taxFields'};
  $(map[t]).classList.remove('hidden');
 }
-function addCost(){let d=document.createElement('div');d.className='cost-row';d.innerHTML='<input placeholder="Pieza o elemento"><input type="number" step=".01" placeholder="Coste €"><button class="danger" type="button" onclick="this.parentElement.remove()">×</button>';$('costItems').appendChild(d)}
+function updateTotalCost(){const total=[...document.querySelectorAll('#costItems .cost-row input[type=number]')].reduce((a,x)=>a+Number(x.value||0),0);$('totalCost').value=total.toFixed(2);return total}
+function addCost(){let d=document.createElement('div');d.className='cost-row';d.innerHTML='<input placeholder="Pieza o elemento"><input type="number" step=".01" min="0" placeholder="Coste €"><button class="danger" type="button" onclick="this.parentElement.remove();updateTotalCost()">×</button>';d.querySelector('input[type=number]').addEventListener('input',updateTotalCost);$('costItems').appendChild(d);updateTotalCost()}
 function saveIntervention(){
  let v=data.vehicles.find(x=>x.id===data.selected),type=$('itype').value,details='';
  if(type==='Mantenimiento')details=[...document.querySelectorAll('#maintenanceFields input:checked')].map(x=>x.value).join(', ')||'Mantenimiento general';
@@ -1506,7 +1563,7 @@ function saveIntervention(){
  let manual=$('manualDetails').value.trim(); if(manual)details=manual;
  let km=Number($('ikm').value||0),interval=Number($('inext').value||0);
  let parts=[...document.querySelectorAll('.cost-row')].map(r=>({name:r.querySelectorAll('input')[0].value,cost:Number(r.querySelectorAll('input')[1].value||0)})).filter(x=>x.name||x.cost);
- let record={type,date:$('idate').value,km,nextKm:interval?km+interval:null,interval,details,parts,totalCost:Number($('totalCost').value||0)};
+ let partsTotal=parts.reduce((a,p)=>a+Number(p.cost||0),0);let record={type,date:$('idate').value,km,nextKm:interval?km+interval:null,interval,details,parts,totalCost:partsTotal};
  if(window.editIntervention){
    let existing=(v.interventions||[]).find(x=>x.id===window.editIntervention);
    if(existing)Object.assign(existing,record);
