@@ -102,7 +102,7 @@ opacity:1
 
 /* GARAGEY — Nueva intervención: ficha profesional v1
    Solo modifica presentación del formulario. No cambia IDs, datos ni lógica JS. */
-#interventionModal{background:rgba(11,18,32,.72);backdrop-filter:blur(5px);padding:12px}
+#interventionModal{background:rgba(11,18,32,.72);backdrop-filter:blur(5px);padding:12px;z-index:100!important}
 #interventionModal .dialog{
   max-width:820px;
   margin:12px auto 28px;
@@ -1167,7 +1167,7 @@ html,body{overflow-x:hidden}
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v25 · Coches y motos · Ficha e historial en ventanas independientes</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v25.1 · Coches y motos · Ficha e historial en ventanas independientes</div></div>
 
 <div class="modal" id="vehicleTypeModal"><div class="dialog"><div class="top"><h2>🚘🏍️ Añadir vehículo</h2><button class="soft" onclick="closeModal('vehicleTypeModal')">Cerrar</button></div><p class="vehicle-type-intro">Primero elige qué tipo de vehículo quieres añadir.</p><div class="vehicle-type-grid"><button class="vehicle-type-choice" onclick="chooseVehicleType('Coche')"><span class="choice-icon">🚘</span><b>Coche</b><small>Ficha completa de automóvil</small></button><button class="vehicle-type-choice" onclick="chooseVehicleType('Moto')"><span class="choice-icon">🏍️</span><b>Moto</b><small>Ficha adaptada a motocicleta</small></button></div></div></div>
 
