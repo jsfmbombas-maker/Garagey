@@ -1266,7 +1266,7 @@ html,body{overflow-x:hidden}
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v28.3.1 · Coches y motos · Logotipos por marca · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v28.4.1 · Coches y motos · Logotipos por marca · Diseño Android</div></div>
 
 <div class="modal" id="vehicleTypeModal"><div class="dialog"><div class="top"><h2>🚘🏍️ Añadir vehículo</h2><button class="soft" onclick="closeModal('vehicleTypeModal')">Cerrar</button></div><p class="vehicle-type-intro">Primero elige qué tipo de vehículo quieres añadir.</p><div class="vehicle-type-grid"><button class="vehicle-type-choice" onclick="chooseVehicleType('Coche')"><span class="choice-icon">🚘</span><b>Coche</b><small>Ficha completa de automóvil</small></button><button class="vehicle-type-choice" onclick="chooseVehicleType('Moto')"><span class="choice-icon">🏍️</span><b>Moto</b><small>Ficha adaptada a motocicleta</small></button></div></div></div>
 
@@ -1511,7 +1511,7 @@ function brandLogo(v){
   const brand=(v?.brand||'').trim();
   const slug=logoSlug(brand);
   const key=vehicleTypeOf(v)==='motorcycle'?motorcycleBrandKey(v):vehicleAssetKey(v);
-  const local=vehicleTypeOf(v)==='motorcycle'?`assets/brand_logos/motos/fallback_svg/${key}.svg`:(key==='nissan'||key==='bmw'||key==='audi'?`assets/brand_logos/cars/fallback_svg/${key}.png`:`assets/brand_logos/cars/fallback_svg/${key}.svg`);
+  const local=individualLogoPath(brand, vehicleTypeOf(v)==='motorcycle'?'Moto':'Coche') || (vehicleTypeOf(v)==='motorcycle'?`assets/brand_logos/motos/${key}.png`:`assets/brand_logos/cars/${key}.png`);
   if(!brand) return '<div class="vehicle-brand-fallback">MARCA</div>';
   const auth=AUTH_LOGOS[brand]&&vehicleTypeOf(v)==='motorcycle'?AUTH_LOGOS[brand]:'';
   const individual=individualLogoPath(brand, vehicleTypeOf(v)==='motorcycle'?'Moto':'Coche');
@@ -1521,7 +1521,7 @@ function brandLogo(v){
 }
 function vehicleBg(v){return heroPhoto(v)}
 function populateBrandSelect(type,current){const sel=$('vbrand');if(!sel)return;const list=type==='Moto'?MOTO_BRANDS:CAR_BRANDS;sel.innerHTML='<option value="">Seleccionar marca</option>'+list.map(x=>`<option value="${x[0].replace(/&/g,'&amp;').replace(/"/g,'&quot;')}">${x[0]}</option>`).join('');sel.value=current||'';updateBrandPreview()}
-function updateBrandPreview(){const sel=$('vbrand'),box=$('brandPreview');if(!sel||!box)return;const b=sel.value;if(!b){box.innerHTML='<span>Selecciona una marca</span>';return}const isMoto=$('vehicleFormDialog').classList.contains('moto-mode');const key=isMoto?motorcycleBrandKey({brand:b}):vehicleAssetKey({brand:b});const local=isMoto?`assets/brand_logos/motos/fallback_svg/${key}.svg`:(()=>{const row=CAR_BRANDS.find(x=>x[0]===b);return row?`assets/brand_logos/cars/fallback_svg/${row[1]}.${row[2]}`:''})();const auth=AUTH_LOGOS[b]&&isMoto?AUTH_LOGOS[b]:'';const individual=individualLogoPath(b,isMoto?'Moto':'Coche');const remote=auth||individual?'':logoRemote(b);const src=auth||individual||remote||local;box.innerHTML=`<div class="brand-logo-preview"><img src="${src}" data-fallback="${local}" alt="Logotipo ${b}" loading="eager" onerror="if(this.dataset.fallback && this.src!==this.dataset.fallback){this.src=this.dataset.fallback}"></div>`}
+function updateBrandPreview(){const sel=$('vbrand'),box=$('brandPreview');if(!sel||!box)return;const b=sel.value;if(!b){box.innerHTML='<span>Selecciona una marca</span>';return}const isMoto=$('vehicleFormDialog').classList.contains('moto-mode');const key=isMoto?motorcycleBrandKey({brand:b}):vehicleAssetKey({brand:b});const local=individualLogoPath(b,isMoto?'Moto':'Coche') || (isMoto?`assets/brand_logos/motos/${key}.png`:(()=>{const row=CAR_BRANDS.find(x=>x[0]===b);return row?`assets/brand_logos/cars/${row[1]}.png`:''})());const auth=AUTH_LOGOS[b]&&isMoto?AUTH_LOGOS[b]:'';const individual=individualLogoPath(b,isMoto?'Moto':'Coche');const remote=auth||individual?'':logoRemote(b);const src=auth||individual||remote||local;box.innerHTML=`<div class="brand-logo-preview"><img src="${src}" data-fallback="${local}" alt="Logotipo ${b}" loading="eager" onerror="if(this.dataset.fallback && this.src!==this.dataset.fallback){this.src=this.dataset.fallback}"></div>`}
 function filterVehicleList(q){vehicleListQuery=(q||'').toLowerCase().trim(); renderVehicleList()}
 function cycleVehicleFilter(){vehicleListType=vehicleListType==='all'?'Coche':vehicleListType==='Coche'?'Moto':'all'; const b=$('vehicleFilter'); if(b)b.title=vehicleListType==='all'?'Todos':vehicleListType; renderVehicleList()}
 function renderVehicleList(){
@@ -1919,7 +1919,7 @@ render();
 </script>
 
 <style id="garagey-v28-fixes">
-/* Garagey v28.3 — logos reales de referencia + motos con encuadre completo */
+/* Garagey v28.4 — logos reales de referencia + motos con encuadre completo */
 .vehicle-detail-dialog .vehicle-hero-image{background-repeat:no-repeat!important;background-position:center center!important;background-color:#061827!important;background-size:cover!important;}
 .vehicle-detail-dialog .vehicle-hero-image.is-moto{background-size:contain!important;background-position:center center!important;background-color:#071827!important;}
 .vehicle-detail-dialog .vehicle-hero-image.is-moto img.vehicle-photo{object-fit:contain!important;object-position:center center!important;background:#071827!important;padding:22px 34px!important;box-sizing:border-box!important;}
