@@ -1,14 +1,11 @@
-GARAGEY v25 — COCHES Y MOTOS
+GARAGEY v25.4
 
-Cambios principales:
-- Al pulsar «Añadir vehículo» primero se elige Coche o Moto.
-- Formulario de coche con Marca como selector y vista previa del logo.
-- Nuevo formulario de moto con tipo de moto, cilindrada, potencia, combustible, transmisión, kilometraje, matrícula, VIN, color y fecha de compra.
-- Selector de marcas de moto con recursos visuales y fotografías hero automáticas.
-- La ficha de coche mantiene el diseño aprobado de v24.
-- La ficha de moto adapta los datos al vehículo de dos ruedas manteniendo la misma identidad Garagey.
-- La foto de cada ficha se asigna automáticamente según la marca/tipo.
-- Migración de datos v5→v6: los vehículos existentes se conservan y se consideran coches salvo que ya fueran motos.
-- Se mantiene localStorage, historial, avisos y sincronización/copia de seguridad.
-
-Nota: las imágenes de moto de v25 son recursos visuales generados para Garagey y se reutilizan por familias de marca para mantener un estilo coherente y ligero.
+Cambios:
+- Fotografías hero de vehículos vinculadas automáticamente a la marca seleccionada.
+- Fotografías de coches con fallback robusto para evitar fichas sin imagen.
+- Fotografías de motos limpiadas para eliminar el pequeño encabezado superior que aparecía sobre la imagen.
+- Se mantienen las 36 marcas de motos y sus logotipos.
+- Se han actualizado varias fotografías de motos por imágenes fotográficas representativas de modelos concretos y el resto conserva los recursos de marca de la versión anterior, ya sin el encabezado.
+- El Nissan Qashqai conserva su hero específico.
+- Se mantiene el diseño de la ficha de vehículo y las funciones anteriores.
+- Caché PWA actualizada a v25.4.
