@@ -1266,7 +1266,7 @@ html,body{overflow-x:hidden}
 </div></div>
 <div class="full"><label>Descripción editable de la intervención</label>
 <textarea id="manualDetails" placeholder="Opcional. Permite corregir o ampliar la descripción de una intervención existente."></textarea></div>
-<div class="full cost-panel"><div class="cost-header"><div><label>Coste de piezas y elementos</label><div class="cost-help">Añade cada pieza o elemento y su importe. Garagey calcula automáticamente el coste total.</div></div><span class="badge">€</span></div><div id="costItems"></div><button class="soft" type="button" onclick="addCost()">＋ Añadir pieza</button><div class="cost-total-box"><label>Coste total de la intervención</label><input id="totalCost" type="text" inputmode="decimal" readonly></div></div></div>
+<div class="full cost-panel"><div class="cost-header"><div><label>Coste de piezas y elementos</label><div class="cost-help">Añade cada pieza o elemento y su importe. Garagey calcula automáticamente el coste total.</div></div><span class="badge">€</span></div><div id="costItems"></div><button class="soft" type="button" onclick="addCost()">＋ Añadir pieza</button><div class="cost-total-box"><label>Coste total de la intervención</label><input id="totalCost" type="number" step=".01" min="0" readonly></div></div></div>
 <div class="actions" style="margin-top:20px"><button class="primary" onclick="saveIntervention()">Guardar intervención</button></div></div></div>
 
 <div class="modal" id="settingsModal"><div class="dialog"><div class="top"><h2>⚙️ Ajustes y evolución</h2><button class="soft" onclick="closeModal('settingsModal')">Cerrar</button></div>
@@ -1291,7 +1291,7 @@ html,body{overflow-x:hidden}
    La interfaz puede cambiar sin modificar ni perder los datos.
    Cada futura actualización incrementará schemaVersion y aplicará migraciones. */
 const STORAGE_KEY='garagey_data';
-const CURRENT_SCHEMA=7; // Vehículos ilimitados + tipo estructurado + campos de moto + costes de piezas normalizados
+const CURRENT_SCHEMA=8; // Vehículos ilimitados + tipo estructurado + campos de moto + costes de piezas normalizados
 function freshData(){return {schemaVersion:CURRENT_SCHEMA,vehicles:[],selected:null}}
 let data;
 let editVehicle=null;
@@ -1322,11 +1322,15 @@ function migrate(){
    })}));
    data.schemaVersion=7;
  }
+ if(data.schemaVersion<8){
+   data.vehicles=(data.vehicles||[]).map(v=>({...v,vehicleType:v.vehicleType||(v.type==='Moto'?'motorcycle':'car')}));
+   data.schemaVersion=8;
+ }
  save();
 }
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data));if(window.garageyScheduleAutoBackup)window.garageyScheduleAutoBackup();}
 migrate();
-const $=id=>document.getElementById(id), euro=n=>new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:2}).format(Number(n||0));
+const $=id=>document.getElementById(id), euro=n=>new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(Number(n||0));
 function interventionCost(i){const parts=Array.isArray(i?.parts)?i.parts:[];const partsTotal=parts.reduce((a,p)=>a+Number(p?.cost||0),0);return partsTotal>0?partsTotal:Number(i?.totalCost||0)}
 
 
@@ -1414,7 +1418,7 @@ function vehicleTypeOf(v){return v?.vehicleType || (v?.type==='Moto'?'motorcycle
 function vehicleAssetKey(v){let b=normBrand(v?.brand); if(b.includes('toyota'))return 'toyota'; if(b.includes('volkswagen'))return 'volkswagen'; if(b.includes('renault'))return 'renault'; if(b.includes('seat'))return 'seat'; if(b.includes('peugeot'))return 'peugeot'; if(b.includes('kia'))return 'kia'; if(b.includes('hyundai'))return 'hyundai'; if(b.includes('dacia'))return 'dacia'; if(b.includes('mercedes'))return 'mercedes'; if(b.includes('ford'))return 'ford'; if(b.includes('citroen'))return 'citroen'; if(b.includes('skoda'))return 'skoda'; if(b.includes('opel'))return 'opel'; if(b==='mg'||b.startsWith('mg '))return 'mg'; if(b.includes('volvo'))return 'volvo'; if(b.includes('cupra'))return 'cupra'; if(b.includes('mazda'))return 'mazda'; if(b.includes('honda'))return 'honda'; if(b.includes('suzuki'))return 'suzuki'; if(b.includes('jeep'))return 'jeep'; if(b.includes('fiat'))return 'fiat'; if(b.includes('tesla'))return 'tesla'; if(b.includes('lexus'))return 'lexus'; if(b.includes('mitsubishi'))return 'mitsubishi'; if(b.includes('audi'))return 'audi'; if(b.includes('nissan'))return 'nissan'; if(b.includes('bmw'))return 'bmw'; return 'generic'}
 function motorcycleBrandKey(v){const found=MOTO_BRANDS.find(x=>normBrand(x[0])===normBrand(v?.brand)); return found?found[1]:'generic'}
 function motorcycleHeroKey(v){return MOTO_HERO[v?.brand]||'naked'}
-function heroPhoto(v){if(vehicleTypeOf(v)==='motorcycle')return `assets/moto_heroes/moto_${motorcycleHeroKey(v)}.jpg`; const key=vehicleAssetKey(v); return key==='nissan'?'assets/nissan_hero_tall.jpg':`assets/vehicles/${key}.jpg`}
+function heroPhoto(v){if(vehicleTypeOf(v)==='motorcycle'){const key=motorcycleBrandKey(v); return key==='generic'?'assets/moto_heroes/moto_naked.jpg':`assets/moto_heroes/brands/${key}.jpg`} const key=vehicleAssetKey(v); return key==='nissan'?'assets/nissan_hero_tall.jpg':`assets/vehicles/${key}.jpg`}
 function brandLogo(v){if(vehicleTypeOf(v)==='motorcycle'){const key=motorcycleBrandKey(v); if(key==='generic')return `<div class="vehicle-brand-fallback">${(v.brand||'MOTO').slice(0,12)}</div>`; return `<img class="vehicle-brand-logo" src="assets/brands_moto/${key}.svg" alt="${v.brand||key}" loading="lazy">`} const key=vehicleAssetKey(v); if(key==='generic'){let s=(v.brand||'AUTO').trim(); return `<div class="vehicle-brand-fallback">${s.slice(0,12)}</div>`} const ext=(key==='nissan'||key==='bmw'||key==='audi')?'png':'svg'; return `<img class="vehicle-brand-logo" src="assets/brands/${key}.${ext}" alt="${v.brand||key}" loading="lazy">`}
 function vehicleBg(v){return heroPhoto(v)}
 function populateBrandSelect(type,current){const sel=$('vbrand');if(!sel)return;const list=type==='Moto'?MOTO_BRANDS:CAR_BRANDS;sel.innerHTML='<option value="">Seleccionar marca</option>'+list.map(x=>`<option value="${x[0].replace(/&/g,'&amp;').replace(/"/g,'&quot;')}">${x[0]}</option>`).join('');sel.value=current||'';updateBrandPreview()}
@@ -1549,9 +1553,8 @@ function typeFields(){
  let map={'Mantenimiento':'maintenanceFields','Neumáticos':'tireFields','Correa/Cadena':'beltFields','Varios':'otherFields','ITV':'itvFields','Seguro':'insuranceFields','Impuestos':'taxFields'};
  $(map[t]).classList.remove('hidden');
 }
-function parseMoney(v){if(v==null)return 0;let s=String(v).trim().replace(/\s/g,'');if(!s)return 0;if(s.includes(',')&&s.includes('.')){s=s.lastIndexOf(',')>s.lastIndexOf('.')?s.replace(/\./g,'').replace(',','.'):s.replace(/,/g,'')}else{s=s.replace(',','.')}const n=Number(s);return Number.isFinite(n)?n:0}
-function updateTotalCost(){const total=[...document.querySelectorAll('#costItems .cost-row .cost-value')].reduce((a,x)=>a+parseMoney(x.value),0);$('totalCost').value=total.toFixed(2);return total}
-function addCost(){let d=document.createElement('div');d.className='cost-row';d.innerHTML='<input placeholder="Pieza o elemento"><input class="cost-value" type="text" inputmode="decimal" placeholder="Coste €"><button class="danger" type="button" onclick="this.parentElement.remove();updateTotalCost()">×</button>';d.querySelector('.cost-value').addEventListener('input',updateTotalCost);$('costItems').appendChild(d);updateTotalCost()}
+function updateTotalCost(){const total=[...document.querySelectorAll('#costItems .cost-row input[type=number]')].reduce((a,x)=>a+Number(x.value||0),0);$('totalCost').value=total.toFixed(2);return total}
+function addCost(){let d=document.createElement('div');d.className='cost-row';d.innerHTML='<input placeholder="Pieza o elemento"><input type="number" step=".01" min="0" placeholder="Coste €"><button class="danger" type="button" onclick="this.parentElement.remove();updateTotalCost()">×</button>';d.querySelector('input[type=number]').addEventListener('input',updateTotalCost);$('costItems').appendChild(d);updateTotalCost()}
 function saveIntervention(){
  let v=data.vehicles.find(x=>x.id===data.selected),type=$('itype').value,details='';
  if(type==='Mantenimiento')details=[...document.querySelectorAll('#maintenanceFields input:checked')].map(x=>x.value).join(', ')||'Mantenimiento general';
@@ -1563,7 +1566,7 @@ function saveIntervention(){
  if(type==='Impuestos')details=`${$('taxType').value}${$('taxDueDate').value?' · Pago: '+$('taxDueDate').value:''}${$('taxNotes').value?' · '+$('taxNotes').value:''}`;
  let manual=$('manualDetails').value.trim(); if(manual)details=manual;
  let km=Number($('ikm').value||0),interval=Number($('inext').value||0);
- let parts=[...document.querySelectorAll('.cost-row')].map(r=>({name:r.querySelectorAll('input')[0].value,cost:parseMoney(r.querySelectorAll('input')[1].value)})).filter(x=>x.name||x.cost);
+ let parts=[...document.querySelectorAll('.cost-row')].map(r=>({name:r.querySelectorAll('input')[0].value,cost:Number(r.querySelectorAll('input')[1].value||0)})).filter(x=>x.name||x.cost);
  let partsTotal=parts.reduce((a,p)=>a+Number(p.cost||0),0);let record={type,date:$('idate').value,km,nextKm:interval?km+interval:null,interval,details,parts,totalCost:partsTotal};
  if(window.editIntervention){
    let existing=(v.interventions||[]).find(x=>x.id===window.editIntervention);
