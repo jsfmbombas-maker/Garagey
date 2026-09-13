@@ -1,11 +1,11 @@
-GARAGEY v25.4
+GARAGEY v26.1
 
-Cambios:
-- Fotografías hero de vehículos vinculadas automáticamente a la marca seleccionada.
-- Fotografías de coches con fallback robusto para evitar fichas sin imagen.
-- Fotografías de motos limpiadas para eliminar el pequeño encabezado superior que aparecía sobre la imagen.
-- Se mantienen las 36 marcas de motos y sus logotipos.
-- Se han actualizado varias fotografías de motos por imágenes fotográficas representativas de modelos concretos y el resto conserva los recursos de marca de la versión anterior, ya sin el encabezado.
-- El Nissan Qashqai conserva su hero específico.
-- Se mantiene el diseño de la ficha de vehículo y las funciones anteriores.
-- Caché PWA actualizada a v25.4.
+Cambios de esta versión:
+- Fotografías de las fichas de vehículos optimizadas para Android: menor ampliación y mejor nitidez percibida.
+- Catálogo de fotografías de motos preparado para mostrarse con encuadre más equilibrado.
+- Asociación automática marca → fotografía en las fichas de vehículos.
+- En el formulario de creación/edición, debajo de Marca se muestra únicamente el logotipo de la marca; ya no se muestra la fotografía del vehículo.
+- Se mantiene el catálogo de 27 marcas de coches y 36 marcas de motos con sus logotipos.
+- Fallback de fotografía reforzado para coches y motos.
+- Se mantienen vehículos, intervenciones, costes, avisos, historial y Google Drive.
+- Caché PWA actualizada a v26.1.

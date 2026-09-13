@@ -1220,6 +1220,38 @@ html,body{overflow-x:hidden}
 @media(max-width:600px),(pointer:coarse){.brand-preview{height:132px;min-height:132px}.brand-preview-label b{font-size:13px}}
 </style>
 
+
+<style id="garagey-v26-1-fixes">
+/* v26.1 — ficha fotográfica y selector de marca */
+.brand-preview{
+  min-height:76px!important;height:76px!important;margin-top:8px!important;padding:8px 12px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  border:1px solid #d7e0ea!important;border-radius:14px!important;background:#f8fafc!important;
+  overflow:hidden!important;
+}
+.brand-preview-photo,.brand-preview-label{display:none!important}
+.brand-logo-preview{width:100%;height:100%;display:flex;align-items:center;justify-content:center;gap:12px;color:#172033}
+.brand-logo-preview img{width:64px!important;height:58px!important;max-width:64px!important;max-height:58px!important;object-fit:contain!important;filter:none!important;border-radius:0!important}
+.brand-logo-preview b{display:none!important}
+
+/* La fotografía solo aparece en la ficha, no en el formulario. */
+.vehicle-detail-dialog .vehicle-hero{height:360px!important;min-height:360px!important;overflow:hidden!important}
+.vehicle-detail-dialog .vehicle-hero-content{height:360px!important;min-height:360px!important}
+.vehicle-detail-dialog .vehicle-hero-image{z-index:0!important;background-image:none!important;background:#061827!important}
+.vehicle-detail-dialog .vehicle-hero-image img.vehicle-photo{
+  z-index:0!important;display:block!important;position:absolute!important;inset:0!important;
+  width:100%!important;height:100%!important;max-width:none!important;
+  object-fit:cover!important;object-position:center center!important;
+  image-rendering:auto!important;opacity:1!important;
+}
+.vehicle-detail-dialog .vehicle-hero-image:after{z-index:1!important}
+@media(max-width:600px),(pointer:coarse){
+  .vehicle-detail-dialog .vehicle-hero{height:350px!important;min-height:350px!important}
+  .vehicle-detail-dialog .vehicle-hero-content{height:350px!important;min-height:350px!important}
+  .vehicle-detail-dialog .vehicle-hero-image img.vehicle-photo{object-fit:cover!important;object-position:center center!important}
+  .brand-preview{height:72px!important;min-height:72px!important}
+}
+</style>
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
@@ -1434,7 +1466,7 @@ function heroPhoto(v){if(vehicleTypeOf(v)==='motorcycle'){const key=motorcycleBr
 function brandLogo(v){if(vehicleTypeOf(v)==='motorcycle'){const key=motorcycleBrandKey(v); if(key==='generic')return `<div class="vehicle-brand-fallback">${(v.brand||'MOTO').slice(0,12)}</div>`; return `<img class="vehicle-brand-logo" src="assets/brands_moto/${key}.svg" alt="${v.brand||key}" loading="lazy">`} const key=vehicleAssetKey(v); if(key==='generic'){let s=(v.brand||'AUTO').trim(); return `<div class="vehicle-brand-fallback">${s.slice(0,12)}</div>`} const ext=(key==='nissan'||key==='bmw'||key==='audi')?'png':'svg'; return `<img class="vehicle-brand-logo" src="assets/brands/${key}.${ext}" alt="${v.brand||key}" loading="lazy">`}
 function vehicleBg(v){return heroPhoto(v)}
 function populateBrandSelect(type,current){const sel=$('vbrand');if(!sel)return;const list=type==='Moto'?MOTO_BRANDS:CAR_BRANDS;sel.innerHTML='<option value="">Seleccionar marca</option>'+list.map(x=>`<option value="${x[0].replace(/&/g,'&amp;').replace(/"/g,'&quot;')}">${x[0]}</option>`).join('');sel.value=current||'';updateBrandPreview()}
-function updateBrandPreview(){const sel=$('vbrand'),box=$('brandPreview');if(!sel||!box)return;const b=sel.value;if(!b){box.innerHTML='<span>Selecciona una marca para ver su imagen</span>';return}const isMoto=$('vehicleFormDialog').classList.contains('moto-mode');const v={brand:b,vehicleType:isMoto?'motorcycle':'car'};const photo=heroPhoto(v);const key=isMoto?motorcycleBrandKey(v):vehicleAssetKey(v);const logo=isMoto?`assets/brands_moto/${key}.svg`:(()=>{const row=CAR_BRANDS.find(x=>x[0]===b);return row?`assets/brands/${row[1]}.${row[2]}`:''})();box.innerHTML=`<div class="brand-preview-photo"><img src="${photo}" onerror="this.style.display='none'" alt="${b}"></div><div class="brand-preview-label">${logo?`<img src="${logo}" alt="" loading="lazy">`:''}<b>${b}</b></div>`}
+function updateBrandPreview(){const sel=$('vbrand'),box=$('brandPreview');if(!sel||!box)return;const b=sel.value;if(!b){box.innerHTML='<span>Selecciona una marca</span>';return}const isMoto=$('vehicleFormDialog').classList.contains('moto-mode');const key=isMoto?motorcycleBrandKey({brand:b}):vehicleAssetKey({brand:b});const logo=isMoto?`assets/brands_moto/${key}.svg`:(()=>{const row=CAR_BRANDS.find(x=>x[0]===b);return row?`assets/brands/${row[1]}.${row[2]}`:''})();box.innerHTML=logo?`<div class="brand-logo-preview"><img src="${logo}" alt="Logotipo ${b}" loading="eager"></div>`:`<div class="brand-logo-preview"><span>${b}</span></div>`}
 function filterVehicleList(q){vehicleListQuery=(q||'').toLowerCase().trim(); renderVehicleList()}
 function cycleVehicleFilter(){vehicleListType=vehicleListType==='all'?'Coche':vehicleListType==='Coche'?'Moto':'all'; const b=$('vehicleFilter'); if(b)b.title=vehicleListType==='all'?'Todos':vehicleListType; renderVehicleList()}
 function renderVehicleList(){
