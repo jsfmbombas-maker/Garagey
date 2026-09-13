@@ -678,8 +678,8 @@ html,body{width:100%!important;min-width:0!important;max-width:100%!important;ov
 .vehicle-card-premium:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,13,25,.98) 0%,rgba(2,13,25,.84) 34%,rgba(2,13,25,.28) 64%,rgba(2,13,25,.12) 100%),linear-gradient(0deg,rgba(2,13,25,.92) 0%,rgba(2,13,25,.02) 65%);z-index:-1}
 .vehicle-card-inner{position:relative;z-index:2;min-height:285px;padding:18px 16px 13px;display:flex;flex-direction:column;justify-content:space-between}
 .vehicle-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.vehicle-brand-logo{width:66px;height:50px;object-fit:contain;object-position:left center;filter:drop-shadow(0 2px 8px #0008);border-radius:8px}
-.vehicle-brand-fallback{height:50px;min-width:66px;padding:0 8px;display:flex;align-items:center;font-size:14px;font-weight:900;color:#fff;border:1px solid #75bfff88;border-radius:12px;background:#06213a}
+.vehicle-brand-logo{width:128px;height:104px;object-fit:contain;object-position:center center;filter:drop-shadow(0 2px 8px #0008);border-radius:8px}
+.vehicle-brand-fallback{height:104px;min-width:128px;padding:0 8px;display:flex;align-items:center;font-size:14px;font-weight:900;color:#fff;border:1px solid #75bfff88;border-radius:12px;background:#06213a}
 .vehicle-card-arrow{font-size:34px;line-height:1;color:#fff;text-shadow:0 2px 9px #0009;margin-top:3px}
 .vehicle-card-name{font-size:27px;line-height:1.04;font-weight:900;letter-spacing:-.03em;margin-top:2px;text-shadow:0 2px 12px #000}
 .vehicle-card-meta{font-size:15px;color:#c4dfff;margin-top:6px;font-weight:600}
@@ -875,7 +875,7 @@ html,body{overflow-x:hidden}
 
 /* GARAGEY v17 — composición Signature Android definitiva */
 .vehicle-detail-dialog .vehicle-hero-image{
-  background-image:url(assets/vehicles/nissan.jpg) !important;
+  background-image:url(assets/vehicle_images/cars/nissan.jpg) !important;
   background-size:cover !important;
   background-position:center center !important;
   background-repeat:no-repeat !important;
@@ -957,7 +957,7 @@ html,body{overflow-x:hidden}
 }
 .vehicle-detail-dialog .vehicle-hero-image{
   position:absolute!important; inset:0!important; display:block!important;
-  background-image:url(assets/nissan.jpg)!important; background-size:cover!important;
+  background-image:url(assets/vehicle_images/cars/nissan.jpg)!important; background-size:cover!important;
   background-position:center center!important; background-repeat:no-repeat!important;
   filter:none!important;
 }
@@ -1231,7 +1231,7 @@ html,body{overflow-x:hidden}
 }
 .brand-preview-photo,.brand-preview-label{display:none!important}
 .brand-logo-preview{width:100%;height:100%;display:flex;align-items:center;justify-content:center;gap:12px;color:#172033}
-.brand-logo-preview img{width:64px!important;height:58px!important;max-width:64px!important;max-height:58px!important;object-fit:contain!important;filter:none!important;border-radius:0!important}
+.brand-logo-preview img{width:150px!important;height:120px!important;max-width:150px!important;max-height:120px!important;object-fit:contain!important;filter:none!important;border-radius:0!important}
 .brand-logo-preview b{display:none!important}
 
 /* La fotografía solo aparece en la ficha, no en el formulario. */
@@ -1255,7 +1255,7 @@ html,body{overflow-x:hidden}
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v28 · Coches y motos · Logotipos por marca · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v28.1 · Coches y motos · Logotipos por marca · Diseño Android</div></div>
 
 <div class="modal" id="vehicleTypeModal"><div class="dialog"><div class="top"><h2>🚘🏍️ Añadir vehículo</h2><button class="soft" onclick="closeModal('vehicleTypeModal')">Cerrar</button></div><p class="vehicle-type-intro">Primero elige qué tipo de vehículo quieres añadir.</p><div class="vehicle-type-grid"><button class="vehicle-type-choice" onclick="chooseVehicleType('Coche')"><span class="choice-icon">🚘</span><b>Coche</b><small>Ficha completa de automóvil</small></button><button class="vehicle-type-choice" onclick="chooseVehicleType('Moto')"><span class="choice-icon">🏍️</span><b>Moto</b><small>Ficha adaptada a motocicleta</small></button></div></div></div>
 
@@ -1334,7 +1334,7 @@ html,body{overflow-x:hidden}
    La interfaz puede cambiar sin modificar ni perder los datos.
    Cada futura actualización incrementará schemaVersion y aplicará migraciones. */
 const STORAGE_KEY='garagey_data';
-const CURRENT_SCHEMA=9; // v28: logotipos de marca actualizados + fotos de moto con encuadre completo
+const CURRENT_SCHEMA=9; // v28.2: logotipos de marca actualizados + fotos de moto con encuadre completo
 function freshData(){return {schemaVersion:CURRENT_SCHEMA,vehicles:[],selected:null}}
 let data;
 let editVehicle=null;
@@ -1465,20 +1465,23 @@ function motorcycleHeroKey(v){return MOTO_HERO[v?.brand]||'naked'}
 function heroPhoto(v){
   if(vehicleTypeOf(v)==='motorcycle'){
     const key=motorcycleBrandKey(v);
-    return key==='generic'?'assets/moto_heroes/moto_naked.jpg':`assets/moto_heroes/brands/${key}.jpg`;
+    return key==='generic'?'assets/vehicle_images/motos/generic/moto_naked.jpg':`assets/vehicle_images/motos/brands/${key}.jpg`;
   }
   const key=vehicleAssetKey(v);
-  return key==='nissan'?'assets/nissan_hero_tall.jpg':`assets/vehicles/${key}.jpg`;
+  return key==='nissan'?'assets/vehicle_images/cars/nissan_hero_tall.jpg':`assets/vehicle_images/cars/${key}.jpg`;
 }
 const BRAND_LOGO_SLUGS={
   'Toyota':'toyota','Mitsubishi':'mitsubishi','Honda':'honda','Citroën':'citroen','Suzuki':'suzuki','Volvo':'volvo','Nissan':'nissan','Mazda':'mazda','Fiat':'fiat','SEAT':'seat','Lexus':'lexus','Dacia':'dacia','Ford':'ford','Kia':'kia','Audi':'audi','Škoda':'skoda','Tesla':'tesla','Renault':'renault','Hyundai':'hyundai','Peugeot':'peugeot','CUPRA':'cupra','Mercedes-Benz':'mercedes','BMW':'bmw','Jeep':'jeep','Volkswagen':'volkswagen','MG':'mg','Opel':'opel',
   'Aprilia':'aprilia','Benda':'benda','Benelli':'benelli','BMW Motorrad':'bmw','CFMoto':'cfmoto','Ducati':'ducati','GasGas':'gasgas','Harley-Davidson':'harleydavidson','Hero MotoCorp':'heromotocorp','Husqvarna':'husqvarna','Indian':'indianmotorcycle','Kawasaki':'kawasaki','Keeway':'keeway','Kove':'kove','KTM':'ktm','Kymco':'kymco','Macbor':'macbor','Mash':'mash','Mitt':'mitt','Moto Guzzi':'motoguzzi','Moto Morini':'motomorini','MV Agusta':'mvagusta','Piaggio':'piaggio','QJ Motor':'qjmotor','Rieju':'rieju','Royal Enfield':'royalenfield','SYM':'sym','Triumph':'triumph','Vespa':'vespa','Voge':'voge','Yamaha':'yamahamotorcorporation','Zontes':'zontes','Zero':'zero'
 };
 const AUTH_LOGOS={
-  'Honda':'assets/brand_logos_auth/honda.png',
-  'Kawasaki':'assets/brand_logos_auth/kawasaki.png',
-  'Ducati':'assets/brand_logos_auth/ducati.png'
+  'Honda':'assets/brand_logos/motos/honda.png',
+  'Kawasaki':'assets/brand_logos/motos/kawasaki.png',
+  'Ducati':'assets/brand_logos/motos/ducati.png'
 };
+const INDIVIDUAL_LOGOS_CAR=new Set(['audi','bmw','citroen','dacia','fiat','ford','honda','hyundai','kia','mazda','mercedes','nissan','opel','peugeot','renault','seat','skoda','toyota','volkswagen','volvo']);
+const INDIVIDUAL_LOGOS_MOTO=new Set(['aprilia','benelli','bmw_motorrad','ducati','harley_davidson','honda','kawasaki','ktm','moto_guzzi','piaggio','royal_enfield','suzuki','triumph','yamaha','vespa','beta','cfmoto','malaguti','rieju','sherco','tm','husqvarna','gasgas','indian','zontes','voge','qj_motor','brixton','keeway','ksr_moto','fantic','mondial','rvm','swm','um','victory']);
+function individualLogoPath(brand,type){ const key=type==='Moto'?motorcycleBrandKey({brand}):vehicleAssetKey({brand}); const set=type==='Moto'?INDIVIDUAL_LOGOS_MOTO:INDIVIDUAL_LOGOS_CAR; return set.has(key)?`assets/brand_logos/${type==='Moto'?'motos':'cars'}/${key}.png`:''; }
 const BRAND_LOGO_COLORS={
   'Toyota':'EB0A1E','Mitsubishi':'E60012','Honda':'CC0000','Citroën':'E0002A','Suzuki':'E30613','Volvo':'111111','Nissan':'C3002F','Mazda':'111111','Fiat':'8B1E2D','SEAT':'111111','Lexus':'111111','Dacia':'646B72','Ford':'003478','Kia':'111111','Audi':'BB0A30','Škoda':'4BA82E','Tesla':'E82127','Renault':'111111','Hyundai':'002C5F','Peugeot':'111111','CUPRA':'111111','Mercedes-Benz':'111111','BMW':'0066B1','Jeep':'111111','Volkswagen':'001E50','MG':'A6192E','Opel':'F2A900',
   'Aprilia':'D71920','Benda':'111111','Benelli':'008C44','BMW Motorrad':'0066B1','CFMoto':'00AEEF','Ducati':'D50000','GasGas':'E30613','Harley-Davidson':'F58220','Hero MotoCorp':'E31837','Husqvarna':'006F9B','Indian':'111111','Kawasaki':'5A9E1B','Keeway':'111111','Kove':'E30613','KTM':'FF6600','Kymco':'111111','Macbor':'E30613','Mash':'111111','Mitt':'E30613','Moto Guzzi':'111111','Moto Morini':'B40000','MV Agusta':'E30613','Peugeot':'111111','Piaggio':'0066A1','QJ Motor':'D71920','Rieju':'E30613','Royal Enfield':'C62828','SYM':'D71920','Triumph':'111111','Vespa':'008C95','Voge':'111111','Yamaha':'E60012','Zontes':'111111','Zero':'111111'
@@ -1489,16 +1492,17 @@ function brandLogo(v){
   const brand=(v?.brand||'').trim();
   const slug=logoSlug(brand);
   const key=vehicleTypeOf(v)==='motorcycle'?motorcycleBrandKey(v):vehicleAssetKey(v);
-  const local=vehicleTypeOf(v)==='motorcycle'?`assets/brands_moto/${key}.svg`:(key==='nissan'||key==='bmw'||key==='audi'?`assets/brands/${key}.png`:`assets/brands/${key}.svg`);
+  const local=vehicleTypeOf(v)==='motorcycle'?`assets/brand_logos/motos/fallback_svg/${key}.svg`:(key==='nissan'||key==='bmw'||key==='audi'?`assets/brand_logos/cars/fallback_svg/${key}.png`:`assets/brand_logos/cars/fallback_svg/${key}.svg`);
   if(!brand) return '<div class="vehicle-brand-fallback">MARCA</div>';
-  const auth=AUTH_LOGOS[brand]||'';
-  const remote=auth?'':logoRemote(brand);
-  const src=auth||remote||local;
+  const auth=AUTH_LOGOS[brand]&&vehicleTypeOf(v)==='motorcycle'?AUTH_LOGOS[brand]:'';
+  const individual=individualLogoPath(brand, vehicleTypeOf(v)==='motorcycle'?'Moto':'Coche');
+  const remote=auth||individual?'':logoRemote(brand);
+  const src=auth||individual||remote||local;
   return `<img class="vehicle-brand-logo real-brand-logo" src="${src}" data-fallback="${local}" alt="Logotipo ${brand}" loading="lazy" onerror="if(this.dataset.fallback && this.src!==this.dataset.fallback){this.src=this.dataset.fallback}else{this.replaceWith(Object.assign(document.createElement('span'),{className:'vehicle-brand-fallback',textContent:'${brand.replace("'","\'")}' }))}">`;
 }
 function vehicleBg(v){return heroPhoto(v)}
 function populateBrandSelect(type,current){const sel=$('vbrand');if(!sel)return;const list=type==='Moto'?MOTO_BRANDS:CAR_BRANDS;sel.innerHTML='<option value="">Seleccionar marca</option>'+list.map(x=>`<option value="${x[0].replace(/&/g,'&amp;').replace(/"/g,'&quot;')}">${x[0]}</option>`).join('');sel.value=current||'';updateBrandPreview()}
-function updateBrandPreview(){const sel=$('vbrand'),box=$('brandPreview');if(!sel||!box)return;const b=sel.value;if(!b){box.innerHTML='<span>Selecciona una marca</span>';return}const isMoto=$('vehicleFormDialog').classList.contains('moto-mode');const key=isMoto?motorcycleBrandKey({brand:b}):vehicleAssetKey({brand:b});const local=isMoto?`assets/brands_moto/${key}.svg`:(()=>{const row=CAR_BRANDS.find(x=>x[0]===b);return row?`assets/brands/${row[1]}.${row[2]}`:''})();const auth=AUTH_LOGOS[b]||'';const remote=auth?'':logoRemote(b);const src=auth||remote||local;box.innerHTML=`<div class="brand-logo-preview"><img src="${src}" data-fallback="${local}" alt="Logotipo ${b}" loading="eager" onerror="if(this.dataset.fallback && this.src!==this.dataset.fallback){this.src=this.dataset.fallback}"></div>`}
+function updateBrandPreview(){const sel=$('vbrand'),box=$('brandPreview');if(!sel||!box)return;const b=sel.value;if(!b){box.innerHTML='<span>Selecciona una marca</span>';return}const isMoto=$('vehicleFormDialog').classList.contains('moto-mode');const key=isMoto?motorcycleBrandKey({brand:b}):vehicleAssetKey({brand:b});const local=isMoto?`assets/brand_logos/motos/fallback_svg/${key}.svg`:(()=>{const row=CAR_BRANDS.find(x=>x[0]===b);return row?`assets/brand_logos/cars/fallback_svg/${row[1]}.${row[2]}`:''})();const auth=AUTH_LOGOS[b]&&isMoto?AUTH_LOGOS[b]:'';const individual=individualLogoPath(b,isMoto?'Moto':'Coche');const remote=auth||individual?'':logoRemote(b);const src=auth||individual||remote||local;box.innerHTML=`<div class="brand-logo-preview"><img src="${src}" data-fallback="${local}" alt="Logotipo ${b}" loading="eager" onerror="if(this.dataset.fallback && this.src!==this.dataset.fallback){this.src=this.dataset.fallback}"></div>`}
 function filterVehicleList(q){vehicleListQuery=(q||'').toLowerCase().trim(); renderVehicleList()}
 function cycleVehicleFilter(){vehicleListType=vehicleListType==='all'?'Coche':vehicleListType==='Coche'?'Moto':'all'; const b=$('vehicleFilter'); if(b)b.title=vehicleListType==='all'?'Todos':vehicleListType; renderVehicleList()}
 function renderVehicleList(){
@@ -1904,8 +1908,8 @@ render();
 .vehicle-detail-dialog .vehicle-hero-image.photo-fallback{background-size:cover!important;}
 .vehicle-detail-dialog .vehicle-actions-pro{grid-template-columns:1fr 1fr!important;gap:10px!important;}
 .vehicle-detail-dialog .vehicle-actions-pro .delete-vehicle-btn{display:flex!important;align-items:center!important;justify-content:center!important;min-height:48px!important;border:1px solid #ff5c6c!important;border-radius:14px!important;background:linear-gradient(180deg,#7d1f2c,#551521)!important;color:#fff!important;font-weight:800!important;box-shadow:0 6px 18px rgba(120,20,35,.25)!important;}
-.vehicle-brand-logo.real-brand-logo{background:#fff!important;border-radius:10px!important;padding:4px!important;filter:none!important;}
-.brand-logo-preview img{background:#fff!important;border-radius:12px!important;padding:8px!important;}
+.vehicle-brand-logo.real-brand-logo{background:transparent!important;border-radius:0!important;padding:0!important;filter:drop-shadow(0 2px 8px #0008)!important;}
+.brand-logo-preview img{background:transparent!important;border-radius:0!important;padding:0!important;}
 @media(max-width:600px),(pointer:coarse){
  .vehicle-detail-dialog .vehicle-hero-image.is-moto img.vehicle-photo{object-fit:contain!important;padding:28px 18px!important;}
  .vehicle-detail-dialog .vehicle-actions-pro .delete-vehicle-btn{font-size:13px!important;}

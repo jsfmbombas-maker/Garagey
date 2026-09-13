@@ -9,3 +9,19 @@ Cambios de esta versión:
 - Fallback de fotografía reforzado para coches y motos.
 - Se mantienen vehículos, intervenciones, costes, avisos, historial y Google Drive.
 - Caché PWA actualizada a v26.1.
+
+
+LOGOTIPOS INDIVIDUALIZADOS v28
+Se añade assets/brand_logos_v28/ con PNG 512x512 por marca. Honda, Kawasaki y Ducati de moto conservan las referencias exactas proporcionadas por el usuario. El resto de los archivos se han individualizado a partir de la lámina de referencia de Garagey.
+
+
+Garagey v28.2 — reorganización de assets
+- assets/brand_logos/cars: logotipos de coches
+- assets/brand_logos/motos: logotipos de motos
+- assets/brand_logos/*/fallback_svg: logotipos SVG de respaldo
+- assets/vehicle_images/cars: fotos de vehículos/coches
+- assets/vehicle_images/motos: fotos de motos y fondos genéricos
+- icons: iconos PWA
+
+Los logotipos PNG han sido reencuadrados y centrados en lienzos 512x512.
+Las fotos de vehículos proceden de la base estable Garagey v28 y se conservan.
