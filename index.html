@@ -1263,7 +1263,40 @@ html,body{overflow-x:hidden}
 .vehicle-hero-image.is-moto .vehicle-photo{object-fit:contain!important;padding:10px!important;box-sizing:border-box!important}
 .vehicle-hero-image.photo-fallback{background:#071a2b!important}
 </style>
-<style id="garagey-v28-8-create-form">
+<style id="garagey-v28-6-add-vehicle-exact">
+.garagey-type-modal{padding:0!important;background:#03182af5!important;overflow:hidden!important;z-index:90!important}
+.garagey-type-dialog{width:min(100%,900px);min-height:100dvh;margin:0 auto;background:linear-gradient(180deg,#041a2d 0%,#03182a 100%);border:2px solid #19a9ff;border-radius:30px;box-shadow:0 0 30px rgba(0,164,255,.2),inset 0 0 0 1px rgba(77,197,255,.18);overflow:hidden;color:#fff}
+.garagey-type-header{height:130px;display:flex;align-items:center;gap:28px;padding:20px 42px;border-bottom:1px solid rgba(27,139,210,.5);box-sizing:border-box}
+.garagey-back{width:58px;height:58px;border:0;background:transparent;color:#fff;font-size:58px;line-height:1;font-weight:300;padding:0;display:grid;place-items:center;cursor:pointer;margin-top:-4px}
+.garagey-type-header h2{margin:0;font-size:36px;letter-spacing:-.03em;color:#fff}
+.garagey-type-content{padding:96px 42px 80px;text-align:center}
+.garagey-type-question{font-size:42px;line-height:1.18;font-weight:900;letter-spacing:-.035em;margin-bottom:86px;text-shadow:0 3px 12px rgba(0,0,0,.2)}
+.garagey-type-choices{display:flex;flex-direction:column;gap:28px;align-items:center}
+.garagey-type-card{display:block;width:min(100%,775px);padding:0;border:0;background:transparent;cursor:pointer;border-radius:32px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.22);transition:transform .16s ease,filter .16s ease}
+.garagey-type-card img{display:block;width:100%;height:auto;border-radius:32px}
+.garagey-type-card:active{transform:scale(.985);filter:brightness(.95)}
+.garagey-type-card:focus-visible{outline:3px solid #fff;outline-offset:5px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:600px){
+ .garagey-type-dialog{width:100%;border-radius:24px}
+ .garagey-type-header{height:125px;padding:20px 26px;gap:18px}
+ .garagey-back{width:48px;height:48px;font-size:50px}
+ .garagey-type-header h2{font-size:30px}
+ .garagey-type-content{padding:76px 22px 60px}
+ .garagey-type-question{font-size:34px;margin-bottom:78px}
+ .garagey-type-choices{gap:28px}
+ .garagey-type-card{width:100%;border-radius:28px}
+ .garagey-type-card img{border-radius:28px}
+}
+@media(max-width:390px){
+ .garagey-type-header{height:112px;padding:18px 20px}
+ .garagey-type-header h2{font-size:27px}
+ .garagey-type-content{padding:62px 16px 48px}
+ .garagey-type-question{font-size:29px;margin-bottom:58px}
+}
+</style>
+
+<style id="garagey-v28-9-create-form">
 .vehicle-form-dialog{background:#031729!important;color:#eef8ff!important;max-width:780px!important;border:1px solid #087bc0!important;box-shadow:0 20px 70px rgba(0,0,0,.45),0 0 28px rgba(0,180,255,.12)!important;overflow:hidden!important}
 .vehicle-form-header{display:flex;align-items:center;gap:12px;padding:14px 16px 12px;background:linear-gradient(180deg,#061d31,#041729);border-bottom:1px solid #0b4770;position:sticky;top:0;z-index:20}.vehicle-form-header>div{min-width:0;flex:1}.vehicle-back{width:38px;height:38px;border:0;border-radius:50%;background:transparent;color:#eaf8ff;font-size:34px;line-height:1;cursor:pointer}.vehicle-form-kicker{font-size:9px;letter-spacing:1.5px;color:#56baf0;font-weight:800}.vehicle-form-title{margin:2px 0 0;font-size:21px;font-weight:850;color:#fff}.vehicle-form-caption{margin-top:2px;color:#9dbbd0;font-size:11px}.vehicle-form-header .soft{background:#0a263d!important;border:1px solid #245779!important;color:#dceeff!important;padding:8px 11px!important}
 .vehicle-form-hero{position:relative;height:185px;margin:0;background:#061827;overflow:hidden;border-bottom:1px solid #078fd2}.vehicle-form-hero-photo{position:absolute;inset:0;background:#061827 center/cover no-repeat}.vehicle-form-hero-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,15,28,.92) 0%,rgba(2,15,28,.52) 43%,rgba(2,15,28,.08) 100%),linear-gradient(0deg,rgba(2,15,28,.82),transparent 58%)}.vehicle-form-hero-content{position:relative;z-index:2;height:100%;display:flex;align-items:flex-end;padding:16px}.vehicle-form-hero-brand{display:flex;align-items:center;gap:12px}.form-brand-badge{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:rgba(4,29,48,.86);border:1px solid #3c9bd1;box-shadow:0 0 18px rgba(0,170,255,.18);backdrop-filter:blur(5px)}.form-brand-badge img{width:46px;height:46px;object-fit:contain}.vehicle-form-hero-brand span{display:block;font-size:11px;color:#6dc5f2;font-weight:800}.vehicle-form-hero-brand b{display:block;font-size:22px;color:#fff;line-height:1.1}.vehicle-form-hero-brand small{display:block;color:#b2cadb;font-size:11px;margin-top:3px}
@@ -1274,9 +1307,9 @@ html,body{overflow-x:hidden}
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v28.8 · Coches y motos · Logotipos por marca · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v28.9 · Coches y motos · Logotipos por marca · Diseño Android</div></div>
 
-<div class="modal" id="vehicleTypeModal"><div class="dialog"><div class="top"><h2>🚘🏍️ Añadir vehículo</h2><button class="soft" onclick="closeModal('vehicleTypeModal')">Cerrar</button></div><p class="vehicle-type-intro">Primero elige qué tipo de vehículo quieres añadir.</p><div class="vehicle-type-grid"><button class="vehicle-type-choice" onclick="chooseVehicleType('Coche')"><span class="choice-icon">🚘</span><b>Coche</b><small>Ficha completa de automóvil</small></button><button class="vehicle-type-choice" onclick="chooseVehicleType('Moto')"><span class="choice-icon">🏍️</span><b>Moto</b><small>Ficha adaptada a motocicleta</small></button></div></div></div>
+<div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog vehicle-form-dialog car-mode" id="vehicleFormDialog">
 <div class="vehicle-form-header"><button class="vehicle-back" onclick="closeModal('vehicleModal')" aria-label="Volver">‹</button><div><div class="vehicle-form-kicker">GARAGEY · VEHÍCULO</div><h2 class="vehicle-form-title">Añadir vehículo</h2><div class="vehicle-form-caption" id="vehicleFormCaption">Datos del coche y características principales</div></div><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
@@ -1937,7 +1970,7 @@ render();
 </script>
 
 <style id="garagey-v28-fixes">
-/* Garagey v28.8 — logos reducidos al 50% + motos con encuadre completo */
+/* Garagey v28.9 — logos reducidos al 50% + motos con encuadre completo */
 .vehicle-detail-dialog .vehicle-hero-image{background-repeat:no-repeat!important;background-position:center center!important;background-color:#061827!important;background-size:cover!important;}
 .vehicle-detail-dialog .vehicle-hero-image.is-moto{background-size:contain!important;background-position:center center!important;background-color:#071827!important;}
 .vehicle-detail-dialog .vehicle-hero-image.is-moto img.vehicle-photo{object-fit:contain!important;object-position:center center!important;background:#071827!important;padding:22px 34px!important;box-sizing:border-box!important;}
