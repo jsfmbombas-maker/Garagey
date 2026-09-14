@@ -1649,6 +1649,7 @@ function renderVehicleDetailModal(){
  </section>${due.length?`<div class="vehicle-detail-alerts">${due.map(i=>`<div class="alert red">⚠️ <b>${i.type}</b> requiere atención. Próximo objetivo: ${Number(i.nextKm).toLocaleString('es-ES')} km.</div>`).join('')}</div>`:''}
  <button class="history-launch" onclick="openHistoryModal()">📚 Abrir historial de intervenciones <span>›</span></button></div>`;
  box.innerHTML=html;
+  hydrateVehicleFormIcons();
 }
 function renderHistoryModal(){
  const modal=$('historyModal'), box=$('historyModalContent'); if(!modal||!box)return;
