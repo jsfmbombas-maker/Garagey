@@ -1,0 +1,22 @@
+{
+  "name": "Garagey - Control de Vehículos",
+  "short_name": "Garagey",
+  "start_url": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f6f7fb",
+  "theme_color": "#2196F3",
+  "description": "Control de mantenimiento de vehículos con sincronización y copias en Google Drive.",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
