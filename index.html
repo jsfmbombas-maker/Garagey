@@ -1188,8 +1188,6 @@ html,body{overflow-x:hidden}
 .brand-preview img{width:44px;height:38px;object-fit:contain}.brand-preview span{font-size:12px;font-weight:800;color:#566074}
 .vehicle-form-caption{margin:-8px 0 14px;color:#7b8495;font-size:12px}
 .moto-only{display:none}.vehicle-form-dialog.moto-mode .car-only{display:none}.vehicle-form-dialog.moto-mode .moto-only{display:block}
-.vehicle-form-dialog.moto-mode .vehicle-form-title:before{content:'🏍️';margin-right:8px}
-.vehicle-form-dialog.car-mode .vehicle-form-title:before{content:'🚘';margin-right:8px}
 .vehicle-form-dialog .form{grid-template-columns:1fr 1fr}
 @media(max-width:600px),(pointer:coarse){
   #vehicleTypeModal{padding:10px!important}
@@ -1323,12 +1321,11 @@ html,body{overflow-x:hidden}
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v28.9 · Coches y motos · Logotipos por marca · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v29 · Coches y motos · Logotipos por marca · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
 <div class="modal" id="vehicleModal"><div class="dialog vehicle-form-dialog car-mode" id="vehicleFormDialog">
-<div class="vehicle-form-header"><button class="vehicle-back" onclick="closeModal('vehicleModal')" aria-label="Volver">‹</button><div><div class="vehicle-form-kicker">GARAGEY · VEHÍCULO</div><h2 class="vehicle-form-title">Añadir vehículo</h2><div class="vehicle-form-caption" id="vehicleFormCaption">Datos del coche y características principales</div></div><button class="soft" onclick="closeModal('vehicleModal')">Cerrar</button></div>
 <div class="vehicle-form-hero" id="vehicleFormHero"><div class="vehicle-form-hero-photo" id="vehicleFormHeroPhoto"></div><div class="vehicle-form-hero-content"><div class="vehicle-form-hero-brand"><div class="form-brand-badge" id="formBrandBadge"></div><div><span id="formVehicleTypeLabel">Coche</span><b id="formVehicleNameLabel">Nuevo vehículo</b><small id="formVehicleBrandLabel">Selecciona una marca</small></div></div></div></div>
 <div class="vehicle-form-body">
 <section class="vehicle-form-section"><div class="vehicle-form-section-head"><div class="section-icon"><span class="vehicle-form-icon-slot" data-icon="car"></span></div><div><h3>Datos del vehículo</h3><p>Información principal del vehículo</p></div></div>
