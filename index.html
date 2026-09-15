@@ -273,15 +273,25 @@ opacity:1
 #interventionModal .dialog>.top .top-title{display:block}
 
 @media(max-width:600px){
-  /* v30.4 — pequeño margen lateral en fichas de intervención */
-  #interventionModal{padding:8px!important;background:rgba(11,18,32,.72)}
-  #interventionModal .dialog{margin:8px auto!important;border-radius:22px!important;min-height:calc(100% - 16px);box-shadow:0 18px 55px rgba(0,0,0,.38)!important}
+  /* v30.6 — sin margen exterior añadido; campos ligeramente más estrechos */
+  #interventionModal{padding:0!important;background:rgba(11,18,32,.72)}
+  #interventionModal .dialog{margin:0 auto 28px!important;border-radius:22px!important;min-height:100%;box-shadow:0 18px 55px rgba(0,0,0,.38)!important}
   #interventionModal .dialog>.top{padding:18px 16px 17px;position:sticky;top:0;z-index:5}
   #interventionModal .dialog>.top h2{font-size:21px}
   #interventionModal .dialog>.top h2:before{width:34px;height:34px;margin-right:8px}
   #interventionModal .dialog>.form{padding:14px 12px 18px;grid-template-columns:1fr;gap:11px}
   #interventionModal .dialog>.form>div:not(.full){padding:11px 12px 12px}
   #interventionModal .dialog>.form>.full{padding:13px;border-radius:18px}
+  #interventionModal .dialog>.form>div:not(.full) input,
+  #interventionModal .dialog>.form>div:not(.full) select,
+  #interventionModal .dialog>.form>.full input:not([type="checkbox"]),
+  #interventionModal .dialog>.form>.full select,
+  #interventionModal .dialog>.form>.full textarea{
+    width:calc(100% - 16px);
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+  }
   #interventionModal #maintenanceFields .checks{grid-template-columns:1fr;gap:8px}
   #interventionModal #maintenanceFields .check{min-height:54px;padding:11px 12px}
   #interventionModal .cost-row{grid-template-columns:minmax(0,1fr) 92px 38px}
