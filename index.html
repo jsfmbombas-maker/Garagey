@@ -2140,4 +2140,22 @@ window.deleteVehicle=function(id){
   render();
 };
 </script>
+
+<style id="garagey-v30-3-1-field-width">
+/* GARAGEY v30.3.1 — Campos ligeramente más estrechos dentro de sus fichas
+   La ficha mantiene todo su ancho; solo los controles dejan 8px de aire por lado. */
+#interventionModal .intervention-form-step input:not([type="checkbox"]),
+#interventionModal .intervention-form-step select,
+#interventionModal .intervention-form-step textarea{
+  width:calc(100% - 16px)!important;
+  margin-left:8px!important;
+  margin-right:8px!important;
+  box-sizing:border-box!important;
+}
+#interventionModal .intervention-form-step .cost-row{
+  width:calc(100% - 16px);
+  margin-left:8px;
+  margin-right:8px;
+}
+</style>
 </body></html>
