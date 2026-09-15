@@ -27,3 +27,6 @@ Garagey v28.2 — reorganización de assets
 
 Los logotipos PNG han sido reencuadrados y centrados en lienzos 512x512.
 Las fotos de vehículos proceden de la base estable Garagey v28 y se conservan.
+
+
+GARAGEY v30.4 — Ajuste visual: pequeño margen lateral (8 px) en las fichas de intervención para mejorar respiración visual en Android, manteniendo el diseño y la funcionalidad de v30.3. Cache del Service Worker actualizada.

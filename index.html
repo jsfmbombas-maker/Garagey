@@ -273,8 +273,9 @@ opacity:1
 #interventionModal .dialog>.top .top-title{display:block}
 
 @media(max-width:600px){
-  #interventionModal{padding:0;background:rgba(11,18,32,.72)}
-  #interventionModal .dialog{margin:0;border-radius:0;min-height:100%;box-shadow:none}
+  /* v30.4 — pequeño margen lateral en fichas de intervención */
+  #interventionModal{padding:8px!important;background:rgba(11,18,32,.72)}
+  #interventionModal .dialog{margin:8px auto!important;border-radius:22px!important;min-height:calc(100% - 16px);box-shadow:0 18px 55px rgba(0,0,0,.38)!important}
   #interventionModal .dialog>.top{padding:18px 16px 17px;position:sticky;top:0;z-index:5}
   #interventionModal .dialog>.top h2{font-size:21px}
   #interventionModal .dialog>.top h2:before{width:34px;height:34px;margin-right:8px}
