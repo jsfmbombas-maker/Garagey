@@ -1475,6 +1475,9 @@ html,body{overflow-x:hidden}
 
 
 </style>
+
+
+
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
@@ -2158,37 +2161,65 @@ window.deleteVehicle=function(id){
   margin-right:8px;
 }
 </style>
-
-<style id="garagey-v30-3-2-spacing-save">
-/* GARAGEY v30.3.2 — separación visual de textos/botón y botón Guardar íntegro
-   Base: v30.3.1. No se modifica el ancho exterior de la ficha. */
-#interventionModal .intervention-form-step > div > label,
-#interventionModal .intervention-form-step .full > label,
-#interventionModal .intervention-form-step .cost-header > div > label,
-#interventionModal .intervention-form-step .cost-help,
-#interventionModal .intervention-form-step .fuel-form-title > div,
-#interventionModal .intervention-form-step .fuel-full > label {
-  margin-left:8px!important;
-  margin-right:8px!important;
-}
-#interventionModal .intervention-form-step .cost-panel > .soft {
-  margin-left:8px!important;
-}
-#interventionModal .dialog > .actions .primary {
+<style id="garagey-v31-intervention-spacing">
+/* GARAGEY v31 — espaciado uniforme dentro de todas las fichas de intervención */
+#interventionModal .intervention-form-step{
   box-sizing:border-box!important;
-  display:block!important;
+  padding-left:8px!important;
+  padding-right:8px!important;
+  padding-bottom:12px!important;
+}
+/* Los controles heredan los 8px del contenido de la ficha; evitamos duplicarlos. */
+#interventionModal .intervention-form-step input:not([type="checkbox"]),
+#interventionModal .intervention-form-step select,
+#interventionModal .intervention-form-step textarea{
   width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  box-sizing:border-box!important;
+}
+#interventionModal .intervention-form-step .cost-row{
+  width:100%!important;
+  margin-left:0!important;
+  margin-right:0!important;
+  box-sizing:border-box!important;
+}
+/* Añadir pieza queda en su propia línea y nunca se solapa con el campo superior. */
+#interventionModal .cost-panel > .soft{
+  display:block!important;
+  width:max-content!important;
   max-width:100%!important;
-  margin:0!important;
+  margin:12px 0 0 8px!important;
+  position:relative!important;
+  clear:both!important;
+}
+/* Acción final: centrada y con espacio real respecto al borde inferior. */
+#interventionModal .dialog > .actions{
+  justify-content:center!important;
+  padding-left:16px!important;
+  padding-right:16px!important;
+  padding-top:14px!important;
+  padding-bottom:24px!important;
+  box-sizing:border-box!important;
+}
+#interventionModal .dialog > .actions .primary{
+  width:auto!important;
+  min-width:230px!important;
+  max-width:calc(100% - 16px)!important;
+  margin:0 auto!important;
+  box-sizing:border-box!important;
 }
 @media(max-width:600px){
-  #interventionModal .dialog > .actions {
+  #interventionModal .dialog > .actions{
     padding-left:16px!important;
     padding-right:16px!important;
-    box-sizing:border-box!important;
+    padding-top:14px!important;
+    padding-bottom:calc(24px + env(safe-area-inset-bottom))!important;
   }
-  #interventionModal .dialog > .actions .primary {
-    min-width:0!important;
+  #interventionModal .dialog > .actions .primary{
+    width:auto!important;
+    min-width:230px!important;
+    max-width:100%!important;
   }
 }
 </style>

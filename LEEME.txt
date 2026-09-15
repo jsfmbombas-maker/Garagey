@@ -1,4 +1,4 @@
-Garagey v30.3.2 — Intervenciones en 2 pasos y ajuste de espaciado Android
+Garagey v31 — Intervenciones en 2 pasos y diseño premium Android
 
 GARAGEY v26.1
 
@@ -27,3 +27,12 @@ Garagey v28.2 — reorganización de assets
 
 Los logotipos PNG han sido reencuadrados y centrados en lienzos 512x512.
 Las fotos de vehículos proceden de la base estable Garagey v28 y se conservan.
+
+GARAGEY v31 — AJUSTE DE FICHAS DE INTERVENCIÓN
+- Base utilizada: Garagey v30.3.1.
+- Se aplica una separación interior uniforme de 8 px a los contenidos de todas las fichas de intervención.
+- Los campos se ajustan para respetar el espacio sin crear margen exterior adicional en la ficha.
+- El botón «Añadir pieza» queda separado del campo superior y no se solapa.
+- El botón «Guardar intervención» queda centrado y con espacio respecto al borde inferior, en todas las fichas.
+- Se mantiene la funcionalidad y los datos existentes.
+- Caché PWA actualizada a v31.
