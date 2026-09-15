@@ -1391,6 +1391,45 @@ html,body{overflow-x:hidden}
   color:#f2f9ff!important;
 }
 #interventionModal .intervention-form-step input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(1) brightness(1.5);}
+<style id="garagey-v32-2-dark-fields">
+/* GARAGEY v32.2 — todos los campos de las fichas de intervención usan el fondo oscuro Garagey */
+#interventionModal .intervention-form-step input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+#interventionModal .intervention-form-step select,
+#interventionModal .intervention-form-step textarea,
+#interventionModal .intervention-form-step .cost-row input,
+#interventionModal .intervention-form-step #totalCost{
+  background-color:#041b2c!important;
+  background-image:none!important;
+  color:#f2f9ff!important;
+  -webkit-text-fill-color:#f2f9ff!important;
+  border-color:#285f85!important;
+  box-shadow:none!important;
+}
+#interventionModal .intervention-form-step input:-webkit-autofill,
+#interventionModal .intervention-form-step input:-webkit-autofill:hover,
+#interventionModal .intervention-form-step input:-webkit-autofill:focus,
+#interventionModal .intervention-form-step textarea:-webkit-autofill,
+#interventionModal .intervention-form-step select:-webkit-autofill{
+  -webkit-text-fill-color:#f2f9ff!important;
+  -webkit-box-shadow:0 0 0 1000px #041b2c inset!important;
+  box-shadow:0 0 0 1000px #041b2c inset!important;
+  background-color:#041b2c!important;
+  caret-color:#f2f9ff!important;
+}
+#interventionModal .intervention-form-step input::placeholder,
+#interventionModal .intervention-form-step textarea::placeholder{
+  color:#62869d!important; opacity:1!important;
+}
+#interventionModal .intervention-form-step input:focus,
+#interventionModal .intervention-form-step select:focus,
+#interventionModal .intervention-form-step textarea:focus{
+  background-color:#05243a!important;
+  color:#f2f9ff!important;
+  -webkit-text-fill-color:#f2f9ff!important;
+  border-color:#20a5ff!important;
+}
+#interventionModal .intervention-form-step select option{background:#041b2c!important;color:#f2f9ff!important;}
+</style>
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
