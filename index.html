@@ -1262,6 +1262,104 @@ html,body{overflow-x:hidden}
  .vehicle-form-dialog .vehicle-form-caption{font-size:10px;}
  .vehicle-form-dialog .vehicle-form-header .soft{padding:7px 10px!important;}
 }
+
+
+/* GARAGEY v30.3 — Fichas de intervención: identidad visual premium Android */
+#interventionModal{
+  background:linear-gradient(180deg,rgba(2,16,29,.94),rgba(1,11,21,.98))!important;
+  backdrop-filter:blur(8px)!important;
+  padding:12px!important;
+}
+#interventionModal .dialog{
+  width:min(100%,760px)!important;
+  max-width:760px!important;
+  margin:12px auto!important;
+  padding:0!important;
+  overflow:hidden!important;
+  background:linear-gradient(180deg,#041d31 0%,#031727 100%)!important;
+  border:1px solid #155b88!important;
+  border-radius:24px!important;
+  color:#eef8ff!important;
+  box-shadow:0 24px 70px rgba(0,0,0,.48),0 0 0 1px rgba(30,155,235,.08)!important;
+}
+#interventionModal .dialog>.top{
+  margin:0!important;padding:18px 18px 16px!important;
+  background:linear-gradient(135deg,#062a45,#073c61)!important;
+  border-bottom:1px solid #155b88!important;position:relative!important;
+}
+#interventionModal .dialog>.top:after{background:#ffffff10!important}
+#interventionModal .dialog>.top .top-kicker{color:#72bce9!important}
+#interventionModal .dialog>.top h2{color:#f5fbff!important;font-size:22px!important}
+#interventionModal .dialog>.top .soft{
+  background:#0b3553!important;color:#eaf7ff!important;border:1px solid #2b8dd0!important;
+  border-radius:13px!important;padding:10px 14px!important;
+}
+#interventionModal .dialog>.form{display:block!important;padding:16px!important;background:#031a2b!important}
+#interventionModal .intervention-type-picker{padding:0!important;background:transparent!important;border:0!important}
+#interventionModal .intervention-type-heading{margin:0 2px 12px!important}
+#interventionModal .intervention-type-heading label{font-size:18px!important;color:#f2f9ff!important}
+#interventionModal .intervention-type-heading small{font-size:12px!important;color:#7fa8c1!important}
+#interventionModal .intervention-type-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+#interventionModal .intervention-type-card{
+  min-height:78px!important;padding:12px!important;gap:12px!important;
+  border:1px solid #155b88!important;border-radius:18px!important;
+  background:linear-gradient(145deg,#082c47,#061e32)!important;color:#eef8ff!important;
+  box-shadow:0 7px 18px rgba(0,0,0,.20)!important;
+}
+#interventionModal .intervention-type-card:hover{transform:translateY(-1px)!important;border-color:#249de5!important;background:linear-gradient(145deg,#0a3655,#07253b)!important}
+#interventionModal .intervention-type-card.active{
+  border-color:#16a6ff!important;box-shadow:0 0 0 2px rgba(22,166,255,.22),0 10px 25px rgba(0,135,220,.18)!important;
+  background:linear-gradient(145deg,#0a3c61,#07263f)!important;
+}
+#interventionModal .type-card-icon{
+  width:46px!important;height:46px!important;flex:0 0 46px!important;border-radius:50%!important;
+  display:grid!important;place-items:center!important;background:#0b3553!important;border:1px solid #2b8dd0!important;color:#79c8f5!important;
+}
+#interventionModal .type-card-icon .premium-svg{width:24px!important;height:24px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+#interventionModal .intervention-type-card b{font-size:14px!important;color:#f4fbff!important}
+#interventionModal .intervention-type-card small{font-size:11px!important;color:#86a9bd!important}
+#interventionModal .type-repostaje .type-card-icon{background:#063f38!important;border-color:#00a995!important;color:#54e1cb!important}
+#interventionModal .type-seguro .type-card-icon{background:#093d32!important;border-color:#20a96f!important;color:#68e0ac!important}
+#interventionModal .type-impuestos .type-card-icon{background:#30265a!important;border-color:#765bd0!important;color:#b39cff!important}
+#interventionModal .intervention-form-step{width:100%!important;color:#eef8ff!important}
+#interventionModal .intervention-form-step-head{padding:0 0 14px!important;margin:0 0 14px!important;border-bottom:1px solid #155b88!important}
+#interventionModal .intervention-form-step-head>div:last-child{gap:10px!important}
+#interventionModal .intervention-form-type-icon{width:46px!important;height:46px!important;flex:0 0 46px!important;border-radius:50%!important;background:#0b3553!important;border:1px solid #2b8dd0!important;color:#79c8f5!important;font-size:0!important;display:grid!important;place-items:center!important}
+#interventionModal .intervention-form-type-icon .premium-svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#interventionModal .intervention-form-step-head strong{color:#f4fbff!important;font-size:18px!important}
+#interventionModal .intervention-form-step-head small{color:#80a5bb!important}
+#interventionModal .intervention-back{background:#092a43!important;color:#79c8f5!important;border:1px solid #1c6897!important;border-radius:12px!important}
+#interventionModal .dialog>.form>div:not(.full){padding:12px!important;background:#062239!important;border:1px solid #155b88!important;border-radius:15px!important;margin-bottom:10px!important}
+#interventionModal .dialog label{color:#8bc8f5!important}
+#interventionModal .dialog input,#interventionModal .dialog select,#interventionModal .dialog textarea{
+  color:#f2f9ff!important;background:#041b2c!important;border:1px solid #285f85!important;border-radius:12px!important;box-shadow:none!important;
+}
+#interventionModal .dialog input::placeholder,#interventionModal .dialog textarea::placeholder{color:#62869d!important}
+#interventionModal .dialog input:focus,#interventionModal .dialog select:focus,#interventionModal .dialog textarea:focus{border-color:#20a5ff!important;box-shadow:0 0 0 3px rgba(32,165,255,.13)!important;background:#05243a!important}
+#interventionModal .dialog>.form>.full{margin-bottom:10px!important;background:#062239!important;border:1px solid #155b88!important;border-radius:17px!important;padding:14px!important}
+#interventionModal #maintenanceFields{background:linear-gradient(145deg,#082b45,#062137)!important;border-color:#155b88!important}
+#interventionModal #maintenanceFields .check{background:#09263d!important;border-color:#285f85!important;color:#eaf6ff!important}
+#interventionModal #maintenanceFields .check:hover{background:#0a3150!important;border-color:#2b9fe2!important}
+#interventionModal #maintenanceFields .check:has(input:checked){background:#063f38!important;border-color:#00bfa6!important;color:#dffff9!important;box-shadow:none!important}
+#interventionModal .cost-panel{background:linear-gradient(145deg,#062239,#041b2c)!important}
+#interventionModal .cost-help{color:#769bb1!important}
+#interventionModal .cost-row{background:#09263d!important;border-color:#1a587d!important}
+#interventionModal .cost-row .danger{background:#3d1823!important;color:#ff7e98!important;border-color:#783448!important}
+#interventionModal .cost-total-box{background:#082d46!important;border-color:#1b6a95!important}
+#interventionModal .cost-total-box label{color:#78a5bd!important}
+#interventionModal #totalCost{background:#041b2c!important;color:#e9dcff!important;border:1px solid #5d4fb0!important}
+#interventionModal .dialog>.actions{margin:0!important;padding:12px 16px calc(14px + env(safe-area-inset-bottom))!important;background:#031727!important;border-top:1px solid #155b88!important}
+#interventionModal .dialog>.actions .primary{width:100%!important;background:linear-gradient(90deg,#078cff,#168cff)!important;color:#fff!important;border-radius:14px!important;min-height:50px!important;box-shadow:0 10px 25px rgba(0,140,255,.25)!important}
+#interventionModal .fuel-fields{background:linear-gradient(145deg,#061f33,#082a43)!important}
+@media(max-width:600px){
+ #interventionModal{padding:0!important}
+ #interventionModal .dialog{width:100%!important;max-width:none!important;min-height:100%!important;margin:0!important;border-radius:0!important}
+ #interventionModal .dialog>.top{position:sticky!important;top:0!important;z-index:10!important;padding:15px 14px!important}
+ #interventionModal .dialog>.form{padding:14px 12px 12px!important}
+ #interventionModal .intervention-type-grid{grid-template-columns:1fr!important;gap:9px!important}
+ #interventionModal .intervention-type-card{min-height:70px!important}
+ #interventionModal .dialog>.actions{position:sticky!important;bottom:0!important;z-index:10!important}
+}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
@@ -1273,6 +1371,8 @@ html,body{overflow-x:hidden}
 .brand-preview-photo{position:absolute;inset:0}.brand-preview-photo img{width:100%;height:100%;object-fit:cover;display:block;opacity:.92}.brand-preview-photo:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 38%,rgba(2,14,25,.78) 100%)}
 .brand-preview-label{position:absolute;left:12px;right:12px;bottom:10px;z-index:2;display:flex;align-items:center;gap:8px;color:#fff}.brand-preview-label img{width:34px;height:30px;object-fit:contain;filter:brightness(0) invert(1)}.brand-preview-label b{font-size:14px}
 @media(max-width:600px),(pointer:coarse){.brand-preview{height:132px;min-height:132px}.brand-preview-label b{font-size:13px}}
+
+
 </style>
 
 
@@ -1306,6 +1406,8 @@ html,body{overflow-x:hidden}
   .vehicle-detail-dialog .vehicle-hero-image img.vehicle-photo{object-fit:cover!important;object-position:center center!important}
   .brand-preview{height:72px!important;min-height:72px!important}
 }
+
+
 </style>
 
 <style id="garagey-v28-3-asset-fixes">
@@ -1317,6 +1419,8 @@ html,body{overflow-x:hidden}
 .vehicle-hero-image .vehicle-photo{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
 .vehicle-hero-image.is-moto .vehicle-photo{object-fit:contain!important;padding:10px!important;box-sizing:border-box!important}
 .vehicle-hero-image.photo-fallback{background:#071a2b!important}
+
+
 </style>
 <style id="garagey-v28-6-add-vehicle-exact">
 .garagey-type-modal{padding:0!important;background:#03182af5!important;overflow:hidden!important;z-index:90!important}
@@ -1349,6 +1453,8 @@ html,body{overflow-x:hidden}
  .garagey-type-content{padding:62px 16px 48px}
  .garagey-type-question{font-size:29px;margin-bottom:58px}
 }
+
+
 </style>
 
 <style id="garagey-v28-9-create-form">
@@ -1358,12 +1464,16 @@ html,body{overflow-x:hidden}
 .vehicle-form-body{padding:14px;background:linear-gradient(180deg,#04192b,#031525)}.vehicle-form-section{border:1px solid #087ec2;border-radius:18px;background:linear-gradient(145deg,#06243a,#041a2b);box-shadow:0 8px 24px rgba(0,0,0,.18);padding:14px;margin-bottom:12px}.vehicle-form-section-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}.vehicle-form-section-head .section-icon{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#15547d,#08283f);border:1px solid #3c8fc2;color:#eaf8ff}.vehicle-form-section-head .premium-svg{width:22px;height:22px}.vehicle-form-section-head h3{margin:0;color:#fff;font-size:16px}.vehicle-form-section-head p{margin:2px 0 0;color:#79a7c3;font-size:10px}.vehicle-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.vehicle-field{display:grid;grid-template-columns:38px minmax(0,1fr);align-items:center;gap:9px;min-width:0;padding:8px 9px;border:1px solid #174c70;border-radius:14px;background:rgba(2,20,34,.7)}.vehicle-field.full{grid-column:1/-1}.field-icon{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#123e64,#071f35);border:1px solid #2d76a7;color:#dff3ff}.field-icon .premium-svg{width:18px;height:18px;stroke-width:1.9}.field-content{min-width:0}.field-content label{display:block;color:#71b9e8;font-size:10px;font-weight:750;margin:0 0 3px}.field-content input,.field-content select{width:100%;box-sizing:border-box;background:#061d31;border:1px solid #286186;border-radius:9px;color:#edf8ff;padding:8px 9px;font:inherit;font-size:12px;outline:none}.field-content input:focus,.field-content select:focus{border-color:#08b9ff;box-shadow:0 0 0 2px rgba(0,185,255,.12)} .vehicle-form-dialog .field-content input:focus,.vehicle-form-dialog .field-content select:focus{background:#061d31!important;color:#edf8ff!important;border-color:#08b9ff!important;box-shadow:0 0 0 2px rgba(0,185,255,.12)!important} .vehicle-form-dialog .field-content input:-webkit-autofill,.vehicle-form-dialog .field-content input:-webkit-autofill:hover,.vehicle-form-dialog .field-content input:-webkit-autofill:focus,.vehicle-form-dialog .field-content select:-webkit-autofill{ -webkit-text-fill-color:#edf8ff!important; -webkit-box-shadow:0 0 0 1000px #061d31 inset!important; box-shadow:0 0 0 1000px #061d31 inset!important; background-color:#061d31!important; caret-color:#edf8ff!important}.field-content input::placeholder{color:#6f8fa5} .vehicle-form-dialog .field-content select option{background:#061d31!important;color:#edf8ff!important}.vehicle-form-dialog .moto-only{display:none}.vehicle-form-dialog.moto-mode .moto-only{display:grid}.vehicle-form-dialog.moto-mode .car-only{display:none}
 .vehicle-form-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:2px 0 4px}.vehicle-form-actions button{min-height:48px;border-radius:15px;font-weight:800;font-size:13px;cursor:pointer}.vehicle-form-actions .primary{border:1px solid #12c7ff;background:linear-gradient(90deg,#078df0,#0b75ff);color:#fff;box-shadow:0 0 18px rgba(0,157,255,.22)}.vehicle-form-actions .secondary{border:1px solid #3b607d;background:linear-gradient(180deg,#17324a,#0b2135);color:#d8e9f5}.vehicle-form-actions .action-check{font-size:18px;margin-right:5px}.vehicle-form-actions button span{font-size:21px;vertical-align:-1px;margin-right:5px}
 @media(max-width:600px),(pointer:coarse){#vehicleModal{padding:0!important}.vehicle-form-dialog{width:100%!important;min-height:100dvh!important;max-width:none!important;border-radius:0!important}.vehicle-form-header{padding:14px 12px 11px}.vehicle-form-header .soft{font-size:10px}.vehicle-form-hero{height:170px}.vehicle-form-body{padding:10px}.vehicle-form-section{padding:11px;border-radius:16px}.vehicle-form-grid{grid-template-columns:1fr;gap:8px}.vehicle-field.full{grid-column:auto}.vehicle-form-section-head{margin-bottom:9px}.vehicle-form-section-head .section-icon{width:36px;height:36px}.vehicle-form-section-head h3{font-size:15px}.vehicle-field{grid-template-columns:36px minmax(0,1fr);padding:7px}.field-icon{width:32px;height:32px}.field-content input,.field-content select{padding:8px;font-size:12px}.vehicle-form-actions{grid-template-columns:1fr;position:sticky;bottom:0;background:#031525;padding:10px 0 2px;z-index:10}.form-brand-badge{width:58px;height:58px}.form-brand-badge img{width:42px;height:42px}.vehicle-form-hero-brand b{font-size:20px}}
+
+
 </style>
 <style>
 /* v30 combustible — mismo lenguaje visual que la ficha del vehículo */
 .fuel-mode-hidden{display:none!important}
 #interventionModal .fuel-fields{background:linear-gradient(145deg,#061f33,#082a43)!important;border:1px solid #155b88!important;border-radius:18px;padding:14px!important;color:#fff}.fuel-form-title{display:flex;align-items:center;gap:11px;margin-bottom:12px}.fuel-form-title b{display:block;font-size:15px}.fuel-form-title small{display:block;color:#8fb0c8;font-size:11px;margin-top:3px}.fuel-icon{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#0b3553;border:1px solid #2b8dd0}.fuel-form-grid{grid-template-columns:1fr 1fr!important;gap:10px!important}.fuel-form-grid>div{padding:0!important;background:transparent!important;border:0!important}.fuel-form-grid label{color:#8bc8f5!important}.fuel-form-grid input,.fuel-form-grid textarea{background:#061b2d!important;border:1px solid #285f85!important;color:#f4fbff!important}.fuel-form-grid input:focus,.fuel-form-grid textarea:focus{background:#07233a!important;border-color:#20a5ff!important}.fuel-form-grid #fuelTotal{font-weight:850}.fuel-full{grid-column:1/-1}.fuel-full textarea{min-height:82px}.fuel-check-wrap{display:flex;align-items:flex-end}.fuel-full-check{width:100%;min-height:48px!important;background:#09263d!important;border:1px solid #285f85!important;color:#e9f6ff!important}.fuel-full-check:has(input:checked){border-color:#00d2b3!important;background:#063f38!important}.fuel-full-check input{accent-color:#00d2b3}.optional{font-size:10px;color:#6f8ca4;font-weight:500;text-transform:none;letter-spacing:0}.fuel-history-dialog{background:#031a2b!important;color:#fff}.fuel-summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;padding:12px}.fuel-summary-card{background:linear-gradient(145deg,#072b46,#061d30);border:1px solid #155b88;border-radius:15px;padding:12px}.fuel-summary-card span{display:block;color:#7fa6c0;font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:800}.fuel-summary-card b{display:block;font-size:18px;margin-top:4px}.fuel-summary-card small{display:block;color:#8fb0c8;font-size:10px;margin-top:3px}.fuel-history-list{display:grid;gap:10px;padding:12px}.fuel-history-card{border:1px solid #155b88;border-radius:18px;background:linear-gradient(145deg,#07263d,#051c2d);overflow:hidden}.fuel-history-head{display:flex;align-items:center;gap:10px;padding:13px 14px;border-bottom:1px solid #ffffff12}.fuel-card-icon{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#0a3553;border:1px solid #2b8dd0}.fuel-history-head b{font-size:15px}.fuel-history-head small{display:block;color:#8fb0c8;font-size:11px;margin-top:2px}.fuel-history-cost{margin-left:auto;text-align:right}.fuel-history-cost strong{display:block;font-size:18px}.fuel-history-body{padding:12px 14px}.fuel-history-meta{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.fuel-history-meta>div{border:1px solid #ffffff10;background:#061d30;border-radius:12px;padding:9px}.fuel-history-meta span{display:block;color:#79a8c4;font-size:10px}.fuel-history-meta b{display:block;margin-top:3px;font-size:13px}.fuel-history-actions{display:flex;gap:8px;margin-top:10px}.fuel-history-actions button{flex:1;min-height:40px;border-radius:12px;font-weight:800}.fuel-history-actions .edit{background:transparent;color:#fff;border:1px solid #2d8bd0}.fuel-history-actions .delete{background:#3f1721;color:#ffb7c2;border:1px solid #b83950}.fuel-stats-panel{margin:0 16px 16px;border:1px solid #155b88;border-radius:18px;padding:15px;background:linear-gradient(145deg,#06263d,#061b2d)}.fuel-stats-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px solid #ffffff12}.fuel-stats-head h3{margin:0;font-size:18px}.fuel-stats-head h3 .premium-svg{width:20px;height:20px;vertical-align:-4px;margin-right:5px}.fuel-stats-head small{display:block;color:#82a7bf;font-size:10px;margin-top:3px}.fuel-stats-head button{background:transparent;color:#13a6ff;border:1px solid #2d8bd0;border-radius:13px;padding:8px 11px;font-weight:800}.fuel-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}.fuel-stat-box{border-radius:15px;padding:12px;background:#071f33;border:1px solid #1c5f8a}.fuel-stat-box .stat-label{display:block;color:#7fa7c0;font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:800}.fuel-stat-box strong{display:block;font-size:21px;margin-top:4px}.fuel-stat-box small{display:block;color:#8aa8bb;font-size:10px;margin-top:3px}.fuel-stats-note{margin-top:10px;color:#6f93ab;font-size:10px;line-height:1.4}.fuel-launch{margin:0 16px 16px;width:calc(100% - 32px);min-height:48px;border:1px solid #2d8bd0;border-radius:14px;background:#08263e;color:#dff3ff;font-weight:850;font-size:14px}.fuel-launch .premium-svg{width:19px;height:19px;vertical-align:-4px;margin-right:5px}.fuel-history-modal .history-modal-top{background:#06233a}.fuel-history-modal .history-modal-scroll{background:#031a2b}.fuel-empty{padding:28px 18px;text-align:center;color:#8aa8bb;border:1px dashed #245779;border-radius:16px;margin:12px}
 @media(max-width:600px),(pointer:coarse){.fuel-form-grid{grid-template-columns:1fr!important}.fuel-summary-grid{grid-template-columns:1fr 1fr}.fuel-summary-card:last-child{grid-column:1/-1}.fuel-stats-panel{margin-left:12px;margin-right:12px}.fuel-launch{width:calc(100% - 24px);margin-left:12px;margin-right:12px}}
+
+
 </style>
 </head>
 <body><div class="app">
@@ -1405,14 +1515,14 @@ html,body{overflow-x:hidden}
 
 <div class="modal" id="interventionModal"><div class="dialog"><div class="top"><div><span class="top-kicker">GARAGEY · FICHA DE INTERVENCIÓN</span><h2>🔧 Nueva intervención</h2></div><button class="soft" onclick="closeModal('interventionModal')">Cerrar</button></div>
 <div class="form"><div class="full intervention-type-picker"><div class="intervention-type-heading"><div><label>Tipo de intervención</label><small>Selecciona la ficha que quieres registrar</small></div></div><div class="intervention-type-grid">
-<button type="button" class="intervention-type-card type-mantenimiento" data-type="Mantenimiento" onclick="selectInterventionType('Mantenimiento')"><span class="type-card-icon">${svgIcon('wrench')}</span><span><b>Mantenimiento</b><small>Aceite y filtros</small></span></button>
-<button type="button" class="intervention-type-card type-neumaticos" data-type="Neumáticos" onclick="selectInterventionType('Neumáticos')"><span class="type-card-icon">${svgIcon('tire')}</span><span><b>Neumáticos</b><small>Cambio de neumáticos</small></span></button>
-<button type="button" class="intervention-type-card type-correa" data-type="Correa/Cadena" onclick="selectInterventionType('Correa/Cadena')"><span class="type-card-icon">${svgIcon('gear')}</span><span><b>Correa / cadena</b><small>Distribución y auxiliares</small></span></button>
-<button type="button" class="intervention-type-card type-varios" data-type="Varios" onclick="selectInterventionType('Varios')"><span class="type-card-icon">${svgIcon('wrench')}</span><span><b>Intervención varias</b><small>Reparaciones y otros</small></span></button>
-<button type="button" class="intervention-type-card type-itv" data-type="ITV" onclick="selectInterventionType('ITV')"><span class="type-card-icon">${svgIcon('calendar')}</span><span><b>ITV</b><small>Inspección técnica</small></span></button>
-<button type="button" class="intervention-type-card type-seguro" data-type="Seguro" onclick="selectInterventionType('Seguro')"><span class="type-card-icon">${svgIcon('shield')}</span><span><b>Seguro</b><small>Póliza y vencimiento</small></span></button>
-<button type="button" class="intervention-type-card type-impuestos" data-type="Impuestos" onclick="selectInterventionType('Impuestos')"><span class="type-card-icon">${svgIcon('building')}</span><span><b>Impuestos</b><small>IVTM y tasas</small></span></button>
-<button type="button" class="intervention-type-card type-repostaje" data-type="Repostaje" onclick="selectInterventionType('Repostaje')"><span class="type-card-icon">${svgIcon('fuel')}</span><span><b>Repostaje</b><small>Combustible y consumo</small></span></button>
+<button type="button" class="intervention-type-card type-mantenimiento" data-type="Mantenimiento" onclick="selectInterventionType('Mantenimiento')"><span class="type-card-icon" data-icon="wrench"></span><span><b>Mantenimiento</b><small>Aceite y filtros</small></span></button>
+<button type="button" class="intervention-type-card type-neumaticos" data-type="Neumáticos" onclick="selectInterventionType('Neumáticos')"><span class="type-card-icon" data-icon="tire"></span><span><b>Neumáticos</b><small>Cambio de neumáticos</small></span></button>
+<button type="button" class="intervention-type-card type-correa" data-type="Correa/Cadena" onclick="selectInterventionType('Correa/Cadena')"><span class="type-card-icon" data-icon="gear"></span><span><b>Correa / cadena</b><small>Distribución y auxiliares</small></span></button>
+<button type="button" class="intervention-type-card type-varios" data-type="Varios" onclick="selectInterventionType('Varios')"><span class="type-card-icon" data-icon="wrench"></span><span><b>Intervención varias</b><small>Reparaciones y otros</small></span></button>
+<button type="button" class="intervention-type-card type-itv" data-type="ITV" onclick="selectInterventionType('ITV')"><span class="type-card-icon" data-icon="calendar"></span><span><b>ITV</b><small>Inspección técnica</small></span></button>
+<button type="button" class="intervention-type-card type-seguro" data-type="Seguro" onclick="selectInterventionType('Seguro')"><span class="type-card-icon" data-icon="shield"></span><span><b>Seguro</b><small>Póliza y vencimiento</small></span></button>
+<button type="button" class="intervention-type-card type-impuestos" data-type="Impuestos" onclick="selectInterventionType('Impuestos')"><span class="type-card-icon" data-icon="building"></span><span><b>Impuestos</b><small>IVTM y tasas</small></span></button>
+<button type="button" class="intervention-type-card type-repostaje" data-type="Repostaje" onclick="selectInterventionType('Repostaje')"><span class="type-card-icon" data-icon="fuel"></span><span><b>Repostaje</b><small>Combustible y consumo</small></span></button>
 </div><select id="itype" aria-hidden="true" tabindex="-1" onchange="typeFields()"><option value="Mantenimiento">Mantenimiento</option><option value="Neumáticos">Neumáticos</option><option value="Correa/Cadena">Correa/Cadena</option><option value="Varios">Varios</option><option value="ITV">ITV</option><option value="Seguro">Seguro</option><option value="Impuestos">Impuestos</option><option value="Repostaje">Repostaje</option></select></div>
 </div><div class="intervention-form-step"><div class="intervention-form-step-head"><button type="button" class="intervention-back" onclick="showInterventionTypePicker()">← Cambiar tipo</button><div><span id="interventionFormTypeIcon" class="intervention-form-type-icon">🔧</span><div><strong id="interventionFormTypeTitle">Nueva intervención</strong><small>Completa los datos de la intervención</small></div></div></div><div><label>Fecha</label><input id="idate" type="date"></div><div><label>Kilómetros actuales</label><input id="ikm" type="number"></div><div id="nextInterventionField"><label>Próxima intervención (intervalo)</label><select id="inext"><option value="">Sin programar</option><option>10000</option><option>15000</option><option>20000</option><option>25000</option><option>30000</option><option>35000</option><option>40000</option><option>45000</option><option>50000</option></select></div>
 <div class="full" id="maintenanceFields"><label>Acciones realizadas</label><div class="checks"><label class="check"><input type="checkbox" value="Cambio de aceite"> Cambio de aceite</label><label class="check"><input type="checkbox" value="Filtro de aceite"> Filtro de aceite</label><label class="check"><input type="checkbox" value="Filtro de gasoil"> Filtro de gasoil</label><label class="check"><input type="checkbox" value="Filtro de aire"> Filtro de aire</label><label class="check"><input type="checkbox" value="Filtro de habitáculo"> Filtro de habitáculo</label></div></div>
@@ -1683,7 +1793,7 @@ function svgIcon(name){const p={
  bell:'<path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/>',
  power:'<path d="M13 2 4 14h6l-1 8 11-14h-6z"/>', engine:'<path d="M4 9h4l2-3h4l2 3h4v8H4z"/><path d="M8 9v5h4v-5M16 12h3"/>', gauge:'<path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 14l4-4"/><circle cx="12" cy="18" r="1"/>', transmission:'<path d="M5 4v16M12 4v16M19 4v16M5 9h7M12 15h7"/><circle cx="5" cy="9" r="2"/><circle cx="12" cy="15" r="2"/><circle cx="19" cy="9" r="2"/>', palette:'<path d="M12 3a9 9 0 1 0 0 18h2.2a2 2 0 0 0 0-4H13a2 2 0 0 1 0-4h2a6 6 0 0 0-3-10z"/><circle cx="7" cy="10" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="6" cy="14" r="1"/>', id:'<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M8 11h8M8 15h5"/>' , tire:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4v5M12 15v5M4 12h5M15 12h5"/>' ,license:'<path d="M4 5h16v14H4z"/><path d="M7 9h10M7 13h7M7 17h5"/>', shield:'<path d="M12 3l8 3v5c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/>', building:'<path d="M4 21V5l8-3 8 3v16M4 9h16M8 13h2M14 13h2M8 17h2M14 17h2"/>', gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-2.6V20a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H4v-2.6h.2a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V5h2.6v.2a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v2.6H20a1.7 1.7 0 0 0-1.6 1z"/>'
 };return `<svg class="premium-svg" viewBox="0 0 24 24" aria-hidden="true">${p[name]||p.car}</svg>`}
-function hydrateVehicleFormIcons(){document.querySelectorAll('.vehicle-form-icon-slot').forEach(el=>{if(!el.dataset.icon)return;el.innerHTML=svgIcon(el.dataset.icon)})}
+function hydrateVehicleFormIcons(){document.querySelectorAll('.vehicle-form-icon-slot,.type-card-icon').forEach(el=>{if(!el.dataset.icon)return;el.innerHTML=svgIcon(el.dataset.icon)})}
 function dataItem(icon,label,value,v){const mark=icon==='brand'?brandLogo(v):svgIcon(icon);return `<div class="vehicle-data-item"><span class="data-icon">${mark}</span><div><span>${label}</span><b>${value||'—'}</b></div></div>`}
 function fuelStats(v){
  const rows=[...(v?.fuelings||[])].filter(x=>Number(x.liters)>0).sort((a,b)=>Number(a.km||0)-Number(b.km||0)||(a.id||0)-(b.id||0));
@@ -1720,7 +1830,7 @@ function setInterventionFormMode(type){
  const title=$('interventionFormTypeTitle'), icon=$('interventionFormTypeIcon');
  const icons={'Mantenimiento':'🔧','Neumáticos':'🛞','Correa/Cadena':'⚙️','Varios':'🔧','ITV':'📋','Seguro':'🛡️','Impuestos':'🏛️','Repostaje':'⛽'};
  if(title)title.textContent=type||'Intervención';
- if(icon)icon.textContent=icons[type]||'🔧';
+ if(icon){const iconMap={'Mantenimiento':'wrench','Neumáticos':'tire','Correa/Cadena':'gear','Varios':'wrench','ITV':'calendar','Seguro':'shield','Impuestos':'building','Repostaje':'fuel'};icon.dataset.icon=iconMap[type]||'wrench';icon.innerHTML=svgIcon(icon.dataset.icon)}
 }
 function showInterventionTypePicker(){
  const modal=$('interventionModal');
@@ -1748,7 +1858,7 @@ function openIntervention(id){
 function openFueling(id){const v=data.vehicles.find(x=>x.id===data.selected);if(!v)return;v.fuelings=Array.isArray(v.fuelings)?v.fuelings:[];const item=v.fuelings.find(x=>x.id===id);if(!item)return;window.editFueling=id;window.editIntervention=null;$('interventionModal').classList.add('show');setInterventionFormMode('Repostaje');$('idate').value=item.date||new Date().toISOString().slice(0,10);$('ikm').value=item.km??v.km??'';$('itype').value='Repostaje';$('inext').value='';$('manualDetails').value='';$('costItems').innerHTML='';resetFuelForm();$('fuelLiters').value=item.liters??'';$('fuelPrice').value=item.price??'';$('fuelTotal').value=item.totalCost??'';$('fuelFull').checked=!!item.fullTank;$('fuelStation').value=item.station||'';$('fuelNotes').value=item.notes||'';typeFields();updateFuelTotal();hydrateVehicleFormIcons();document.querySelector('#interventionModal h2').textContent='Editar repostaje';document.querySelector('#interventionModal .primary').textContent='Guardar cambios';}
 function resetFuelForm(){['fuelLiters','fuelPrice','fuelTotal','fuelStation','fuelNotes'].forEach(id=>{if($(id))$(id).value=''});if($('fuelFull'))$('fuelFull').checked=false}
 function updateFuelTotal(){const l=Number($('fuelLiters')?.value||0),p=Number($('fuelPrice')?.value||0);if($('fuelTotal'))$('fuelTotal').value=l&&p?(l*p).toFixed(2):''}
-function selectInterventionType(type){const s=$('itype');if(!s)return;s.value=type;typeFields();document.querySelectorAll('.intervention-type-card').forEach(c=>c.classList.toggle('active',c.dataset.type===type));setInterventionFormMode(type);document.querySelector('#interventionModal .top h2').textContent='🔧 '+type;}
+function selectInterventionType(type){const s=$('itype');const modal=$('interventionModal');if(!s||!modal)return;s.value=type;document.querySelectorAll('.intervention-type-card').forEach(c=>c.classList.toggle('active',c.dataset.type===type));setInterventionFormMode(type);typeFields();const title=modal.querySelector('.top h2');if(title)title.textContent='🔧 '+type;const formTitle=$('interventionFormTypeTitle');if(formTitle)formTitle.textContent=type;const icon=$('interventionFormTypeIcon');if(icon){icon.dataset.icon=({'Mantenimiento':'wrench','Neumáticos':'tire','Correa/Cadena':'gear','Varios':'wrench','ITV':'calendar','Seguro':'shield','Impuestos':'building','Repostaje':'fuel'})[type]||'wrench';icon.innerHTML=svgIcon(icon.dataset.icon)}const dialog=modal.querySelector('.dialog');if(dialog)dialog.scrollTop=0;hydrateVehicleFormIcons();}
 
 function typeFields(){['maintenanceFields','tireFields','beltFields','otherFields','itvFields','insuranceFields','taxFields','fuelFields'].forEach(x=>$(x).classList.add('hidden'));['nextInterventionField','manualDetailsWrap','costPanel'].forEach(x=>$(x)?.classList.remove('fuel-mode-hidden'));let t=$('itype').value;document.querySelectorAll('.intervention-type-card').forEach(c=>c.classList.toggle('active',c.dataset.type===t));let map={'Mantenimiento':'maintenanceFields','Neumáticos':'tireFields','Correa/Cadena':'beltFields','Varios':'otherFields','ITV':'itvFields','Seguro':'insuranceFields','Impuestos':'taxFields','Repostaje':'fuelFields'};$(map[t]).classList.remove('hidden');if(t==='Repostaje'){['nextInterventionField','manualDetailsWrap','costPanel'].forEach(x=>$(x)?.classList.add('fuel-mode-hidden'));updateFuelTotal()}hydrateVehicleFormIcons();}
 function updateTotalCost(){const total=[...document.querySelectorAll('#costItems .cost-row input[type=number]')].reduce((a,x)=>a+Number(x.value||0),0);$('totalCost').value=total.toFixed(2);return total}
@@ -2012,6 +2122,8 @@ render();
  .vehicle-detail-dialog .vehicle-hero-image.is-moto img.vehicle-photo{object-fit:contain!important;padding:28px 18px!important;}
  .vehicle-detail-dialog .vehicle-actions-pro .delete-vehicle-btn{font-size:13px!important;}
 }
+
+
 </style>
 <script>
 /* v27: after changing vehicle, ensure the current detail sheet is redrawn */
