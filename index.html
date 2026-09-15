@@ -1360,43 +1360,6 @@ html,body{overflow-x:hidden}
  #interventionModal .intervention-type-card{min-height:70px!important}
  #interventionModal .dialog>.actions{position:sticky!important;bottom:0!important;z-index:10!important}
 }
-
-/* GARAGEY v30.3.2 — Ajuste fino de anchura de campos y botón guardar */
-#interventionModal .dialog>.form input:not([type="checkbox"]):not([type="radio"]),
-#interventionModal .dialog>.form select,
-#interventionModal .dialog>.form textarea{
-  width:calc(100% - 16px)!important;
-  margin-left:8px!important;
-  margin-right:8px!important;
-  box-sizing:border-box!important;
-}
-#interventionModal .dialog>.form .cost-row input{
-  width:calc(100% - 16px)!important;
-  margin-left:8px!important;
-  margin-right:8px!important;
-}
-#interventionModal .dialog>.form>.full .soft{
-  margin-left:8px!important;
-  margin-right:8px!important;
-}
-#interventionModal .dialog>.actions{
-  box-sizing:border-box!important;
-}
-#interventionModal .dialog>.actions .primary{
-  box-sizing:border-box!important;
-  max-width:100%!important;
-}
-@media(max-width:600px){
-  #interventionModal .dialog>.actions{
-    padding-left:16px!important;
-    padding-right:16px!important;
-    padding-bottom:22px!important;
-  }
-  #interventionModal .dialog>.actions .primary{
-    width:100%!important;
-    box-sizing:border-box!important;
-  }
-}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
@@ -1515,7 +1478,7 @@ html,body{overflow-x:hidden}
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v30.3.2 · Coches y motos · Combustible y mantenimiento · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v30.2 · Coches y motos · Combustible y mantenimiento · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
@@ -2177,4 +2140,56 @@ window.deleteVehicle=function(id){
   render();
 };
 </script>
+
+<style id="garagey-v30-3-1-field-width">
+/* GARAGEY v30.3.1 — Campos ligeramente más estrechos dentro de sus fichas
+   La ficha mantiene todo su ancho; solo los controles dejan 8px de aire por lado. */
+#interventionModal .intervention-form-step input:not([type="checkbox"]),
+#interventionModal .intervention-form-step select,
+#interventionModal .intervention-form-step textarea{
+  width:calc(100% - 16px)!important;
+  margin-left:8px!important;
+  margin-right:8px!important;
+  box-sizing:border-box!important;
+}
+#interventionModal .intervention-form-step .cost-row{
+  width:calc(100% - 16px);
+  margin-left:8px;
+  margin-right:8px;
+}
+</style>
+
+<style id="garagey-v30-3-2-spacing-save">
+/* GARAGEY v30.3.2 — separación visual de textos/botón y botón Guardar íntegro
+   Base: v30.3.1. No se modifica el ancho exterior de la ficha. */
+#interventionModal .intervention-form-step > div > label,
+#interventionModal .intervention-form-step .full > label,
+#interventionModal .intervention-form-step .cost-header > div > label,
+#interventionModal .intervention-form-step .cost-help,
+#interventionModal .intervention-form-step .fuel-form-title > div,
+#interventionModal .intervention-form-step .fuel-full > label {
+  margin-left:8px!important;
+  margin-right:8px!important;
+}
+#interventionModal .intervention-form-step .cost-panel > .soft {
+  margin-left:8px!important;
+}
+#interventionModal .dialog > .actions .primary {
+  box-sizing:border-box!important;
+  display:block!important;
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+}
+@media(max-width:600px){
+  #interventionModal .dialog > .actions {
+    padding-left:16px!important;
+    padding-right:16px!important;
+    box-sizing:border-box!important;
+  }
+  #interventionModal .dialog > .actions .primary {
+    min-width:0!important;
+  }
+}
+</style>
 </body></html>
