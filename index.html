@@ -2047,10 +2047,11 @@ function openIntervention(id){
    $('costItems').innerHTML='';
    addCost();
    clearNewInterventionAutofill();
-   setTimeout(clearNewInterventionAutofill,80);
-   setTimeout(clearNewInterventionAutofill,300);
-   setTimeout(clearNewInterventionAutofill,800);
-   setTimeout(clearNewInterventionAutofill,1500);
+   hardResetNewInterventionFields();
+   clearNewInterventionAutofill();
+   requestAnimationFrame(()=>{hardResetNewInterventionFields();clearNewInterventionAutofill();});
+   setTimeout(()=>{hardResetNewInterventionFields();clearNewInterventionAutofill();},250);
+   setTimeout(()=>{hardResetNewInterventionFields();clearNewInterventionAutofill();},900);
  }
  if(item){if(item.type==='ITV'&&$('itvCost'))$('itvCost').value=item.totalCost??'';if(item.type==='Seguro'&&$('insuranceCost'))$('insuranceCost').value=item.totalCost??'';if(item.type==='Impuestos'&&$('taxCost'))$('taxCost').value=item.totalCost??'';let d=item.details||'';if(item.type==='Mantenimiento')document.querySelectorAll('#maintenanceFields input[type=checkbox]').forEach(x=>x.checked=d.includes(x.value));if(item.type==='Neumáticos'){let a=d.split(' · ');$('tireSize').value=a[0]||'';$('tireBrand').value=a[1]||'';}if(item.type==='Correa/Cadena'){let a=d.split(' · ');$('beltType').value=a[0]||$('beltType').value;$('beltBrand').value=a[1]||'';}if(item.type==='Varios')$('otherDescription').value=d;}
  typeFields();updateTotalCost();hydrateVehicleFormIcons();
@@ -2059,6 +2060,41 @@ function openIntervention(id){
 }
 function openFueling(id){const v=data.vehicles.find(x=>x.id===data.selected);if(!v)return;v.fuelings=Array.isArray(v.fuelings)?v.fuelings:[];const item=v.fuelings.find(x=>x.id===id);if(!item)return;window.editFueling=id;window.editIntervention=null;$('interventionModal').classList.add('show');setInterventionFormMode('Repostaje');$('idate').value=item.date||new Date().toISOString().slice(0,10);$('ikm').value=item.km??v.km??'';$('itype').value='Repostaje';$('inext').value='';$('manualDetails').value='';$('costItems').innerHTML='';resetFuelForm();$('fuelLiters').value=item.liters??'';$('fuelPrice').value=item.price??'';$('fuelTotal').value=item.totalCost??'';$('fuelFull').checked=!!item.fullTank;$('fuelStation').value=item.station||'';$('fuelNotes').value=item.notes||'';typeFields();updateFuelTotal();hydrateVehicleFormIcons();document.querySelector('#interventionModal h2').textContent='Editar repostaje';document.querySelector('#interventionModal .intervention-form-step > .actions .primary').textContent='Guardar cambios';}
 function resetFuelForm(){['fuelLiters','fuelPrice','fuelTotal','fuelStation','fuelNotes'].forEach(id=>{if($(id))$(id).value=''});if($('fuelFull'))$('fuelFull').checked=false}
+/* GARAGEY v32.6 — hard reset anti-restauración de Chrome en nuevas intervenciones */
+function hardResetNewInterventionFields(){
+ // Chrome Android puede restaurar el estado visual de un formulario reutilizado aunque se haya puesto value=''.
+ // Para una NUEVA intervención sustituimos los controles específicos por nodos nuevos y les damos nombres de sesión únicos.
+ const ids=['tireSize','tireBrand','beltBrand','otherDescription','itvNextDate','itvNotes','itvCost','insuranceCompany','insurancePolicy','insuranceExpiry','insuranceCost','taxDueDate','taxNotes','taxCost','fuelLiters','fuelPrice','fuelTotal','fuelStation','fuelNotes'];
+ const session=Date.now().toString(36);
+ ids.forEach(id=>{
+   const old=$(id); if(!old)return;
+   const fresh=old.cloneNode(true);
+   fresh.value='';
+   fresh.removeAttribute('value');
+   fresh.setAttribute('autocomplete','new-password');
+   fresh.setAttribute('data-new-intervention-session',session);
+   if(fresh.name) fresh.name='garagey_new_'+session+'_'+id;
+   old.replaceWith(fresh);
+ });
+ ['beltType','itvResult','insurancePeriod','taxType'].forEach(id=>{
+   const old=$(id); if(!old)return;
+   const fresh=old.cloneNode(true);
+   fresh.selectedIndex=0;
+   fresh.setAttribute('autocomplete','off');
+   fresh.setAttribute('data-new-intervention-session',session);
+   if(fresh.name) fresh.name='garagey_new_'+session+'_'+id;
+   old.replaceWith(fresh);
+ });
+ if($('fuelFull')){
+   const old=$('fuelFull'), fresh=old.cloneNode(true);
+   fresh.checked=false; fresh.removeAttribute('checked');
+   fresh.setAttribute('autocomplete','off');
+   old.replaceWith(fresh);
+ }
+ // Vaciar también cualquier valor persistido en los elementos específicos recién creados.
+ ids.forEach(id=>{const el=$(id);if(el){el.value='';el.removeAttribute('value');}});
+ if($('fuelFull'))$('fuelFull').checked=false;
+}
 function resetInterventionSpecificFields(){
  const ids=['tireSize','tireBrand','beltBrand','otherDescription','itvNextDate','itvNotes','itvCost','insuranceCompany','insurancePolicy','insuranceExpiry','insuranceCost','taxDueDate','taxNotes','taxCost'];
  ids.forEach(id=>{const el=$(id);if(el){el.value='';el.removeAttribute('value');el.setAttribute('autocomplete','off');}});
@@ -2077,7 +2113,7 @@ function clearNewInterventionAutofill(){
  if($('fuelFull'))$('fuelFull').checked=false;
 }
 function updateFuelTotal(){const l=Number($('fuelLiters')?.value||0),p=Number($('fuelPrice')?.value||0);if($('fuelTotal'))$('fuelTotal').value=l&&p?(l*p).toFixed(2):''}
-function selectInterventionType(type){const s=$('itype');const modal=$('interventionModal');if(!s||!modal)return;s.value=type;if(!window.editIntervention&&!window.editFueling){resetInterventionSpecificFields();clearNewInterventionAutofill();}document.querySelectorAll('.intervention-type-card').forEach(c=>c.classList.toggle('active',c.dataset.type===type));setInterventionFormMode(type);typeFields();const title=modal.querySelector('.top h2');if(title)title.textContent='🔧 '+type;const formTitle=$('interventionFormTypeTitle');if(formTitle)formTitle.textContent=type;const icon=$('interventionFormTypeIcon');if(icon){icon.dataset.icon=({'Mantenimiento':'wrench','Neumáticos':'tire','Correa/Cadena':'gear','Varios':'wrench','ITV':'calendar','Seguro':'shield','Impuestos':'building','Repostaje':'fuel'})[type]||'wrench';icon.innerHTML=svgIcon(icon.dataset.icon)}const dialog=modal.querySelector('.dialog');if(dialog)dialog.scrollTop=0;hydrateVehicleFormIcons();}
+function selectInterventionType(type){const s=$('itype');const modal=$('interventionModal');if(!s||!modal)return;s.value=type;if(!window.editIntervention&&!window.editFueling){hardResetNewInterventionFields();resetInterventionSpecificFields();clearNewInterventionAutofill();}document.querySelectorAll('.intervention-type-card').forEach(c=>c.classList.toggle('active',c.dataset.type===type));setInterventionFormMode(type);typeFields();const title=modal.querySelector('.top h2');if(title)title.textContent='🔧 '+type;const formTitle=$('interventionFormTypeTitle');if(formTitle)formTitle.textContent=type;const icon=$('interventionFormTypeIcon');if(icon){icon.dataset.icon=({'Mantenimiento':'wrench','Neumáticos':'tire','Correa/Cadena':'gear','Varios':'wrench','ITV':'calendar','Seguro':'shield','Impuestos':'building','Repostaje':'fuel'})[type]||'wrench';icon.innerHTML=svgIcon(icon.dataset.icon)}const dialog=modal.querySelector('.dialog');if(dialog)dialog.scrollTop=0;hydrateVehicleFormIcons();}
 
 function typeFields(){['maintenanceFields','tireFields','beltFields','otherFields','itvFields','insuranceFields','taxFields','fuelFields'].forEach(x=>$(x).classList.add('hidden'));['nextInterventionField','manualDetailsWrap','costPanel'].forEach(x=>$(x)?.classList.remove('fuel-mode-hidden'));let t=$('itype').value;document.querySelectorAll('.intervention-type-card').forEach(c=>c.classList.toggle('active',c.dataset.type===t));let map={'Mantenimiento':'maintenanceFields','Neumáticos':'tireFields','Correa/Cadena':'beltFields','Varios':'otherFields','ITV':'itvFields','Seguro':'insuranceFields','Impuestos':'taxFields','Repostaje':'fuelFields'};$(map[t]).classList.remove('hidden');if(['ITV','Seguro','Impuestos'].includes(t))$('costPanel')?.classList.add('fuel-mode-hidden');if(t==='Repostaje'){['nextInterventionField','manualDetailsWrap','costPanel'].forEach(x=>$(x)?.classList.add('fuel-mode-hidden'));updateFuelTotal()}hydrateVehicleFormIcons();}
 function updateTotalCost(){const total=[...document.querySelectorAll('#costItems .cost-row input[type=number]')].reduce((a,x)=>a+Number(x.value||0),0);$('totalCost').value=total.toFixed(2);return total}

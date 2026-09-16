@@ -1,4 +1,4 @@
-const CACHE='garagey-v32-5';
+const CACHE='garagey-v32-6';
 const CORE=['./','./index.html','./manifest.json'];
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));
