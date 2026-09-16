@@ -2710,4 +2710,45 @@ window.deleteVehicle=function(id){
 .vehicle-history-launch.fuel-launch{margin-top:0!important;margin-bottom:16px!important;background:linear-gradient(135deg,#082e50 0%,#07375d 52%,#082849 100%)!important;border:1px solid #168eea!important;color:#dff4ff!important}
 @media(max-width:600px),(pointer:coarse){.vehicle-history-launch{width:calc(100% - 24px)!important;margin-left:12px!important;margin-right:12px!important;min-height:56px!important;padding:8px 12px!important;border-radius:16px!important;grid-template-columns:42px 1fr 22px!important}.vehicle-history-icon{width:36px;height:36px}.vehicle-history-icon .premium-svg{width:23px;height:23px}.vehicle-history-label{font-size:13px}.vehicle-history-arrow{font-size:25px}}
 </style>
+<style id="garagey-v33-6-tire-focus-fix">
+/* GARAGEY v33.6 — evitar que la regla global .dialog input:focus vuelva blancos los campos de neumáticos */
+.tire-dialog input:not([type="checkbox"]):not([type="radio"]),
+.tire-dialog select,
+.tire-dialog textarea{
+  background-color:#061c2e!important;
+  background-image:none!important;
+  color:#f2f9ff!important;
+  -webkit-text-fill-color:#f2f9ff!important;
+  border-color:#285f85!important;
+  color-scheme:dark;
+}
+.tire-dialog input:not([type="checkbox"]):not([type="radio"]):focus,
+.tire-dialog select:focus,
+.tire-dialog textarea:focus{
+  background-color:#05243a!important;
+  background-image:none!important;
+  color:#f2f9ff!important;
+  -webkit-text-fill-color:#f2f9ff!important;
+  border-color:#20a5ff!important;
+  box-shadow:0 0 0 3px rgba(32,165,255,.13)!important;
+  outline:none!important;
+  color-scheme:dark;
+}
+.tire-dialog input::placeholder,
+.tire-dialog textarea::placeholder{
+  color:#62869d!important;
+  opacity:1!important;
+  -webkit-text-fill-color:#62869d!important;
+}
+.tire-dialog input:-webkit-autofill,
+.tire-dialog input:-webkit-autofill:hover,
+.tire-dialog input:-webkit-autofill:focus{
+  -webkit-text-fill-color:#f2f9ff!important;
+  -webkit-box-shadow:0 0 0 1000px #061c2e inset!important;
+  box-shadow:0 0 0 1000px #061c2e inset!important;
+  background-color:#061c2e!important;
+  caret-color:#f2f9ff!important;
+}
+.tire-dialog input:focus::selection{background:rgba(32,165,255,.35);color:#fff;}
+</style>
 </body></html>
