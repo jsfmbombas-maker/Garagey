@@ -1663,7 +1663,7 @@ html,body{overflow-x:hidden}
 #interventionModal #taxFields #taxCost{background:#041b2c!important;color:#f2f9ff!important;border:1px solid #285f85!important;-webkit-text-fill-color:#f2f9ff!important;box-shadow:none!important}
 
 /* GARAGEY v33.3 — Gestión de neumáticos. Usa la misma paleta oscura/cian de v33.2. */
-.tire-modal{background:rgba(0,7,16,.78)!important;padding:10px!important}
+.tire-modal{background:rgba(0,7,16,.78)!important;padding:10px!important;z-index:120!important}
 .tire-dialog{width:min(900px,100%)!important;height:min(94dvh,920px)!important;max-height:94dvh!important;padding:0!important;background:#031a2b!important;border:1px solid #168eea!important;border-radius:26px!important;overflow:hidden!important;box-shadow:0 30px 90px rgba(0,0,0,.62)!important;color:#eef8ff!important;display:flex!important;flex-direction:column!important}
 .tire-top{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:18px 20px;background:linear-gradient(135deg,#061a2c,#0b2942);border-bottom:1px solid #174c6e;flex:0 0 auto}
 .tire-top strong{display:block;font-size:20px;color:#fff;margin-top:2px}.tire-top small{display:block;color:#91b0c8;font-size:12px;margin-top:3px}.tire-top .eyebrow{color:#72bce9;font-size:10px;letter-spacing:.08em;font-weight:900}
@@ -1682,7 +1682,7 @@ html,body{overflow-x:hidden}
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v33.3 · Coches y motos · Neumáticos por ejes · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v33.4 · Coches y motos · Neumáticos por ejes · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
@@ -1780,7 +1780,7 @@ html,body{overflow-x:hidden}
    La interfaz puede cambiar sin modificar ni perder los datos.
    Cada futura actualización incrementará schemaVersion y aplicará migraciones. */
 const STORAGE_KEY='garagey_data';
-const CURRENT_SCHEMA=11; // v33.3: gestión avanzada de neumáticos por ejes y ciclos de vida
+const CURRENT_SCHEMA=11; // v33.4: gestión avanzada de neumáticos por ejes y ciclos de vida
 function freshData(){return {schemaVersion:CURRENT_SCHEMA,vehicles:[],selected:null}}
 let data;
 let editVehicle=null;
@@ -2077,7 +2077,7 @@ function toggleHistoryIntervention(id){
 
 function renderFuelHistoryModal(){const modal=$('fuelHistoryModal'),box=$('fuelHistoryModalContent');if(!modal||!box)return;const v=data.vehicles.find(x=>x.id===data.selected);if(!v){modal.classList.remove('show');return}v.fuelings=Array.isArray(v.fuelings)?v.fuelings:[];const fs=fuelStats(v);const avg=fs.consumption===null?'—':fs.consumption.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' L/100 km';const ck=fs.costKm===null?'—':(fs.costKm*100).toLocaleString('es-ES',{minimumFractionDigits:1,maximumFractionDigits:1})+' cént/km';let html=`<div class="history-modal-top"><div><span class="eyebrow">HISTORIAL DE REPOSTAJES</span><strong>${v.name||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'} · ${Number(v.km||0).toLocaleString('es-ES')} km</small></div><button class="history-modal-close" onclick="closeModal('fuelHistoryModal')">Cerrar ×</button></div><div class="history-modal-scroll"><div class="fuel-summary-grid"><div class="fuel-summary-card"><span>Consumo medio</span><b>${avg}</b><small>Entre depósitos llenos</small></div><div class="fuel-summary-card"><span>Coste por km</span><b>${ck}</b><small>Combustible</small></div><div class="fuel-summary-card"><span>Gasto combustible</span><b>${euro2(fs.spend)}</b><small>${fs.rows.length} repostajes</small></div></div><div class="fuel-history-list">${fs.rows.length?[...fs.rows].reverse().map(r=>`<article class="fuel-history-card"><div class="fuel-history-head"><div class="fuel-card-icon">${svgIcon('fuel')}</div><div><b>Repostaje ${r.fullTank?'· Depósito lleno':''}</b><small>${r.date||'Fecha no indicada'} · ${Number(r.km||0).toLocaleString('es-ES')} km</small></div><div class="fuel-history-cost"><strong>${euro2(r.totalCost)}</strong><small>${Number(r.price||0).toLocaleString('es-ES',{minimumFractionDigits:3,maximumFractionDigits:3})} €/L</small></div></div><div class="fuel-history-body"><div class="fuel-history-meta"><div><span>Litros</span><b>${Number(r.liters||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})} L</b></div><div><span>Coste</span><b>${euro2(r.totalCost)}</b></div>${r.station?`<div><span>Gasolinera</span><b>${r.station}</b></div>`:''}${r.notes?`<div><span>Observaciones</span><b>${r.notes}</b></div>`:''}</div><div class="fuel-history-actions"><button class="edit" onclick="openFueling(${r.id})">✎ Editar</button><button class="delete" onclick="deleteFueling(${r.id})">▣ Eliminar</button></div></div></article>`).join(''):'<div class="fuel-empty">Todavía no hay repostajes registrados.<br><br>Pulsa «Nueva intervención» y selecciona <b>Repostaje</b>.</div>'}</div></div>`;box.innerHTML=html;hydrateVehicleFormIcons();}
 function openHistoryModal(){renderHistoryModal();$('historyModal').classList.add('show')}function openFuelHistoryModal(){renderFuelHistoryModal();$('fuelHistoryModal').classList.add('show')}
-/* GARAGEY v33.3 — Gestión avanzada de neumáticos por ejes y ciclo de vida */
+/* GARAGEY v33.4 — Gestión avanzada de neumáticos por ejes y ciclo de vida */
 function ensureTireData(v){
   if(!v.tireManagement)v.tireManagement={frontPairId:null,rearPairId:null,pairs:[],events:[]};
   const t=v.tireManagement;
@@ -2116,7 +2116,7 @@ function tireEventIcon(type){return type==='rotation'?'↔':type==='replacement'
 function tireOpenBase(title,subtitle,body,footer=''){
  return `<div class="tire-top"><div><span class="eyebrow">GARAGEY · NEUMÁTICOS</span><strong>${title}</strong><small>${subtitle}</small></div><button class="history-modal-close" onclick="closeModal('tireModal')">Cerrar ×</button></div><div class="tire-scroll">${body}</div>${footer}`;
 }
-function openTireManager(opts={}){const v=data.vehicles.find(x=>x.id===data.selected);if(!v)return;ensureTireData(v);renderTireManager();$('tireModal').classList.add('show');if(opts.mode==='change')openTireOperationPicker();}
+function openTireManager(opts={}){const v=data.vehicles.find(x=>x.id===data.selected);if(!v)return;ensureTireData(v);const modal=$('tireModal');if(!modal)return;renderTireManager();modal.classList.add('show');if(opts.mode==='change')requestAnimationFrame(()=>openTireOperationPicker());}
 function renderTireManager(){
  const v=data.vehicles.find(x=>x.id===data.selected),box=$('tireModalContent');if(!v||!box)return;const t=ensureTireData(v),s=tireActiveSummary(v),km=Number(v.km||0),costKm=tireTotalCostKm(v);
  const axle=(label,pair,cls)=>`<div class="tire-axle ${cls}" ${pair?`onclick="renderTirePairDetail('${pair.id}')" role="button" tabindex="0"`:''}><div class="tire-axle-icon">${svgIcon('tire')}</div><div class="tire-axle-main"><b>${label}</b>${pair?`<strong>${pair.brand||'Marca no indicada'}</strong><small>${pair.size||'Medida no indicada'} · 2 neumáticos</small>`:'<small>Sin neumáticos registrados</small>'}</div>${pair?`<span class="tire-status">${pair.status==='active'?'En servicio':'Finalizado'}</span>`:''}</div>`;
