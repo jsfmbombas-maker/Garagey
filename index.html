@@ -2187,7 +2187,16 @@ function renderTirePairDetail(pairId){const v=data.vehicles.find(x=>x.id===data.
 function deleteTirePair(pairId){
  const v=data.vehicles.find(x=>x.id===data.selected);if(!v)return;const t=ensureTireData(v),p=tirePairById(v,pairId);if(!p||p.status!=='active'){alert('Solo se puede eliminar un neumático que esté actualmente montado.');return}
  const axle=p.currentAxle||((t.frontPairId===p.id)?'front':(t.rearPairId===p.id?'rear':null));if(!axle){alert('No se ha podido determinar el eje actual del neumático.');return}
- const previous=p.replacedPairId?tirePairById(v,p.replacedPairId):null;const undo=p.undoSnapshot||null;
+ let previous=p.replacedPairId?tirePairById(v,p.replacedPairId):null;
+ // Compatibilidad con neumáticos creados antes de v35: si no guardaban la relación explícita,
+ // localizar el último par que fue desmontado exactamente al instalar este.
+ if(!previous){
+   const candidates=t.pairs.filter(x=>x.id!==p.id&&x.status!=='active'&&Number(x.removalKm??-1)===Number(p.installKm??-2));
+   previous=candidates.filter(x=>x.removalDate&&p.installDate&&x.removalDate===p.installDate&&
+     (x.initialAxle===p.initialAxle || x.currentAxle===p.initialAxle || (Array.isArray(x.axleHistory)&&x.axleHistory[x.axleHistory.length-1]?.axle===p.initialAxle))
+   ).sort((a,b)=>Number(b.removalKm||0)-Number(a.removalKm||0))[0] || candidates.sort((a,b)=>Number(b.removalKm||0)-Number(a.removalKm||0))[0] || null;
+ }
+ const undo=p.undoSnapshot||null;
  const msg=previous?`¿Eliminar los neumáticos ${p.brand||''} del eje ${axle==='front'?'delantero':'trasero'}?\n\nSe desmontarán del registro y se volverá a montar automáticamente el neumático anterior (${previous.brand||'anterior'}). Su vida útil se reabrirá desde el kilometraje en el que se desmontó.`:`¿Eliminar los neumáticos ${p.brand||''} del eje ${axle==='front'?'delantero':'trasero'}?\n\nNo hay un neumático anterior asociado, por lo que el eje quedará sin neumáticos.`;
  if(!confirm(msg))return;
  // Remove the active pair from the axle.
