@@ -1548,6 +1548,110 @@ html,body{overflow-x:hidden}
 
 
 
+
+<style id="garagey-v32-3-no-white-panels">
+/* GARAGEY v32.3 — corrección definitiva de las fichas internas blancas.
+   Ningún contenedor de los datos específicos de una intervención debe quedar blanco. */
+#interventionModal .intervention-form-step > .full,
+#interventionModal .intervention-form-step > .full.hidden,
+#interventionModal #maintenanceFields,
+#interventionModal #tireFields,
+#interventionModal #beltFields,
+#interventionModal #otherFields,
+#interventionModal #itvFields,
+#interventionModal #insuranceFields,
+#interventionModal #taxFields,
+#interventionModal #repostajeFields,
+#interventionModal .cost-panel{
+  background:linear-gradient(145deg,#082b45,#062137)!important;
+  background-color:#062137!important;
+  background-image:linear-gradient(145deg,#082b45,#062137)!important;
+  border:1px solid #155b88!important;
+  color:#eef8ff!important;
+  box-shadow:0 8px 22px rgba(0,0,0,.20)!important;
+}
+/* Los subformularios .form de neumáticos/correa no deben aportar ningún fondo claro. */
+#interventionModal .intervention-form-step > .full > .form,
+#interventionModal #tireFields > .form,
+#interventionModal #beltFields > .form,
+#interventionModal #itvFields > .form,
+#interventionModal #insuranceFields > .form,
+#interventionModal #taxFields > .form{
+  background:transparent!important;
+  background-color:transparent!important;
+  background-image:none!important;
+  border:0!important;
+  box-shadow:none!important;
+}
+/* Todos los campos interiores siguen siendo oscuros, también dentro de estos paneles. */
+#interventionModal .intervention-form-step > .full input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+#interventionModal .intervention-form-step > .full select,
+#interventionModal .intervention-form-step > .full textarea,
+#interventionModal .intervention-form-step > .full .cost-row input,
+#interventionModal .intervention-form-step > .full #totalCost{
+  background:#041b2c!important;
+  background-color:#041b2c!important;
+  background-image:none!important;
+  color:#f2f9ff!important;
+  -webkit-text-fill-color:#f2f9ff!important;
+  border-color:#285f85!important;
+  box-shadow:none!important;
+}
+#interventionModal .intervention-form-step > .full label,
+#interventionModal .intervention-form-step > .full > .form label,
+#interventionModal .intervention-form-step > .full > div > label{
+  color:#8bc8f5!important;
+}
+#interventionModal .intervention-form-step > .full textarea::placeholder,
+#interventionModal .intervention-form-step > .full input::placeholder{
+  color:#62869d!important;
+  opacity:1!important;
+}
+#interventionModal .intervention-form-step > .full input:focus,
+#interventionModal .intervention-form-step > .full select:focus,
+#interventionModal .intervention-form-step > .full textarea:focus{
+  background:#05243a!important;
+  background-color:#05243a!important;
+  color:#f2f9ff!important;
+  -webkit-text-fill-color:#f2f9ff!important;
+  border-color:#20a5ff!important;
+}
+#interventionModal .intervention-form-step > .full input:-webkit-autofill,
+#interventionModal .intervention-form-step > .full input:-webkit-autofill:hover,
+#interventionModal .intervention-form-step > .full input:-webkit-autofill:focus,
+#interventionModal .intervention-form-step > .full textarea:-webkit-autofill,
+#interventionModal .intervention-form-step > .full select:-webkit-autofill{
+  -webkit-text-fill-color:#f2f9ff!important;
+  -webkit-box-shadow:0 0 0 1000px #041b2c inset!important;
+  box-shadow:0 0 0 1000px #041b2c inset!important;
+  background-color:#041b2c!important;
+  caret-color:#f2f9ff!important;
+}
+#interventionModal .intervention-form-step > .full select option{
+  background:#041b2c!important;
+  color:#f2f9ff!important;
+}
+/* Casillas de mantenimiento: mismo lenguaje visual, sin superficies blancas. */
+#interventionModal #maintenanceFields .check{
+  background:#09263d!important;
+  background-color:#09263d!important;
+  background-image:none!important;
+  border-color:#285f85!important;
+  color:#eaf6ff!important;
+  box-shadow:none!important;
+}
+#interventionModal #maintenanceFields .check:hover{
+  background:#0a3150!important;
+  background-color:#0a3150!important;
+}
+#interventionModal #maintenanceFields .check:has(input:checked){
+  background:#063f38!important;
+  background-color:#063f38!important;
+  border-color:#00bfa6!important;
+  color:#dffff9!important;
+}
+</style>
+
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
