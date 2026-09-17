@@ -1708,10 +1708,33 @@ html,body{overflow-x:hidden}
 @media(max-width:600px){.tire-modal{padding:0!important}.tire-dialog{width:100%!important;height:100dvh!important;max-height:100dvh!important;border-radius:0!important;border-left:0!important;border-right:0!important}.tire-top{padding:15px 14px}.tire-top strong{font-size:17px}.tire-scroll{padding:10px 10px calc(20px + env(safe-area-inset-bottom))}.tire-card{padding:12px;margin-bottom:9px;border-radius:16px}.tire-axles,.tire-axis-grid{grid-template-columns:1fr}.tire-actions{position:sticky;bottom:0;padding-top:5px;background:linear-gradient(180deg,rgba(3,26,43,0),#031a2b 22%)}.tire-summary-grid{gap:6px}.tire-option{padding:11px}.tire-intro p{font-size:10px}}
 
 </style>
+
+<style id="garagey-v35-22-moto-hero-full">
+/* v35.22 — Las fotos de marca de las motos ocupan todo el hero,
+   igual que las de los coches. Se elimina el encuadre contain/padding
+   exclusivo de motos. */
+.vehicle-detail-dialog .vehicle-hero-image.is-moto{
+  background-size:cover!important;
+  background-position:center center!important;
+  overflow:hidden!important;
+}
+.vehicle-detail-dialog .vehicle-hero-image.is-moto img.vehicle-photo{
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  padding:0!important;
+  margin:0!important;
+  background:transparent!important;
+  display:block!important;
+}
+</style>
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.19 · Logos Nissan y Kawasaki · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.22 · Logos Nissan y Kawasaki · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
