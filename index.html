@@ -1684,7 +1684,7 @@ html,body{overflow-x:hidden}
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.0 · Motivo y recuperación de neumáticos · Historial por fecha · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.6 · Historial de neumáticos desplegable · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
@@ -2046,7 +2046,7 @@ function renderHistoryModal(){
       :raw.map(x=>`<div class="history-detail-row"><span class="history-detail-bullet"></span><span>${x}</span></div>`).join('');
    const partsTotal=(i.parts||[]).reduce((a,p)=>a+Number(p?.cost||0),0);
    return `<article class="history-compact-card ${meta[2]}" id="history-item-${i.id}">
-      <button type="button" class="history-compact-head" onclick="${i.type==='Neumáticos'?`openTireFromIntervention(${i.id})`:`toggleHistoryIntervention(${i.id})`}" aria-expanded="false" aria-controls="history-details-${i.id}">
+      <button type="button" class="history-compact-head" onclick="${i.type==='Neumáticos'?`toggleTireInterventionHistory(${i.id})`:`toggleHistoryIntervention(${i.id})`}" aria-expanded="false" aria-controls="history-details-${i.id}">
         <span class="history-compact-icon">${svgIcon(meta[0])}</span>
         <span class="history-compact-main"><b>${meta[1]}</b><span class="history-compact-meta"><span class="history-meta-item"><i>${svgIcon('calendar')}</i>${i.date||'—'}</span><span class="history-meta-item"><i>${svgIcon('gauge')}</i>${Number(i.km||0).toLocaleString('es-ES')} km</span></span></span>
         <span class="history-compact-chevron" aria-hidden="true">›</span>
@@ -2067,37 +2067,63 @@ function renderHistoryModal(){
  box.innerHTML=html;
 }
 
-function openTireFromIntervention(interventionId){
+function toggleTireInterventionHistory(interventionId){
+ const card=document.getElementById(`history-item-${interventionId}`);
+ if(!card)return;
+ const head=card.querySelector('.history-compact-head');
+ const details=card.querySelector('.history-compact-details');
+ if(!details)return;
+ const expanded=card.classList.contains('is-expanded');
+ if(expanded){
+   card.classList.remove('is-expanded');
+   head?.setAttribute('aria-expanded','false');
+   details.hidden=true;
+   return;
+ }
  const v=data.vehicles.find(x=>x.id===data.selected);if(!v)return;
  const item=(v.interventions||[]).find(i=>String(i.id)===String(interventionId));if(!item)return;
  const t=ensureTireData(v);
  let pairs=[];
- // Primero usamos la relación explícita guardada en la intervención.
  if(Array.isArray(item.tirePairIds)) pairs=item.tirePairIds.map(id=>tirePairById(v,id)).filter(Boolean);
- // Compatibilidad con intervenciones antiguas que no tenían tirePairIds.
+ // Compatibilidad con intervenciones antiguas.
+ if(!pairs.length) pairs=t.pairs.filter(p=>Number(p.installKm||-1)===Number(item.km||-2)&&String(p.installDate||'')===String(item.date||''));
  if(!pairs.length){
-   pairs=t.pairs.filter(p=>Number(p.installKm||-1)===Number(item.km||-2)&&String(p.installDate||'')===String(item.date||''));
- }
- if(!pairs.length){
-   const details=String(item.details||'').toLowerCase();
+   const detailsText=String(item.details||'').toLowerCase();
    pairs=t.pairs.filter(p=>Number(p.installKm||-1)===Number(item.km||-2)&&(
      !p.installDate||!item.date||String(p.installDate)===String(item.date)||
-     details.includes(String(p.brand||'').toLowerCase())||details.includes(String(p.size||'').toLowerCase())
+     (p.brand&&detailsText.includes(String(p.brand).toLowerCase()))||
+     (p.size&&detailsText.includes(String(p.size).toLowerCase()))
    ));
  }
- if(!pairs.length){
-   alert('No se ha podido localizar el neumático asociado a esta intervención.');
-   return;
+ const linkedIds=new Set(pairs.map(p=>p.id));
+ const makePairHistory=p=>{
+   const life=tireKmLife(p,v.km), ck=tireCostKm(p,v.km);
+   const status=p.status==='active'?'En servicio':p.status==='stored'?'Guardado':'Retirado';
+   const reason=p.removalReason||p.replacementReason||'';
+   const segments=(p.axleHistory||[]).map(h=>`<div class="history-detail-row"><span class="history-detail-bullet"></span><span>${h.axle==='front'?'Eje delantero':'Eje trasero'} · desde ${Number(h.fromKm||0).toLocaleString('es-ES')} km${h.toKm!=null?' hasta '+Number(h.toKm).toLocaleString('es-ES')+' km':''}</span></div>`).join('');
+   return `<section class="tire-history-inline" data-pair-id="${p.id}">
+     <div class="tire-history-inline-head"><span class="history-inline-icon">${svgIcon('tire')}</span><div><b>${p.brand||'Marca no indicada'} · ${p.size||'Medida no indicada'}</b><small>${status} · Montaje ${p.installDate||'—'} · ${Number(p.installKm||0).toLocaleString('es-ES')} km</small></div><button type="button" class="tire-inline-open" onclick="event.stopPropagation();renderTirePairDetail('${p.id}')">Ver ficha ›</button></div>
+     <div class="history-detail-grid">
+       <div><span>Montaje</span><b>${p.installDate||'—'}</b></div><div><span>Km montaje</span><b>${Number(p.installKm||0).toLocaleString('es-ES')} km</b></div>
+       ${p.removalKm!=null?`<div><span>Desmontaje</span><b>${p.removalDate||'—'}</b></div><div><span>Km desmontaje</span><b>${Number(p.removalKm||0).toLocaleString('es-ES')} km</b></div>`:''}
+       <div><span>Vida ${p.status==='active'?'actual':'total'}</span><b>${life.toLocaleString('es-ES')} km</b></div><div><span>Coste / km</span><b>${ck===null?'—':ck.toLocaleString('es-ES',{minimumFractionDigits:4,maximumFractionDigits:4})+' €/km'}</b></div>
+     </div>
+     ${reason?`<div class="history-detail-cost"><span>Motivo de sustitución</span><b>${reason}</b></div>`:''}
+     <div class="history-detail-items"><div class="history-detail-title">Historial del neumático</div>${segments||'<div class="history-detail-row"><span class="history-detail-bullet"></span><span>Sin movimientos registrados</span></div>'}</div>
+   </section>`;
+ };
+ let body;
+ if(pairs.length){
+   body=pairs.map(makePairHistory).join('');
+ }else{
+   body=`<div class="history-detail-row"><span class="history-detail-bullet"></span><span>No se ha podido localizar el neumático asociado a esta intervención. La intervención se conserva y puedes consultar la gestión de neumáticos desde la ficha del vehículo.</span></div>`;
  }
- closeModal('historyModal');
- const modal=$('tireModal');if(!modal)return;
- modal.classList.add('show');
- if(pairs.length===1){renderTirePairDetail(pairs[0].id);return;}
- // Si la intervención cambió ambos ejes, mostramos los neumáticos de esa intervención para elegir el eje.
- const cards=pairs.map(pair=>`<div class="tire-axle" onclick="renderTirePairDetail('${pair.id}')" role="button" tabindex="0"><div class="tire-axle-icon">${svgIcon('tire')}</div><div class="tire-axle-main"><b>${pair.currentAxle==='front'?'Eje delantero':pair.currentAxle==='rear'?'Eje trasero':(pair.initialAxle==='front'?'Eje delantero':'Eje trasero')}</b><strong>${pair.brand||'Marca no indicada'}</strong><small>${pair.size||'Medida no indicada'} · ${pair.status==='active'?'En servicio':pair.status==='stored'?'Guardado':'Retirado'}</small></div><div class="tire-axle-end"><span class="tire-status ${pair.status!=='active'?'closed':''}">${pair.status==='active'?'En servicio':pair.status==='stored'?'Guardado':'Retirado'} ›</span></div></div>`).join('');
- const body=`<section class="tire-card tire-intro"><div class="tire-round-icon">${svgIcon('tire')}</div><div><h3>Neumáticos de esta intervención</h3><p>Selecciona el eje para abrir la ficha completa del neumático, esté actualmente montado o ya desmontado.</p></div></section><section class="tire-card"><div class="tire-axles">${cards}</div></section><div class="tire-actions"><button class="primary" onclick="renderHistoryModal();closeModal('tireModal');requestAnimationFrame(()=>openHistoryModal())">← Volver al historial</button></div>`;
- const box=$('tireModalContent');if(box){box.innerHTML=tireOpenBase('Neumáticos de la intervención',`${v.name||'Mi vehículo'} · ${item.date||'—'} · ${Number(item.km||0).toLocaleString('es-ES')} km`,body);hydrateVehicleFormIcons();}
-}
+ const cost=interventionCost(item);
+ details.innerHTML=`<div class="history-detail-title">Historial del neumático de esta intervención</div>${body}<div class="history-detail-grid"><div><span><i class="history-inline-icon">${svgIcon('calendar')}</i>Fecha de la intervención</span><b>${item.date||'—'}</b></div><div><span><i class="history-inline-icon">${svgIcon('gauge')}</i>Kilómetros</span><b>${Number(item.km||0).toLocaleString('es-ES')} km</b></div></div><div class="history-detail-cost"><span>Coste total</span><b>${euro(cost)}</b></div><div class="history-detail-actions"><button class="edit" onclick="openIntervention(${item.id})">✎ Editar</button><button class="delete" onclick="deleteIntervention(${item.id})">▣ Eliminar</button></div>`;
+ card.classList.add('is-expanded');
+ head?.setAttribute('aria-expanded','true');
+ details.hidden=false;
+};
 
 function toggleHistoryIntervention(id){
  const card=document.getElementById(`history-item-${id}`);
@@ -2835,5 +2861,9 @@ window.deleteVehicle=function(id){
   caret-color:#f2f9ff!important;
 }
 .tire-dialog input:focus::selection{background:rgba(32,165,255,.35);color:#fff;}
+
+/* GARAGEY v35.6 — Historial de neumáticos desplegable desde intervención */
+.tire-history-inline{margin:10px 0;padding:12px;border:1px solid #155b88;border-radius:16px;background:linear-gradient(135deg,#082c47,#061e32);box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
+.tire-history-inline-head{display:flex;align-items:center;gap:10px}.tire-history-inline-head>div{min-width:0;flex:1}.tire-history-inline-head b{display:block;color:#eef8ff;font-size:13px;line-height:1.25}.tire-history-inline-head small{display:block;color:#86a9bd;font-size:10px;margin-top:3px}.tire-inline-open{border:1px solid #168eea;background:#061c2e;color:#eef8ff;border-radius:10px;padding:7px 9px;font-size:10px;font-weight:700;white-space:nowrap}.tire-history-inline .history-detail-grid{margin-top:10px}.tire-history-inline .history-detail-cost{margin-top:8px}.tire-history-inline .history-detail-items{margin-top:10px}.tire-history-inline .history-detail-title{font-size:11px;color:#eef8ff;font-weight:800;margin-bottom:6px}.tire-history-inline .history-inline-icon{display:flex;align-items:center;justify-content:center;width:30px;height:30px;flex:0 0 30px;border-radius:10px;border:1px solid #168eea;background:#061c2e}.tire-history-inline .history-inline-icon svg{width:17px;height:17px}
 </style>
 </body></html>
