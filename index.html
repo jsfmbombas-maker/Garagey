@@ -2048,11 +2048,11 @@ function renderHistoryModal(){
  if(!modal||!box)return;
  const v=data.vehicles.find(x=>x.id===data.selected);
  if(!v){modal.classList.remove('show');return}
- const ints=[...(v.interventions||[])].filter(i=>i.type!=='Repostaje').sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))||Number(b.km||0)-Number(a.km||0)||String(b.id||'').localeCompare(String(a.id||'')));
+ const ints=[...(v.interventions||[])].filter(i=>i.type!=='Repostaje').map(i=>{const ts=i.type==='Neumáticos'?tireInterventionSummary(v,i):null;return {...i,_historyDate:ts?.date||i.date||'',_historyKm:ts?.km??Number(i.km||0)}}).sort((a,b)=>String(b._historyDate||'').localeCompare(String(a._historyDate||''))||Number(b._historyKm||0)-Number(a._historyKm||0)||String(b.id||'').localeCompare(String(a.id||'')));
  let html=`<div class="history-modal-top"><div><span class="eyebrow">HISTORIAL DE INTERVENCIONES</span><strong>${v.name||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'} · ${Number(v.km||0).toLocaleString('es-ES')} km</small></div><button class="history-modal-close" onclick="closeModal('historyModal')">Cerrar ×</button></div><div class="history-modal-scroll"><div class="history-modal-body"><div class="history-intervention-list">${ints.length?ints.map(i=>{
    const tireSummary=i.type==='Neumáticos'?tireInterventionSummary(v,i):null;
-   const displayDate=tireSummary?.date||i.date||'—';
-   const displayKm=tireSummary?.km??Number(i.km||0);
+   const displayDate=i._historyDate||tireSummary?.date||i.date||'—';
+   const displayKm=i._historyKm??tireSummary?.km??Number(i.km||0);
    let meta={
     Mantenimiento:['oil','Cambio de aceite y filtro','mantenimiento'],
     Neumáticos:['tire','Cambio de neumáticos','neumaticos'],
