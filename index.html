@@ -2132,7 +2132,7 @@ function toggleTireInterventionHistory(interventionId){
    body=`<div class="history-detail-row"><span class="history-detail-bullet"></span><span>No se ha podido localizar el neumático asociado a esta intervención. La intervención se conserva y puedes consultar la gestión de neumáticos desde la ficha del vehículo.</span></div>`;
  }
  const cost=interventionCost(item);
- details.innerHTML=`<div class="history-detail-title">Historial del neumático de esta intervención</div>${body}<div class="history-detail-grid"><div><span><i class="history-inline-icon">${svgIcon('calendar')}</i>Fecha de la intervención</span><b>${item.date||'—'}</b></div><div><span><i class="history-inline-icon">${svgIcon('gauge')}</i>Kilómetros</span><b>${Number(item.km||0).toLocaleString('es-ES')} km</b></div></div><div class="history-detail-cost"><span>Coste total</span><b>${euro(cost)}</b></div><div class="history-detail-actions"><button class="edit" onclick="openIntervention('${String(item.id).replace(/'/g,"\\'")}')">✎ Editar</button><button class="delete" onclick="deleteIntervention('${String(item.id).replace(/'/g,"\\'")}')">▣ Eliminar</button></div>`;
+ details.innerHTML=`<div class="history-detail-title">Historial del neumático de esta intervención</div>${body}<div class="history-detail-cost"><span>Coste total</span><b>${euro(cost)}</b></div><div class="history-detail-actions"><button class="edit" onclick="openIntervention('${String(item.id).replace(/'/g,"\\'")}')">✎ Editar</button><button class="delete" onclick="deleteIntervention('${String(item.id).replace(/'/g,"\\'")}')">▣ Eliminar</button></div>`;
  card.classList.add('is-expanded');
  head?.setAttribute('aria-expanded','true');
  details.hidden=false;
