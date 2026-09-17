@@ -1709,7 +1709,7 @@ html,body{overflow-x:hidden}
 
 </style>
 
-<style id="garagey-v35-22-moto-hero-full">
+<style id="garagey-v35-23-moto-hero-full">
 /* v35.22 — Las fotos de marca de las motos ocupan todo el hero,
    igual que las de los coches. Se elimina el encuadre contain/padding
    exclusivo de motos. */
@@ -1734,7 +1734,7 @@ html,body{overflow-x:hidden}
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.22 · Logos Nissan y Kawasaki · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.23 · Logos Nissan y Kawasaki · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
@@ -2943,5 +2943,49 @@ window.deleteVehicle=function(id){
 /* GARAGEY v35.6 — Historial de neumáticos desplegable desde intervención */
 .tire-history-inline{margin:10px 0;padding:12px;border:1px solid #155b88;border-radius:16px;background:linear-gradient(135deg,#082c47,#061e32);box-shadow:inset 0 1px 0 rgba(255,255,255,.03)}
 .tire-history-inline-head{display:flex;align-items:center;gap:10px}.tire-history-inline-head>div{min-width:0;flex:1}.tire-history-inline-head b{display:block;color:#eef8ff;font-size:13px;line-height:1.25}.tire-history-inline-head small{display:block;color:#86a9bd;font-size:10px;margin-top:3px}.tire-inline-open{border:1px solid #168eea;background:#061c2e;color:#eef8ff;border-radius:10px;padding:7px 9px;font-size:10px;font-weight:700;white-space:nowrap}.tire-history-inline .history-detail-grid{margin-top:10px}.tire-history-inline .history-detail-cost{margin-top:8px}.tire-history-inline .history-detail-items{margin-top:10px}.tire-history-inline .history-detail-title{font-size:11px;color:#eef8ff;font-weight:800;margin-bottom:6px}.tire-history-inline .history-inline-icon{display:flex;align-items:center;justify-content:center;width:30px;height:30px;flex:0 0 30px;border-radius:10px;border:1px solid #168eea;background:#061c2e}.tire-history-inline .history-inline-icon svg{width:17px;height:17px}
+</style>
+
+<style id="garagey-v35-23-moto-hero-definitive">
+/* v35.23 — Corrección definitiva del hero de motos.
+   La foto debe llenar exactamente todo el área superior de la ficha,
+   igual que en coches, sin contain, padding ni bandas laterales. */
+.vehicle-detail-dialog .vehicle-hero{
+  position:relative!important;
+  overflow:hidden!important;
+}
+.vehicle-detail-dialog .vehicle-hero-image,
+.vehicle-detail-dialog .vehicle-hero-image.is-moto{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:100%!important;
+  min-height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  overflow:hidden!important;
+  padding:0!important;
+  margin:0!important;
+  background-size:cover!important;
+  background-position:center center!important;
+}
+.vehicle-detail-dialog .vehicle-hero-image.is-moto img.vehicle-photo,
+.vehicle-detail-dialog .vehicle-hero-image.is-moto > img.vehicle-photo{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:100%!important;
+  min-height:100%!important;
+  max-width:none!important;
+  max-height:none!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  object-fit:cover!important;
+  object-position:center center!important;
+  background:transparent!important;
+  display:block!important;
+}
 </style>
 </body></html>
