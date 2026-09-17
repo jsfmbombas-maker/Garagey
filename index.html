@@ -1998,6 +1998,7 @@ function renderVehicleSection(){
  return `<section class="panel vehicle-list-panel"><div class="section-title vehicle-list-title"><div><strong>MIS VEHÍCULOS</strong><small>Gestiona y controla todos tus vehículos</small></div><span>🚘</span></div><div class="vehicle-list-toolbar"><div class="vehicle-search"><span>⌕</span><input id="vehicleSearch" type="search" placeholder="Buscar vehículo…" value="${vehicleListQuery.replace(/"/g,'&quot;')}" oninput="filterVehicleList(this.value)"></div><button class="vehicle-filter" id="vehicleFilter" onclick="cycleVehicleFilter()">☷</button></div><div id="vehicles"></div><button class="add vehicle-add-premium" onclick="openVehicle()"><span>＋</span> Añadir vehículo</button></section>`;
 }
 function svgIcon(name){const p={
+ oil:'<path d="M12 3c-2.5 3.2-5 6.1-5 9.4a5 5 0 0 0 10 0C17 9.1 14.5 6.2 12 3z"/><path d="M9.5 13.5c.3 1.1 1.1 1.8 2.5 2"/>',
  history:'<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 2"/>',
  calendar:'<rect x="3" y="4" width="18" height="17" rx="3"/><path d="M16 2v4M8 2v4M3 9h18M8 13h3M13 13h3M8 17h3"/>',
  fuel:'<path d="M6 21V4a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v17"/><path d="M5 21h13M18 6h2l2 3v8a2 2 0 0 1-2 2h-1M9 6h5v5H9z"/>',
@@ -2030,14 +2031,14 @@ function renderHistoryModal(){
  const ints=[...(v.interventions||[])].filter(i=>i.type!=='Repostaje').sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))||Number(b.km||0)-Number(a.km||0)||String(b.id||'').localeCompare(String(a.id||'')));
  let html=`<div class="history-modal-top"><div><span class="eyebrow">HISTORIAL DE INTERVENCIONES</span><strong>${v.name||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'} · ${Number(v.km||0).toLocaleString('es-ES')} km</small></div><button class="history-modal-close" onclick="closeModal('historyModal')">Cerrar ×</button></div><div class="history-modal-scroll"><div class="history-modal-body"><div class="history-intervention-list">${ints.length?ints.map(i=>{
    let meta={
-    Mantenimiento:['🛢️','Cambio de aceite y filtro','mantenimiento'],
-    Neumáticos:['🛞','Cambio de neumáticos','neumaticos'],
-    'Correa/Cadena':['⚙️','Cambio de correa/cadena','correa'],
-    Varios:['🔧','Intervención varias','varios'],
-    ITV:['📋','ITV','itv'],
-    Seguro:['🛡️','Seguro','seguro'],
-    Impuestos:['🏛️','Impuestos','impuestos']
-   }[i.type]||['🔧',i.type||'Intervención','varios'];
+    Mantenimiento:['oil','Cambio de aceite y filtro','mantenimiento'],
+    Neumáticos:['tire','Cambio de neumáticos','neumaticos'],
+    'Correa/Cadena':['gear','Cambio de correa/cadena','correa'],
+    Varios:['wrench','Intervención varias','varios'],
+    ITV:['calendar','ITV','itv'],
+    Seguro:['shield','Seguro','seguro'],
+    Impuestos:['building','Impuestos','impuestos']
+   }[i.type]||['wrench',i.type||'Intervención','varios'];
    let raw=(i.details||'Sin descripción').split(' · ').filter(Boolean);
    let parts=(i.parts||[]).filter(p=>p.name||p.cost);
    let items=parts.length
@@ -2046,18 +2047,18 @@ function renderHistoryModal(){
    const partsTotal=(i.parts||[]).reduce((a,p)=>a+Number(p?.cost||0),0);
    return `<article class="history-compact-card ${meta[2]}" id="history-item-${i.id}">
       <button type="button" class="history-compact-head" onclick="toggleHistoryIntervention(${i.id})" aria-expanded="false" aria-controls="history-details-${i.id}">
-        <span class="history-compact-icon">${meta[0]}</span>
-        <span class="history-compact-main"><b>${meta[1]}</b><span class="history-compact-meta"><span>📅 ${i.date||'—'}</span><span>🚗 ${Number(i.km||0).toLocaleString('es-ES')} km</span></span></span>
+        <span class="history-compact-icon">${svgIcon(meta[0])}</span>
+        <span class="history-compact-main"><b>${meta[1]}</b><span class="history-compact-meta"><span class="history-meta-item"><i>${svgIcon('calendar')}</i>${i.date||'—'}</span><span class="history-meta-item"><i>${svgIcon('gauge')}</i>${Number(i.km||0).toLocaleString('es-ES')} km</span></span></span>
         <span class="history-compact-chevron" aria-hidden="true">›</span>
       </button>
       <div class="history-compact-details" id="history-details-${i.id}" hidden>
         <div class="history-detail-title">Detalles de la intervención</div>
         <div class="history-detail-grid">
-          <div><span>📅 Fecha</span><b>${i.date||'—'}</b></div>
-          <div><span>🚗 Kilómetros</span><b>${Number(i.km||0).toLocaleString('es-ES')} km</b></div>
+          <div><span><i class="history-inline-icon">${svgIcon('calendar')}</i>Fecha</span><b>${i.date||'—'}</b></div>
+          <div><span><i class="history-inline-icon">${svgIcon('gauge')}</i>Kilómetros</span><b>${Number(i.km||0).toLocaleString('es-ES')} km</b></div>
         </div>
         <div class="history-detail-items">${items}</div>
-        ${i.nextKm?`<div class="history-detail-grid history-detail-next"><div><span>↗ Próxima intervención</span><b>${Number(i.nextKm).toLocaleString('es-ES')} km</b></div>${i.interval?`<div><span>📏 Intervalo</span><b>${Number(i.interval).toLocaleString('es-ES')} km</b></div>`:''}</div>`:''}
+        ${i.nextKm?`<div class="history-detail-grid history-detail-next"><div><span><i class="history-inline-icon">${svgIcon('power')}</i>Próxima intervención</span><b>${Number(i.nextKm).toLocaleString('es-ES')} km</b></div>${i.interval?`<div><span><i class="history-inline-icon">${svgIcon('gauge')}</i>Intervalo</span><b>${Number(i.interval).toLocaleString('es-ES')} km</b></div>`:''}</div>`:''}
         <div class="history-detail-cost"><span>Coste total</span><b>${euro(interventionCost(i))}</b>${partsTotal>0?`<small>✓ Piezas y elementos: ${euro(partsTotal)}</small>`:''}</div>
         <div class="history-detail-actions"><button class="edit" onclick="openIntervention(${i.id})">✎ Editar</button><button class="delete" onclick="deleteIntervention(${i.id})">▣ Eliminar</button></div>
       </div>
@@ -2744,7 +2745,7 @@ window.deleteVehicle=function(id){
 .history-compact-card{border:1px solid #155b88;border-radius:15px;background:linear-gradient(145deg,#07263d,#041c2d);overflow:hidden;box-shadow:0 5px 16px rgba(0,0,0,.12)}
 .history-compact-card.mantenimiento{border-color:#6b58d9}.history-compact-card.neumaticos{border-color:#178ee0}.history-compact-card.correa{border-color:#9b3ee8}.history-compact-card.varios{border-color:#ef7b21}.history-compact-card.itv{border-color:#e92d4f}.history-compact-card.seguro{border-color:#12a878}.history-compact-card.impuestos{border-color:#8a64d8}
 .history-compact-head{width:100%;min-height:70px;padding:9px 10px;display:flex;align-items:center;gap:10px;border:0;background:transparent;color:#f2f9ff;text-align:left;cursor:pointer;font:inherit}
-.history-compact-icon{width:42px;height:42px;min-width:42px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:#0a3857;border:1px solid #2d8bd0;box-shadow:0 5px 12px rgba(0,0,0,.18)}
+.history-compact-icon{width:42px;height:42px;min-width:42px;border-radius:50%;display:grid;place-items:center;background:#0a3857;border:1px solid #2d8bd0;box-shadow:0 5px 12px rgba(0,0,0,.18);color:#8ed5ff}.history-compact-icon .premium-svg{width:22px;height:22px;display:block;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.history-compact-card.mantenimiento .history-compact-icon{background:#092f4b;color:#8ed5ff;border-color:#2d8bd0}.history-compact-card.neumaticos .history-compact-icon{background:#083b5d;color:#61c7ff;border-color:#168eea}.history-compact-card.correa .history-compact-icon{background:#112f49;color:#8fbaff;border-color:#4b8bd1}.history-compact-card.varios .history-compact-icon{background:#17334a;color:#9edbff;border-color:#4d91bf}.history-compact-card.itv .history-compact-icon{background:#3a2430;color:#ff9eb0;border-color:#c75b72}.history-compact-card.seguro .history-compact-icon{background:#063c35;color:#54e1cb;border-color:#00a995}.history-compact-card.impuestos .history-compact-icon{background:#252445;color:#b7adff;border-color:#7165c7}.history-meta-item{display:inline-flex;align-items:center;gap:4px}.history-meta-item i,.history-inline-icon{display:inline-flex;align-items:center;justify-content:center;font-style:normal;color:#75bce5}.history-meta-item .premium-svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.history-inline-icon .premium-svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;margin-right:4px}
 .history-compact-card.mantenimiento .history-compact-icon{background:#4d2bb5}.history-compact-card.neumaticos .history-compact-icon{background:#0877cf}.history-compact-card.correa .history-compact-icon{background:#7429c9}.history-compact-card.varios .history-compact-icon{background:#e86e0d}.history-compact-card.itv .history-compact-icon{background:#dc2748}.history-compact-card.seguro .history-compact-icon{background:#087b50}.history-compact-card.impuestos .history-compact-icon{background:#6642aa}
 .history-compact-main{min-width:0;flex:1;display:flex;flex-direction:column;gap:5px}.history-compact-main>b{font-size:14px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.history-compact-meta{display:flex;align-items:center;gap:14px;color:#8db9d4;font-size:11px;line-height:1.1}.history-compact-meta span{white-space:nowrap}.history-compact-chevron{width:24px;text-align:center;font-size:26px;line-height:1;color:#8fd2ff;transition:transform .18s ease}.history-compact-card.is-expanded .history-compact-chevron{transform:rotate(90deg)}
 .history-compact-details{padding:0 12px 12px;border-top:1px solid #ffffff12;background:linear-gradient(180deg,#061f33,#051a2b)}
