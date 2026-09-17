@@ -2046,7 +2046,7 @@ function renderHistoryModal(){
       :raw.map(x=>`<div class="history-detail-row"><span class="history-detail-bullet"></span><span>${x}</span></div>`).join('');
    const partsTotal=(i.parts||[]).reduce((a,p)=>a+Number(p?.cost||0),0);
    return `<article class="history-compact-card ${meta[2]}" id="history-item-${i.id}">
-      <button type="button" class="history-compact-head" onclick="toggleHistoryIntervention(${i.id})" aria-expanded="false" aria-controls="history-details-${i.id}">
+      <button type="button" class="history-compact-head" onclick="${i.type==='Neumáticos'?`openTireFromIntervention(${i.id})`:`toggleHistoryIntervention(${i.id})`}" aria-expanded="false" aria-controls="history-details-${i.id}">
         <span class="history-compact-icon">${svgIcon(meta[0])}</span>
         <span class="history-compact-main"><b>${meta[1]}</b><span class="history-compact-meta"><span class="history-meta-item"><i>${svgIcon('calendar')}</i>${i.date||'—'}</span><span class="history-meta-item"><i>${svgIcon('gauge')}</i>${Number(i.km||0).toLocaleString('es-ES')} km</span></span></span>
         <span class="history-compact-chevron" aria-hidden="true">›</span>
@@ -2065,6 +2065,38 @@ function renderHistoryModal(){
    </article>`
  }).join(''):'<div class="empty">Todavía no hay intervenciones registradas.</div>'}</div></div></div>`;
  box.innerHTML=html;
+}
+
+function openTireFromIntervention(interventionId){
+ const v=data.vehicles.find(x=>x.id===data.selected);if(!v)return;
+ const item=(v.interventions||[]).find(i=>String(i.id)===String(interventionId));if(!item)return;
+ const t=ensureTireData(v);
+ let pairs=[];
+ // Primero usamos la relación explícita guardada en la intervención.
+ if(Array.isArray(item.tirePairIds)) pairs=item.tirePairIds.map(id=>tirePairById(v,id)).filter(Boolean);
+ // Compatibilidad con intervenciones antiguas que no tenían tirePairIds.
+ if(!pairs.length){
+   pairs=t.pairs.filter(p=>Number(p.installKm||-1)===Number(item.km||-2)&&String(p.installDate||'')===String(item.date||''));
+ }
+ if(!pairs.length){
+   const details=String(item.details||'').toLowerCase();
+   pairs=t.pairs.filter(p=>Number(p.installKm||-1)===Number(item.km||-2)&&(
+     !p.installDate||!item.date||String(p.installDate)===String(item.date)||
+     details.includes(String(p.brand||'').toLowerCase())||details.includes(String(p.size||'').toLowerCase())
+   ));
+ }
+ if(!pairs.length){
+   alert('No se ha podido localizar el neumático asociado a esta intervención.');
+   return;
+ }
+ closeModal('historyModal');
+ const modal=$('tireModal');if(!modal)return;
+ modal.classList.add('show');
+ if(pairs.length===1){renderTirePairDetail(pairs[0].id);return;}
+ // Si la intervención cambió ambos ejes, mostramos los neumáticos de esa intervención para elegir el eje.
+ const cards=pairs.map(pair=>`<div class="tire-axle" onclick="renderTirePairDetail('${pair.id}')" role="button" tabindex="0"><div class="tire-axle-icon">${svgIcon('tire')}</div><div class="tire-axle-main"><b>${pair.currentAxle==='front'?'Eje delantero':pair.currentAxle==='rear'?'Eje trasero':(pair.initialAxle==='front'?'Eje delantero':'Eje trasero')}</b><strong>${pair.brand||'Marca no indicada'}</strong><small>${pair.size||'Medida no indicada'} · ${pair.status==='active'?'En servicio':pair.status==='stored'?'Guardado':'Retirado'}</small></div><div class="tire-axle-end"><span class="tire-status ${pair.status!=='active'?'closed':''}">${pair.status==='active'?'En servicio':pair.status==='stored'?'Guardado':'Retirado'} ›</span></div></div>`).join('');
+ const body=`<section class="tire-card tire-intro"><div class="tire-round-icon">${svgIcon('tire')}</div><div><h3>Neumáticos de esta intervención</h3><p>Selecciona el eje para abrir la ficha completa del neumático, esté actualmente montado o ya desmontado.</p></div></section><section class="tire-card"><div class="tire-axles">${cards}</div></section><div class="tire-actions"><button class="primary" onclick="renderHistoryModal();closeModal('tireModal');requestAnimationFrame(()=>openHistoryModal())">← Volver al historial</button></div>`;
+ const box=$('tireModalContent');if(box){box.innerHTML=tireOpenBase('Neumáticos de la intervención',`${v.name||'Mi vehículo'} · ${item.date||'—'} · ${Number(item.km||0).toLocaleString('es-ES')} km`,body);hydrateVehicleFormIcons();}
 }
 
 function toggleHistoryIntervention(id){
