@@ -1430,12 +1430,32 @@ html,body{overflow-x:hidden}
 }
 #interventionModal .intervention-form-step select option{background:#041b2c!important;color:#f2f9ff!important;}
 
-/* v35.14: ajustes de fichas de intervención */
-#interventionModal #taxFields .tax-form-grid{align-items:start;}
-#interventionModal #taxFields .tax-form-grid>div{align-self:start;min-height:0;}
-#interventionModal #taxFields .tax-form-grid>div>label{min-height:16px;}
-#interventionModal #taxFields .tax-form-grid>div>select,
-#interventionModal #taxFields .tax-form-grid>div>input{box-sizing:border-box;height:43px;}
+/* v35.15: alineación real de los campos de impuestos */
+#interventionModal #taxFields .tax-form-grid{
+  align-items:start!important;
+}
+#interventionModal #taxFields .tax-form-grid>div:not(.full){
+  display:flex!important;
+  flex-direction:column!important;
+  align-self:start!important;
+  min-height:0!important;
+}
+#interventionModal #taxFields .tax-form-grid>div:not(.full)>label{
+  display:flex!important;
+  align-items:flex-end!important;
+  height:32px!important;
+  min-height:32px!important;
+  margin:0 0 8px!important;
+  line-height:16px!important;
+}
+#interventionModal #taxFields .tax-form-grid>div:not(.full)>select,
+#interventionModal #taxFields .tax-form-grid>div:not(.full)>input{
+  box-sizing:border-box!important;
+  height:43px!important;
+  min-height:43px!important;
+  margin:0!important;
+}
+
 </style>
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -2312,7 +2332,17 @@ function openVehicle(id){if(id){const v=data.vehicles.find(x=>x.id===id);openVeh
 document.addEventListener('input',e=>{if(e.target&&e.target.id==='vname'){const el=$('formVehicleNameLabel');if(el)el.textContent=e.target.value.trim()||'Nuevo vehículo'}});
 function openVehicleForm(v,type){editVehicle=v?.id||null;const isNew=!v;const mode=type==='Moto'?'moto':'car';const dlg=$('vehicleFormDialog');dlg.classList.toggle('moto-mode',mode==='moto');dlg.classList.toggle('car-mode',mode==='car');if($('vehicleFormCaption'))$('vehicleFormCaption').textContent=mode==='moto'?'Datos de la moto y características principales':'Datos del coche y características principales';$('formVehicleTypeLabel').textContent=mode==='moto'?'Moto':'Coche';$('formVehicleNameLabel').textContent=isNew?'Nuevo vehículo':(v.name||'Nuevo vehículo');resetVehicleForm();populateBrandSelect(type,v?.brand||'');$('vname').value=v?.name||'';$('vmodel').value=v?.model||'';$('vyear').value=v?.year||'';$('vfuel').value=v?.fuel||'';$('vversion').value=v?.version||'';$('vmototype').value=v?.motoType||'';$('vdisplacement').value=v?.displacement||'';$('vpower').value=v?.power||'';$('vtransmission').value=v?.transmission||'';$('vplate').value=v?.plate||'';$('vvin').value=v?.vin||'';$('vcolor').value=v?.color||'';$('vpurchase').value=v?.purchaseDate||'';$('vkm').value=v?.km||'';hydrateVehicleFormIcons();$('vehicleModal').classList.add('show');if(isNew){setTimeout(()=>{resetVehicleForm();populateBrandSelect(type,'');hydrateVehicleFormIcons();$('formVehicleTypeLabel').textContent=mode==='moto'?'Moto':'Coche';$('formVehicleNameLabel').textContent='Nuevo vehículo';},120)}}
 function saveVehicle(){let name=$('vname').value.trim();if(!name)return alert('Pon un nombre al vehículo');const isMoto=$('vehicleFormDialog').classList.contains('moto-mode');const type=isMoto?'Moto':'Coche';const vehicleFields={name,type,vehicleType:isMoto?'motorcycle':'car',brand:$('vbrand').value.trim(),model:$('vmodel').value.trim(),year:$('vyear').value.trim(),fuel:$('vfuel').value,version:isMoto?'':$('vversion').value.trim(),motoType:isMoto?$('vmototype').value:'',displacement:isMoto?$('vdisplacement').value.trim():'',power:$('vpower').value.trim(),transmission:$('vtransmission').value,plate:$('vplate').value.trim().toUpperCase(),vin:$('vvin').value.trim().toUpperCase(),color:$('vcolor').value.trim(),purchaseDate:$('vpurchase').value,km:Number($('vkm').value||0)};if(editVehicle){Object.assign(data.vehicles.find(x=>x.id===editVehicle),vehicleFields);data.selected=editVehicle}else{let v={id:Date.now(),...vehicleFields,interventions:[],fuelings:[]};data.vehicles.push(v);data.selected=v.id;}save();closeModal('vehicleModal');render();if($('vehicleDetailModal').classList.contains('show'))renderVehicleDetailModal()}
+function updateInterventionTypePickerLabels(){
+ const card=document.querySelector('#interventionModal .type-correa');
+ if(card){
+  const b=card.querySelector('b'),small=card.querySelector('small');
+  const moto=isSelectedMoto();
+  if(b)b.textContent=moto?'Kit de distribución':'Correa / cadena';
+  if(small)small.textContent=moto?'Marca y modelo de distribución':'Distribución y auxiliares';
+ }
+}
 function setInterventionFormMode(type){
+ updateInterventionTypePickerLabels();
  const modal=$('interventionModal');
  modal.classList.remove('intervention-select-mode','intervention-form-mode');
  modal.classList.add('intervention-form-mode');
@@ -2322,6 +2352,7 @@ function setInterventionFormMode(type){
  if(icon){const iconMap={'Mantenimiento':'wrench','Neumáticos':'tire','Correa/Cadena':'gear','Varios':'wrench','ITV':'calendar','Seguro':'shield','Impuestos':'building','Repostaje':'fuel'};icon.dataset.icon=iconMap[type]||'wrench';icon.innerHTML=svgIcon(icon.dataset.icon)}
 }
 function showInterventionTypePicker(){
+ updateInterventionTypePickerLabels();
  const modal=$('interventionModal');
  modal.classList.remove('intervention-form-mode');
  modal.classList.add('intervention-select-mode');
@@ -2329,6 +2360,7 @@ function showInterventionTypePicker(){
  if(title)title.textContent='🔧 Nueva intervención';
 }
 function openIntervention(id){
+ updateInterventionTypePickerLabels();
  let v=data.vehicles.find(x=>x.id===data.selected);if(!v)return;
  v.fuelings=Array.isArray(v.fuelings)?v.fuelings:[];
  let item=id?(v.interventions||[]).find(x=>x.id===id):null;
