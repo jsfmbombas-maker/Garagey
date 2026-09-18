@@ -1764,11 +1764,34 @@ html,body{overflow-x:hidden}
 .notice-alert-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.notice-alert-actions button{min-height:38px;border-radius:11px;border:1px solid;font-weight:900;font-size:10px;display:flex;align-items:center;justify-content:center;gap:6px}.notice-alert-actions .premium-svg{width:16px;height:16px}.notice-action-blue{background:linear-gradient(90deg,#078cff,#168cff);color:#fff;border-color:#36a8ff}.notice-action-green{background:linear-gradient(90deg,#0ca66d,#14b97b);color:#fff;border-color:#3bd496}
 .notice-all-clear{margin-top:6px;padding:22px 12px;border:1px solid #0ca98c;border-radius:18px;background:linear-gradient(145deg,#063b3c,#075d53);display:flex;flex-direction:column;align-items:center;text-align:center}.notice-all-clear>span{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:#0b8c72;border:1px solid #54e6c3;color:#a7fff0;margin-bottom:9px}.notice-all-clear .premium-svg{width:30px;height:30px}.notice-all-clear strong{font-size:18px}.notice-all-clear small{margin-top:5px;color:#a9d8d1;font-size:11px}
 @media(max-width:600px){.notice-panel{padding:14px!important;border-radius:18px!important}.notice-title-wrap h2{font-size:18px}.notice-summary{gap:6px}.notice-summary-box{min-height:62px}.notice-summary-box b{font-size:20px}.notice-alert-head{grid-template-columns:38px minmax(0,1fr) auto 12px;gap:7px;padding:9px}.notice-alert-icon{width:36px;height:36px}.notice-alert-date{font-size:9px}.notice-alert-main strong{font-size:12px}.notice-alert-main small{font-size:9px}.notice-pill{font-size:8px;padding:4px 7px}.notice-alert-actions{gap:6px}.notice-alert-actions button{min-height:36px;font-size:9px}}
+
+/* GARAGEY v35.29 — Centro de avisos: iconografía unificada con historial v35.26 */
+.notice-alert-card{border-width:1px!important;background:linear-gradient(145deg,#07263d,#041c2d)!important;border-radius:15px!important;box-shadow:0 5px 16px rgba(0,0,0,.12)!important}
+.notice-alert-card .notice-alert-head{min-height:66px;padding:8px 9px;gap:9px}
+.notice-alert-card .notice-alert-icon{width:40px;height:40px;min-width:40px;border-radius:50%;display:grid;place-items:center;box-shadow:5px 0 12px rgba(0,0,0,.18)}
+.notice-alert-card .notice-alert-icon .premium-svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.notice-alert-card.itv .notice-alert-icon{background:#dc2748;color:#ff9eb0;border-color:#e92d4f}
+.notice-alert-card.seguro .notice-alert-icon{background:#087b50;color:#54e1cb;border-color:#12a878}
+.notice-alert-card.impuestos .notice-alert-icon{background:#6642aa;color:#b7adff;border-color:#8a64d8}
+.notice-alert-card.mantenimiento .notice-alert-icon{background:#4d2bb5;color:#b7adff;border-color:#6b58d9}
+.notice-alert-card.neumaticos .notice-alert-icon{background:#0877cf;color:#61c7ff;border-color:#178ee0}
+.notice-alert-card.correa .notice-alert-icon{background:#7429c9;color:#d0b3ff;border-color:#9b3ee8}
+.notice-alert-card.varios .notice-alert-icon{background:#e86e0d;color:#ffd0a5;border-color:#ef7b21}
+.notice-alert-card .notice-alert-main strong{font-size:13px;color:#f2f9ff}
+.notice-alert-card .notice-alert-main small{color:#8db9d4;font-size:10px}
+.notice-alert-card .notice-alert-date{color:#8db9d4;font-size:10px}
+.notice-alert-card .notice-alert-chevron{color:#8fd2ff;font-size:26px}
+.notice-alert-card .notice-alert-details{background:linear-gradient(180deg,#061f33,#051a2b);border-top:1px solid #ffffff12;padding:0 12px 12px}
+.notice-alert-card .notice-detail-row{font-size:11px;color:#dbeeff;border-bottom:1px solid #124a6c;min-height:30px}
+.notice-alert-card .notice-detail-row b{color:#fff;font-size:11px}
+.notice-alert-card .notice-detail-icon{color:#75bce5}
+.notice-alert-card .notice-detail-icon .premium-svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:600px){.notice-alert-card .notice-alert-head{min-height:66px;padding:8px 9px;gap:9px}.notice-alert-card .notice-alert-icon{width:40px;height:40px;min-width:40px}.notice-alert-card .notice-alert-main strong{font-size:13px}.notice-alert-card .notice-alert-main small,.notice-alert-card .notice-alert-date{font-size:10px}}
 </style>
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.28 · Logos Nissan y Kawasaki · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.29 · Logos Nissan y Kawasaki · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
@@ -1975,6 +1998,7 @@ function alertVehicle(alert){return data.vehicles.find(v=>v.id===alert.vehicleId
 function alertIntervention(alert){const v=alertVehicle(alert);return v?.interventions?.find(i=>i.id===alert.interventionId)}
 function formatAlertDate(d){if(!d)return '—';const a=d.split('-');return a.length===3?`${a[2]}/${a[1]}/${a[0]}`:d}
 function alertIcon(alert){return svgIcon(alert.icon||'bell')}
+function noticeTypeClass(alert){const t=String(alert?.title||'').toLowerCase();if(t.includes('itv'))return 'itv';if(t.includes('seguro'))return 'seguro';if(t.includes('impuesto'))return 'impuestos';if(t.includes('aceite')||t.includes('mantenimiento'))return 'mantenimiento';if(t.includes('neum'))return 'neumaticos';if(t.includes('correa')||t.includes('cadena'))return 'correa';return 'varios'}
 function alertExtraRows(alert){
  const v=alertVehicle(alert), i=alertIntervention(alert);
  if(!v||!i)return '';
@@ -2010,9 +2034,9 @@ function renderNoticePanel(){
  const list=alerts.map((a,idx)=>{
    const key=String(a.interventionId)+'-'+String(a.vehicleId);
    const pill=a.level==='red'?(a.days!=null&&a.days<0?`Vencido hace ${Math.abs(a.days)} días`:'Requiere atención'):(a.days!=null?`Vence en ${a.days} días`:a.detail.replace('Próximo en ','En '));
-   return `<article class="notice-alert-card ${a.level}" data-notice-key="${key}">
+   return `<article class="notice-alert-card history-compact-card ${noticeTypeClass(a)} ${a.level}" data-notice-key="${key}">
      <button type="button" class="notice-alert-head" onclick="toggleNoticeAlert('${key}')" aria-expanded="false" aria-controls="notice-alert-details-${idx}">
-       <span class="notice-alert-icon">${alertIcon(a)}</span><span class="notice-alert-main"><strong>${a.title}</strong><small>${a.vehicle||'Vehículo'}</small><span class="notice-pill">${pill}</span></span><span class="notice-alert-date">${formatAlertDate(a.date)}</span><span class="notice-alert-chevron">›</span>
+       <span class="notice-alert-icon history-compact-icon">${alertIcon(a)}</span><span class="notice-alert-main"><strong>${a.title}</strong><small>${a.vehicle||'Vehículo'}</small><span class="notice-pill">${pill}</span></span><span class="notice-alert-date">${formatAlertDate(a.date)}</span><span class="notice-alert-chevron">›</span>
      </button>
      <div class="notice-alert-details" id="notice-alert-details-${idx}" hidden>
        ${alertExtraRows(a)}
