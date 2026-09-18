@@ -1884,34 +1884,51 @@ html,body{overflow-x:hidden}
 /* Iconos de datos: misma familia SVG premium utilizada en las fichas de vehículo */
 .vehicle-card-quick-item .premium-svg{fill:none!important;stroke:currentColor!important;stroke-linecap:round!important;stroke-linejoin:round!important;}
 </style>
-<style id="garagey-v35-40-global-header">
-/* GARAGEY v35.40 — Encabezado global fijo, fuera del contenedor de contenido */
-.garagey-global-header{
-  position:fixed!important;top:0!important;left:0!important;right:0!important;width:100%!important;height:92px!important;
-  z-index:9999!important;display:flex!important;align-items:center!important;justify-content:center!important;
-  padding:8px 16px 7px!important;box-sizing:border-box!important;
-  background:linear-gradient(180deg,#031a2b 0%,#041e32 100%)!important;
-  border-bottom:1px solid #168eea!important;box-shadow:0 5px 18px rgba(0,0,0,.28)!important;
+
+<style id="garagey-v35-41-global-header">
+/* GARAGEY v35.41 — Encabezado global fijo DEFINITIVO */
+html,body{margin:0!important;padding:0!important;min-height:100%!important;background:#031525!important;}
+#garageyGlobalHeader{
+  position:fixed!important;top:0!important;left:0!important;right:0!important;
+  width:100%!important;height:88px!important;min-height:88px!important;
+  z-index:2147483647!important;display:flex!important;align-items:center!important;justify-content:center!important;
+  box-sizing:border-box!important;padding:5px 12px!important;
+  background:linear-gradient(180deg,#031a2b 0%,#041b2c 100%)!important;
+  border-bottom:1px solid #157fc2!important;
+  box-shadow:0 4px 18px rgba(0,0,0,.42)!important;
+  visibility:visible!important;opacity:1!important;
 }
-.garagey-global-header-inner{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:2px!important;line-height:1!important}
-.garagey-global-header-logo{width:58px!important;height:58px!important;display:block!important;object-fit:contain!important;border-radius:14px!important;filter:drop-shadow(0 4px 9px rgba(0,153,255,.22))!important}
-.garagey-global-header-tagline{margin:0!important;color:#79c8f5!important;font-size:12px!important;font-weight:800!important;letter-spacing:.02em!important;text-align:center!important}
-.app{padding-top:104px!important}
+#garageyGlobalHeader .garagey-header-inner{
+  width:100%!important;height:100%!important;display:flex!important;flex-direction:column!important;
+  align-items:center!important;justify-content:center!important;gap:1px!important;
+}
+#garageyGlobalHeader .garagey-header-logo{
+  width:55px!important;height:55px!important;max-width:55px!important;max-height:55px!important;
+  object-fit:contain!important;display:block!important;border-radius:12px!important;
+}
+#garageyGlobalHeader .garagey-header-tagline{
+  margin:0!important;padding:0!important;color:#79c8f5!important;font-size:10px!important;
+  line-height:12px!important;font-weight:800!important;letter-spacing:.02em!important;
+}
+body{padding-top:88px!important;}
+.app{padding-top:12px!important;}
 @media(max-width:600px){
-  .garagey-global-header{height:82px!important;padding:6px 12px 5px!important}
-  .garagey-global-header-logo{width:51px!important;height:51px!important;border-radius:12px!important}
-  .garagey-global-header-tagline{font-size:10px!important}
-  .app{padding-top:92px!important}
+ #garageyGlobalHeader{height:84px!important;min-height:84px!important;padding:3px 10px!important;}
+ #garageyGlobalHeader .garagey-header-logo{width:51px!important;height:51px!important;max-width:51px!important;max-height:51px!important;border-radius:11px!important;}
+ #garageyGlobalHeader .garagey-header-tagline{font-size:9px!important;line-height:11px!important;}
+ body{padding-top:84px!important;}
+ .app{padding-top:10px!important;}
 }
 </style>
 </head>
 <body>
-<header class="garagey-global-header" aria-label="Garagey">
-  <div class="garagey-global-header-inner">
-    <img class="garagey-global-header-logo" src="./icons/icon-192.png" alt="Garagey">
-    <p class="garagey-global-header-tagline">Tu taller en el bolsillo</p>
+<header id="garageyGlobalHeader" aria-label="Garagey">
+  <div class="garagey-header-inner">
+    <img class="garagey-header-logo" src="./icons/icon-192.png" alt="Garagey">
+    <div class="garagey-header-tagline">Tu taller en el bolsillo</div>
   </div>
 </header>
+
 <div class="app">
 <main class="content" id="main"></main>
 <button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.40 · Encabezado fijo · Diseño Android</div></div>
@@ -3215,4 +3232,17 @@ window.deleteVehicle=function(id){
   display:block!important;
 }
 </style>
+
+<script id="garagey-v35-41-header-guard">
+(function(){
+  function ensureGarageyHeader(){
+    if(document.getElementById('garageyGlobalHeader')) return;
+    var h=document.createElement('header'); h.id='garageyGlobalHeader'; h.setAttribute('aria-label','Garagey');
+    h.innerHTML='<div class="garagey-header-inner"><img class="garagey-header-logo" src="./icons/icon-192.png" alt="Garagey"><div class="garagey-header-tagline">Tu taller en el bolsillo</div></div>';
+    document.body.insertBefore(h,document.body.firstChild);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',ensureGarageyHeader); else ensureGarageyHeader();
+  setInterval(ensureGarageyHeader,1500);
+})();
+</script>
 </body></html>
