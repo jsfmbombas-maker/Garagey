@@ -1886,30 +1886,25 @@ html,body{overflow-x:hidden}
 </style>
 
 
-<style id="garagey-v35-42-global-header">
-/* GARAGEY v35.42 — Encabezado global fijo, integrado en la estructura de la app */
-html,body{margin:0!important;padding:0!important;min-height:100%!important;background:#031525!important;}
-.app{position:relative!important;}
-#garageyGlobalHeader{
-  position:sticky!important;top:0!important;z-index:99999!important;
-  width:100%!important;height:86px!important;min-height:86px!important;
-  box-sizing:border-box!important;margin:0!important;padding:6px 12px!important;
-  display:flex!important;align-items:center!important;justify-content:center!important;
-  background:linear-gradient(180deg,#031a2b 0%,#041b2c 100%)!important;
-  border:0!important;border-bottom:1px solid #157fc2!important;
-  box-shadow:0 4px 18px rgba(0,0,0,.40)!important;
-}
-#garageyGlobalHeader .garagey-header-inner{width:100%!important;height:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:1px!important;}
-#garageyGlobalHeader .garagey-header-logo{width:58px!important;height:58px!important;max-width:58px!important;max-height:58px!important;object-fit:contain!important;display:block!important;}
-#garageyGlobalHeader .garagey-header-tagline{margin:0!important;color:#79c8f5!important;font-size:10px!important;line-height:12px!important;font-weight:800!important;letter-spacing:.02em!important;}
-@media(max-width:600px){#garageyGlobalHeader{height:82px!important;min-height:82px!important;padding:4px 10px!important;}#garageyGlobalHeader .garagey-header-logo{width:54px!important;height:54px!important;max-width:54px!important;max-height:54px!important;}#garageyGlobalHeader .garagey-header-tagline{font-size:9px!important;line-height:11px!important;}}
+
+
+<style id="garagey-v35-43-global-header">
+/* GARAGEY v35.43 — Encabezado global REALMENTE fijo, fuera del contenedor .app */
+html,body{background:#031525!important;}
+body{padding-top:0!important;}
+body>#garageyGlobalHeader{position:fixed!important;top:0!important;left:0!important;right:0!important;width:100vw!important;height:92px!important;min-height:92px!important;z-index:2147483647!important;display:flex!important;align-items:center!important;justify-content:center!important;box-sizing:border-box!important;margin:0!important;padding:7px 12px!important;background:linear-gradient(180deg,#031a2b 0%,#041d30 100%)!important;border:0!important;border-bottom:1px solid #187fbe!important;box-shadow:0 4px 18px rgba(0,0,0,.42)!important;overflow:hidden!important;visibility:visible!important;opacity:1!important;}
+body>#garageyGlobalHeader .garagey-header-inner{width:auto!important;height:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:0!important;}
+body>#garageyGlobalHeader .garagey-header-logo{width:62px!important;height:62px!important;max-width:62px!important;max-height:62px!important;object-fit:contain!important;display:block!important;visibility:visible!important;opacity:1!important;}
+body>#garageyGlobalHeader .garagey-header-tagline{display:block!important;margin:-1px 0 0!important;color:#79c8f5!important;font-size:10px!important;line-height:12px!important;font-weight:800!important;letter-spacing:.02em!important;white-space:nowrap!important;}
+body>.app{padding-top:106px!important;}
+@media(max-width:600px){body>#garageyGlobalHeader{height:88px!important;min-height:88px!important;padding:5px 10px!important;}body>#garageyGlobalHeader .garagey-header-logo{width:58px!important;height:58px!important;max-width:58px!important;max-height:58px!important;}body>#garageyGlobalHeader .garagey-header-tagline{font-size:9px!important;line-height:11px!important;}body>.app{padding-top:100px!important;}}
 </style>
 </head>
 <body>
-<div class="app">
 <header id="garageyGlobalHeader" aria-label="Garagey"><div class="garagey-header-inner"><img class="garagey-header-logo" src="./icons/icon-192.png" alt="Garagey"><div class="garagey-header-tagline">Tu taller en el bolsillo</div></div></header>
+<div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.42 · Encabezado fijo · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.43 · Encabezado fijo · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
