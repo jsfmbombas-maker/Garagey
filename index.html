@@ -1709,7 +1709,7 @@ html,body{overflow-x:hidden}
 
 </style>
 
-<style id="garagey-v35-23-moto-hero-full">
+<style id="garagey-v35-25-moto-hero-full">
 /* v35.22 — Las fotos de marca de las motos ocupan todo el hero,
    igual que las de los coches. Se elimina el encuadre contain/padding
    exclusivo de motos. */
@@ -1731,10 +1731,28 @@ html,body{overflow-x:hidden}
   display:block!important;
 }
 </style>
+<style>
+/* GARAGEY v35.26 — Historial de repostajes compacto y desplegable */
+.fuel-history-card.combustible{border-color:#13a6b8}
+.fuel-history-compact-head{min-height:70px}
+.fuel-history-compact-head .fuel-history-cost{margin-left:auto;min-width:70px}
+.fuel-history-compact-head .history-compact-chevron{margin-left:0}
+.fuel-history-card.combustible .history-compact-icon{background:#063c4a;color:#5ee8f4;border-color:#13a6b8}
+.fuel-history-card .fuel-history-meta{margin:0}
+.fuel-history-card .fuel-history-meta>div{border:1px solid #1c5f8a;background:#061c2e}
+.fuel-history-card .history-detail-cost{margin-top:9px}
+@media(max-width:600px){
+ .fuel-history-compact-head{gap:8px;padding:9px 8px}
+ .fuel-history-compact-head .fuel-history-cost{min-width:58px}
+ .fuel-history-compact-head .fuel-history-cost strong{font-size:15px}
+ .fuel-history-compact-head .fuel-history-cost small{font-size:9px}
+ .fuel-history-compact-head .history-compact-meta{gap:8px}
+}
+</style>
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.23 · Logos Nissan y Kawasaki · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.25 · Logos Nissan y Kawasaki · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
@@ -2199,7 +2217,8 @@ function toggleHistoryIntervention(id){
  if(details)details.hidden=expanded;
 }
 
-function renderFuelHistoryModal(){const modal=$('fuelHistoryModal'),box=$('fuelHistoryModalContent');if(!modal||!box)return;const v=data.vehicles.find(x=>x.id===data.selected);if(!v){modal.classList.remove('show');return}v.fuelings=Array.isArray(v.fuelings)?v.fuelings:[];const fs=fuelStats(v);const avg=fs.consumption===null?'—':fs.consumption.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' L/100 km';const ck=fs.costKm===null?'—':(fs.costKm*100).toLocaleString('es-ES',{minimumFractionDigits:1,maximumFractionDigits:1})+' cént/km';let html=`<div class="history-modal-top"><div><span class="eyebrow">HISTORIAL DE REPOSTAJES</span><strong>${v.name||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'} · ${Number(v.km||0).toLocaleString('es-ES')} km</small></div><button class="history-modal-close" onclick="closeModal('fuelHistoryModal')">Cerrar ×</button></div><div class="history-modal-scroll"><div class="fuel-summary-grid"><div class="fuel-summary-card"><span>Consumo medio</span><b>${avg}</b><small>Entre depósitos llenos</small></div><div class="fuel-summary-card"><span>Coste por km</span><b>${ck}</b><small>Combustible</small></div><div class="fuel-summary-card"><span>Gasto combustible</span><b>${euro2(fs.spend)}</b><small>${fs.rows.length} repostajes</small></div></div><div class="fuel-history-list">${fs.rows.length?[...fs.rows].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))||Number(b.km||0)-Number(a.km||0)||Number(b.id||0)-Number(a.id||0)).map(r=>`<article class="fuel-history-card"><div class="fuel-history-head"><div class="fuel-card-icon">${svgIcon('fuel')}</div><div><b>Repostaje ${r.fullTank?'· Depósito lleno':''}</b><small>${r.date||'Fecha no indicada'} · ${Number(r.km||0).toLocaleString('es-ES')} km</small></div><div class="fuel-history-cost"><strong>${euro2(r.totalCost)}</strong><small>${Number(r.price||0).toLocaleString('es-ES',{minimumFractionDigits:3,maximumFractionDigits:3})} €/L</small></div></div><div class="fuel-history-body"><div class="fuel-history-meta"><div><span>Litros</span><b>${Number(r.liters||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})} L</b></div><div><span>Coste</span><b>${euro2(r.totalCost)}</b></div>${r.station?`<div><span>Gasolinera</span><b>${r.station}</b></div>`:''}${r.notes?`<div><span>Observaciones</span><b>${r.notes}</b></div>`:''}</div><div class="fuel-history-actions"><button class="edit" onclick="openFueling(${r.id})">✎ Editar</button><button class="delete" onclick="deleteFueling(${r.id})">▣ Eliminar</button></div></div></article>`).join(''):'<div class="fuel-empty">Todavía no hay repostajes registrados.<br><br>Pulsa «Nueva intervención» y selecciona <b>Repostaje</b>.</div>'}</div></div>`;box.innerHTML=html;hydrateVehicleFormIcons();}
+function renderFuelHistoryModal(){const modal=$('fuelHistoryModal'),box=$('fuelHistoryModalContent');if(!modal||!box)return;const v=data.vehicles.find(x=>x.id===data.selected);if(!v){modal.classList.remove('show');return}v.fuelings=Array.isArray(v.fuelings)?v.fuelings:[];const fs=fuelStats(v);const avg=fs.consumption===null?'—':fs.consumption.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' L/100 km';const ck=fs.costKm===null?'—':(fs.costKm*100).toLocaleString('es-ES',{minimumFractionDigits:1,maximumFractionDigits:1})+' cént/km';let html=`<div class="history-modal-top"><div><span class="eyebrow">HISTORIAL DE REPOSTAJES</span><strong>${v.name||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'} · ${Number(v.km||0).toLocaleString('es-ES')} km</small></div><button class="history-modal-close" onclick="closeModal('fuelHistoryModal')">Cerrar ×</button></div><div class="history-modal-scroll"><div class="fuel-summary-grid"><div class="fuel-summary-card"><span>Consumo medio</span><b>${avg}</b><small>Entre depósitos llenos</small></div><div class="fuel-summary-card"><span>Coste por km</span><b>${ck}</b><small>Combustible</small></div><div class="fuel-summary-card"><span>Gasto combustible</span><b>${euro2(fs.spend)}</b><small>${fs.rows.length} repostajes</small></div></div><div class="fuel-history-list">${fs.rows.length?[...fs.rows].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))||Number(b.km||0)-Number(a.km||0)||Number(b.id||0)-Number(a.id||0)).map(r=>`<article class="fuel-history-card history-compact-card combustible" id="fuel-history-item-${r.id}"><button type="button" class="history-compact-head fuel-history-compact-head" onclick="toggleFuelHistory(${r.id})" aria-expanded="false" aria-controls="fuel-history-details-${r.id}"><span class="history-compact-icon">${svgIcon('fuel')}</span><span class="history-compact-main"><b>Repostaje ${r.fullTank?'· Depósito lleno':''}</b><span class="history-compact-meta"><span class="history-meta-item"><i>${svgIcon('calendar')}</i>${r.date||'Fecha no indicada'}</span><span class="history-meta-item"><i>${svgIcon('gauge')}</i>${Number(r.km||0).toLocaleString('es-ES')} km</span></span></span><span class="fuel-history-cost"><strong>${euro2(r.totalCost)}</strong><small>${Number(r.price||0).toLocaleString('es-ES',{minimumFractionDigits:3,maximumFractionDigits:3})} €/L</small></span><span class="history-compact-chevron" aria-hidden="true">›</span></button><div class="history-compact-details fuel-history-body" id="fuel-history-details-${r.id}" hidden><div class="history-detail-title">Detalles del repostaje</div><div class="fuel-history-meta"><div><span>Litros</span><b>${Number(r.liters||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})} L</b></div><div><span>Precio por litro</span><b>${Number(r.price||0).toLocaleString('es-ES',{minimumFractionDigits:3,maximumFractionDigits:3})} €/L</b></div>${r.station?`<div><span>Gasolinera</span><b>${r.station}</b></div>`:''}${r.notes?`<div><span>Observaciones</span><b>${r.notes}</b></div>`:''}</div><div class="history-detail-cost"><span>Coste total</span><b>${euro2(r.totalCost)}</b></div><div class="fuel-history-actions history-detail-actions"><button class="edit" onclick="event.stopPropagation();openFueling(${r.id})">✎ Editar</button><button class="delete" onclick="event.stopPropagation();deleteFueling(${r.id})">▣ Eliminar</button></div></div></article>`).join(''):'<div class="fuel-empty">Todavía no hay repostajes registrados.<br><br>Pulsa «Nueva intervención» y selecciona <b>Repostaje</b>.</div>'}</div></div>`;box.innerHTML=html;hydrateVehicleFormIcons();}
+function toggleFuelHistory(id){const card=document.getElementById(`fuel-history-item-${id}`);if(!card)return;const head=card.querySelector('.history-compact-head'),details=card.querySelector('.history-compact-details');const expanded=card.classList.contains('is-expanded');card.classList.toggle('is-expanded',!expanded);if(head)head.setAttribute('aria-expanded',String(!expanded));if(details)details.hidden=expanded;}
 function openHistoryModal(){renderHistoryModal();$('historyModal').classList.add('show')}function openFuelHistoryModal(){renderFuelHistoryModal();$('fuelHistoryModal').classList.add('show')}
 /* GARAGEY v33.5 — Neumáticos por eje; motos sin rotaciones */
 function ensureTireData(v){
@@ -2945,7 +2964,7 @@ window.deleteVehicle=function(id){
 .tire-history-inline-head{display:flex;align-items:center;gap:10px}.tire-history-inline-head>div{min-width:0;flex:1}.tire-history-inline-head b{display:block;color:#eef8ff;font-size:13px;line-height:1.25}.tire-history-inline-head small{display:block;color:#86a9bd;font-size:10px;margin-top:3px}.tire-inline-open{border:1px solid #168eea;background:#061c2e;color:#eef8ff;border-radius:10px;padding:7px 9px;font-size:10px;font-weight:700;white-space:nowrap}.tire-history-inline .history-detail-grid{margin-top:10px}.tire-history-inline .history-detail-cost{margin-top:8px}.tire-history-inline .history-detail-items{margin-top:10px}.tire-history-inline .history-detail-title{font-size:11px;color:#eef8ff;font-weight:800;margin-bottom:6px}.tire-history-inline .history-inline-icon{display:flex;align-items:center;justify-content:center;width:30px;height:30px;flex:0 0 30px;border-radius:10px;border:1px solid #168eea;background:#061c2e}.tire-history-inline .history-inline-icon svg{width:17px;height:17px}
 </style>
 
-<style id="garagey-v35-23-moto-hero-definitive">
+<style id="garagey-v35-25-moto-hero-definitive">
 /* v35.23 — Corrección definitiva del hero de motos.
    La foto debe llenar exactamente todo el área superior de la ficha,
    igual que en coches, sin contain, padding ni bandas laterales. */
