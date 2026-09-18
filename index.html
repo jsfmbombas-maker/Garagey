@@ -703,49 +703,56 @@ html,body{width:100%!important;min-width:0!important;max-width:100%!important;ov
 }
 
 
-/* GARAGEY — Mis vehículos Premium, Chrome Android */
+/* GARAGEY v35.33 — Mis vehículos compacto, estilo fichas */
 .vehicle-list-panel{background:#061727!important;color:#f7fbff!important;border:1px solid #174c73!important;box-shadow:0 18px 45px rgba(2,14,27,.22)!important}
-.vehicle-list-title{color:#fff!important;display:flex!important;align-items:flex-start!important;justify-content:space-between!important;gap:12px!important}
+.vehicle-list-title{color:#fff!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:10px!important;margin-bottom:10px!important}
+.vehicle-list-title-copy{min-width:0}
 .vehicle-list-title strong{display:block;font-size:22px;letter-spacing:-.02em}
 .vehicle-list-title small{display:block;color:#9fc4e5;font-size:12px;font-weight:500;margin-top:3px}
-.vehicle-list-toolbar{display:grid;grid-template-columns:minmax(0,1fr) 48px;gap:8px;margin:10px 0 14px}
-.vehicle-search{display:flex;align-items:center;gap:9px;min-width:0;border:1px solid #2475aa;border-radius:999px;background:#071e33;box-shadow:inset 0 0 0 1px #ffffff08}
-.vehicle-search span{font-size:27px;line-height:1;color:#a8d2f7;padding-left:13px;transform:rotate(-20deg)}
-.vehicle-search input{width:100%;min-width:0;background:transparent!important;border:0!important;box-shadow:none!important;color:#eaf6ff!important;padding:11px 12px 11px 0!important;font-size:14px!important;outline:0!important}
-.vehicle-search input::placeholder{color:#8fb4d7}
-.vehicle-filter{border:1px solid #2475aa;border-radius:50%;background:#071e33;color:#a8d2f7;font-size:23px;min-height:44px}
-.vehicle-card-premium{position:relative;display:block;overflow:hidden;min-height:245px;margin:12px 0;border:1px solid #157bd0;border-radius:22px;background:#071b2c center/cover no-repeat;box-shadow:0 14px 32px rgba(0,0,0,.28);cursor:pointer;isolation:isolate;transition:transform .18s,box-shadow .18s,border-color .18s}
+.vehicle-add-inline{flex:0 0 auto!important;width:auto!important;min-height:44px!important;padding:8px 13px!important;border-radius:14px!important;background:linear-gradient(90deg,#087fff,#0a8cff)!important;color:#fff!important;border:1px solid #56b6ff!important;box-shadow:0 8px 20px #087fff33!important;font-weight:900!important;font-size:13px!important;white-space:nowrap}
+.vehicle-add-inline span{font-size:22px;vertical-align:-2px;margin-right:3px}
+.vehicle-list-toolbar{display:none!important}
+.vehicle-card-premium{position:relative;display:flex;align-items:stretch;overflow:hidden;min-height:116px;margin:8px 0;border:1px solid #157bd0;border-radius:17px;background:#071e33;box-shadow:0 8px 22px rgba(0,0,0,.22);cursor:pointer;isolation:isolate;transition:transform .18s,box-shadow .18s,border-color .18s}
 .vehicle-card-premium:active{transform:scale(.992)}
-.vehicle-card-premium:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,13,25,.98) 0%,rgba(2,13,25,.84) 34%,rgba(2,13,25,.28) 64%,rgba(2,13,25,.12) 100%),linear-gradient(0deg,rgba(2,13,25,.92) 0%,rgba(2,13,25,.02) 65%);z-index:-1}
-.vehicle-card-inner{position:relative;z-index:2;min-height:245px;padding:13px 14px 10px;display:flex;flex-direction:column;justify-content:space-between}
-.vehicle-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-.vehicle-brand-logo{width:64px;height:52px;object-fit:contain;object-position:center center;filter:drop-shadow(0 2px 8px #0008);border-radius:8px}
-.vehicle-brand-fallback{height:52px;min-width:64px;padding:0 8px;display:flex;align-items:center;font-size:14px;font-weight:900;color:#fff;border:1px solid #75bfff88;border-radius:12px;background:#06213a}
-.vehicle-card-arrow{font-size:34px;line-height:1;color:#fff;text-shadow:0 2px 9px #0009;margin-top:3px}
-.vehicle-card-name{font-size:24px;line-height:1.04;font-weight:900;letter-spacing:-.03em;margin-top:2px;text-shadow:0 2px 12px #000}
-.vehicle-card-meta{font-size:15px;color:#c4dfff;margin-top:6px;font-weight:600}
-.vehicle-card-km{display:inline-flex;align-items:center;gap:7px;width:max-content;margin-top:7px;padding:7px 11px;border-radius:999px;background:#062b50dd;border:1px solid #1197ff;color:#eef8ff;font-size:15px;font-weight:800;box-shadow:0 5px 15px #0005}
-.vehicle-card-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin-top:8px}
-.vehicle-card-stat{min-width:0;min-height:52px;border-radius:13px;padding:7px 8px;border:1px solid #ffffff20;display:flex;align-items:center;gap:8px;box-shadow:inset 0 0 20px #ffffff08}
-.vehicle-card-stat .stat-icon{width:30px;height:30px;flex:0 0 30px;border-radius:50%;display:grid;place-items:center;font-size:18px;background:#ffffff15}
-.vehicle-card-stat b{display:block;font-size:16px;line-height:1.05}.vehicle-card-stat small{display:block;font-size:8px;color:#d6e7f5;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.vehicle-card-stat.blue{background:linear-gradient(135deg,#0a438f,#092957);border-color:#168cff}.vehicle-card-stat.green{background:linear-gradient(135deg,#075c50,#063b35);border-color:#00d4b1}.vehicle-card-stat.red{background:linear-gradient(135deg,#7a2a40,#461c2b);border-color:#ee4766}
-.vehicle-add-premium{width:100%!important;min-height:52px!important;border-radius:15px!important;background:linear-gradient(90deg,#087fff,#9147ef)!important;color:#fff!important;border:1px solid #56b6ff!important;box-shadow:0 12px 25px #087fff33!important;font-weight:900!important;font-size:15px!important}
-.vehicle-add-premium span{font-size:25px;vertical-align:-2px;margin-right:5px}
+.vehicle-card-photo-wrap{position:relative;flex:0 0 31%;min-width:96px;max-width:118px;overflow:hidden;background:#071a2b}
+.vehicle-card-photo{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important;z-index:0!important;opacity:.96!important}
+.vehicle-card-photo-wrap:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,13,25,.02),rgba(2,13,25,.28));pointer-events:none}
+.vehicle-card-brand{position:absolute;z-index:3;top:7px;left:7px;width:38px;height:38px;border-radius:50%;padding:4px;display:grid;place-items:center;background:#03182aee;border:2px solid #dcefff;box-shadow:0 3px 12px #0009}
+.vehicle-card-brand .vehicle-brand-logo{width:100%;height:100%;object-fit:contain;border-radius:50%;filter:none}
+.vehicle-card-brand .vehicle-brand-fallback{height:100%;min-width:0;width:100%;padding:0;border:0;border-radius:50%;background:transparent;font-size:7px;text-align:center}
+.vehicle-card-inner{position:relative;z-index:2;min-width:0;flex:1;padding:10px 10px 9px 11px;display:flex;align-items:center}
+.vehicle-card-content{min-width:0;flex:1}
+.vehicle-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:7px}
+.vehicle-card-name{font-size:18px;line-height:1.08;font-weight:900;letter-spacing:-.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 2px 9px #0008}
+.vehicle-card-meta{font-size:12px;color:#a9c9e5;margin-top:4px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vehicle-card-arrow{flex:0 0 auto;font-size:28px;line-height:1;color:#fff;text-shadow:0 2px 8px #0009;margin-top:0}
+.vehicle-card-quick{display:flex;align-items:center;gap:10px;margin-top:9px;min-width:0}
+.vehicle-card-quick-item{display:flex;align-items:center;gap:4px;min-width:0;color:#d9edff;font-size:11px;white-space:nowrap}
+.vehicle-card-quick-item .premium-svg{width:18px;height:18px;flex:0 0 18px;color:#f2fbff;stroke-width:1.9}
+.vehicle-card-quick-item span:last-child{overflow:hidden;text-overflow:ellipsis}
+.vehicle-card-km{display:none}
+.vehicle-card-stats{display:none}
+.vehicle-card-stat{display:none}
 .vehicle-empty-premium{padding:28px 16px;text-align:center;color:#aac5dc;border:1px dashed #2b668e;border-radius:18px;margin:10px 0}
 @media screen and (max-width:760px){
- .vehicle-list-panel{width:100%!important;max-width:none!important;border-radius:0 0 22px 22px!important;padding:14px 12px!important;margin:0!important}
+ .vehicle-list-panel{width:100%!important;max-width:none!important;border-radius:0 0 22px 22px!important;padding:12px 10px!important;margin:0!important}
+ .vehicle-list-title{margin-bottom:8px!important}
  .vehicle-list-title strong{font-size:21px}.vehicle-list-title small{font-size:11px}
- .vehicle-card-premium{min-height:260px;border-radius:18px;margin:8px 0}
- .vehicle-card-inner{min-height:260px;padding:13px 12px 9px}
- .vehicle-card-name{font-size:23px}.vehicle-card-meta{font-size:13px;margin-top:4px}
- .vehicle-card-stats{gap:5px}.vehicle-card-stat{min-height:52px;padding:7px 6px;gap:5px}.vehicle-card-stat .stat-icon{width:28px;height:28px;flex-basis:28px;font-size:15px}.vehicle-card-stat b{font-size:15px}.vehicle-card-stat small{font-size:7px}
+ .vehicle-add-inline{min-height:42px!important;padding:7px 10px!important;font-size:12px!important;border-radius:13px!important}.vehicle-add-inline span{font-size:21px}
+ .vehicle-card-premium{min-height:112px;margin:7px 0;border-radius:16px}
+ .vehicle-card-photo-wrap{flex-basis:30%;min-width:92px;max-width:112px}
+ .vehicle-card-brand{width:36px;height:36px;top:6px;left:6px}
+ .vehicle-card-inner{padding:9px 8px 8px 10px}
+ .vehicle-card-name{font-size:17px}.vehicle-card-meta{font-size:11px;margin-top:3px}
+ .vehicle-card-arrow{font-size:27px}.vehicle-card-quick{gap:8px;margin-top:8px}.vehicle-card-quick-item{font-size:10px;gap:3px}.vehicle-card-quick-item .premium-svg{width:17px;height:17px;flex-basis:17px}
 }
 @media screen and (max-width:380px){
- .vehicle-list-panel{padding-left:9px!important;padding-right:9px!important}
- .vehicle-card-premium{min-height:300px}.vehicle-card-inner{min-height:300px;padding:15px 11px 10px}.vehicle-card-name{font-size:24px}.vehicle-card-stats{gap:5px}.vehicle-card-stat{padding:8px 5px}.vehicle-card-stat .stat-icon{width:29px;height:29px;flex-basis:29px}.vehicle-card-stat b{font-size:15px}.vehicle-card-stat small{font-size:7px}
+ .vehicle-list-panel{padding-left:8px!important;padding-right:8px!important}
+ .vehicle-card-premium{min-height:106px}
+ .vehicle-card-photo-wrap{flex-basis:29%;min-width:86px}
+ .vehicle-card-brand{width:34px;height:34px}
+ .vehicle-card-name{font-size:16px}.vehicle-card-meta{font-size:10px}.vehicle-card-quick{gap:6px}.vehicle-card-quick-item{font-size:9px}.vehicle-card-quick-item .premium-svg{width:16px;height:16px;flex-basis:16px}
 }
-
 
 /* GARAGEY — ficha de vehículo como ventana emergente */
 .vehicle-detail-modal{background:rgba(1,10,20,.86);backdrop-filter:blur(5px);padding:18px;z-index:20}
@@ -2164,21 +2171,25 @@ function renderVehicleList(){
  const box=$('vehicles'); if(!box)return;
  const list=data.vehicles.filter(v=>{const text=[v.name,v.brand,v.model,v.year,v.fuel,v.type].join(' ').toLowerCase(); const q=!vehicleListQuery||text.includes(vehicleListQuery); const t=vehicleListType==='all'||v.type===vehicleListType; return q&&t;});
  box.innerHTML=list.length?list.map(v=>{
-   const ints=[...(v.interventions||[])].filter(i=>i.type!=='Repostaje'); const cost=ints.reduce((a,x)=>a+interventionCost(x),0); const due=ints.filter(i=>i.nextKm&&Number(v.km)>=Number(i.nextKm)).length;
-   const meta=[v.year||'—',v.fuel||'—',v.type||'—'].join(' · ');
+   const name=v.name||[v.brand,v.model].filter(Boolean).join(' ')||'Mi vehículo';
+   const meta=[v.brand,v.model].filter(Boolean).join(' · ') || (v.type||'Vehículo');
    return `<article class="vehicle-card-premium ${v.id===data.selected?'selected':''}" onclick="selectVehicle(${v.id})">
-    ${safePhotoMarkup(v,'vehicle-card-photo')}
+    <div class="vehicle-card-photo-wrap">
+      ${safePhotoMarkup(v,'vehicle-card-photo')}
+      <span class="vehicle-card-brand">${brandLogo(v)}</span>
+    </div>
     <div class="vehicle-card-inner">
-      <div><div class="vehicle-card-top">${brandLogo(v)}<span class="vehicle-card-arrow">›</span></div>
-      <div class="vehicle-card-name">${v.name||[v.brand,v.model].filter(Boolean).join(' ')||'Mi vehículo'}</div>
-      <div class="vehicle-card-meta">${v.brand||''}${v.model?' · '+v.model:''}${meta?' · '+meta:''}</div>
-      <div class="vehicle-card-km">🛣️ &nbsp;${Number(v.km||0).toLocaleString('es-ES')} km</div></div>
-      <div class="vehicle-card-stats">
-       <div class="vehicle-card-stat blue"><span class="stat-icon">🔧</span><div><b>${ints.length}</b><small>Intervenciones</small></div></div>
-       <div class="vehicle-card-stat green"><span class="stat-icon">€</span><div><b>${euro(cost)}</b><small>Gasto acumulado</small></div></div>
-       <div class="vehicle-card-stat red"><span class="stat-icon">🔔</span><div><b>${due}</b><small>Avisos pendientes</small></div></div>
+      <div class="vehicle-card-content">
+        <div class="vehicle-card-top"><div class="vehicle-card-name">${name}</div><span class="vehicle-card-arrow">›</span></div>
+        <div class="vehicle-card-meta">${meta}</div>
+        <div class="vehicle-card-quick">
+          <div class="vehicle-card-quick-item">${svgIcon('fuel')}<span>${v.fuel||'—'}</span></div>
+          <div class="vehicle-card-quick-item">${svgIcon('calendar')}<span>${v.year||'—'}</span></div>
+          <div class="vehicle-card-quick-item">${svgIcon('gauge')}<span>${Number(v.km||0).toLocaleString('es-ES')} km</span></div>
+        </div>
       </div>
-    </div></article>`
+    </div>
+   </article>`
  }).join(''):'<div class="vehicle-empty-premium">🚘<br><br>No hay vehículos que coincidan con la búsqueda.</div>';
 }
 function renderGarageyPanel(){
@@ -2186,7 +2197,7 @@ function renderGarageyPanel(){
  <div class="quick"><div class="q">Vehículos<b id="qVehicles">${data.vehicles.length}</b></div><div class="q">Intervenciones<b id="qInterventions">${data.vehicles.flatMap(v=>v.interventions||[]).filter(x=>x.type!=='Repostaje').length}</b></div><div class="q">Gasto total<b id="qCost">${euro(data.vehicles.flatMap(v=>v.interventions||[]).filter(x=>x.type!=='Repostaje').reduce((a,x)=>a+interventionCost(x),0))}</b></div><div class="q">Avisos<b id="qAlerts">${getAlerts().length}</b></div></div></section>`;
 }
 function renderVehicleSection(){
- return `<section class="panel vehicle-list-panel"><div class="section-title vehicle-list-title"><div><strong>MIS VEHÍCULOS</strong><small>Gestiona y controla todos tus vehículos</small></div></div><div class="vehicle-list-toolbar"><div class="vehicle-search"><span>⌕</span><input id="vehicleSearch" type="search" placeholder="Buscar vehículo…" value="${vehicleListQuery.replace(/"/g,'&quot;')}" oninput="filterVehicleList(this.value)"></div><button class="vehicle-filter" id="vehicleFilter" onclick="cycleVehicleFilter()">☷</button></div><div id="vehicles"></div><button class="add vehicle-add-premium" onclick="openVehicle()"><span>＋</span> Añadir vehículo</button></section>`;
+ return `<section class="panel vehicle-list-panel"><div class="section-title vehicle-list-title"><div class="vehicle-list-title-copy"><strong>MIS VEHÍCULOS</strong><small>Gestiona y controla todos tus vehículos</small></div><button class="add vehicle-add-inline" onclick="openVehicle()"><span>＋</span> Añadir vehículo</button></div><div id="vehicles"></div></section>`;
 }
 function svgIcon(name){const p={
  oil:'<path d="M12 3c-2.5 3.2-5 6.1-5 9.4a5 5 0 0 0 10 0C17 9.1 14.5 6.2 12 3z"/><path d="M9.5 13.5c.3 1.1 1.1 1.8 2.5 2"/>',
