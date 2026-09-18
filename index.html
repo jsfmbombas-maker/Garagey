@@ -1749,6 +1749,22 @@ html,body{overflow-x:hidden}
  .fuel-history-compact-head .history-compact-meta{gap:8px}
 }
 </style>
+
+/* GARAGEY v35.27 — Centro de avisos inspirado en las fichas v35.26 */
+.notice-panel{background:linear-gradient(145deg,#031b2d,#062b45)!important;color:#eef8ff!important;border:1px solid #1b78ad!important;box-shadow:0 12px 28px rgba(0,0,0,.24)!important;overflow:hidden}
+.notice-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.notice-title-wrap{display:flex;align-items:center;gap:11px}.notice-title-wrap h2{margin:0;color:#f5fbff;font-size:20px}.notice-title-wrap small{display:block;color:#82a8bf;margin-top:2px;font-size:11px}
+.notice-bell{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#073653;border:1px solid #188ed0;color:#20a7ff}.notice-bell .premium-svg{width:24px;height:24px}
+.notice-settings{width:40px;height:40px;border-radius:12px;border:1px solid #216e9e;background:#082b44;color:#a9d8f5;display:grid;place-items:center}.notice-settings .premium-svg{width:21px;height:21px}
+.notice-summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:4px 0 18px}.notice-summary-box{min-height:68px;border-radius:15px;border:1px solid;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05}.notice-summary-box b{font-size:22px;color:#fff}.notice-summary-box span{font-size:11px;font-weight:800;margin-top:5px}.notice-summary-box.red{background:linear-gradient(145deg,#6e1028,#e52e50);border-color:#ff4666}.notice-summary-box.orange{background:linear-gradient(145deg,#75400b,#f39a1f);border-color:#ffb34d}.notice-summary-box.green{background:linear-gradient(145deg,#07543b,#10a879);border-color:#20c895}
+.notice-section-head{display:flex;align-items:center;justify-content:space-between;margin:0 2px 9px}.notice-section-head strong{font-size:16px}.notice-section-head span{font-size:11px;color:#78c8ef}
+.notice-alert-list{display:grid;gap:8px}.notice-alert-card{border:1px solid #1474ad;border-radius:16px;background:linear-gradient(145deg,#082d49,#06243b);overflow:hidden;box-shadow:0 5px 15px rgba(0,0,0,.16)}
+.notice-alert-head{width:100%;display:grid;grid-template-columns:42px minmax(0,1fr) auto 16px;align-items:center;gap:9px;padding:10px;background:transparent;border:0;color:#eff9ff;text-align:left}.notice-alert-icon{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;border:1px solid}.notice-alert-icon .premium-svg{width:21px;height:21px}.notice-alert-card.red .notice-alert-icon{background:#65152a;color:#ff637c;border-color:#ff3f61}.notice-alert-card.orange .notice-alert-icon{background:#65400d;color:#ffc05d;border-color:#f5a62b}.notice-alert-main{min-width:0}.notice-alert-main strong{display:block;font-size:13px}.notice-alert-main small{display:block;color:#8db0c5;font-size:10px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.notice-pill{display:inline-block;margin-top:5px;padding:4px 8px;border-radius:999px;font-size:9px;font-weight:900}.notice-alert-card.red .notice-pill{background:#f52d51;color:#fff}.notice-alert-card.orange .notice-pill{background:#f6ae32;color:#1e2b20}.notice-alert-date{font-size:10px;color:#a8c7d9;white-space:nowrap}.notice-alert-chevron{font-size:25px;color:#d7f1ff;transition:transform .18s}.notice-alert-card.is-expanded .notice-alert-chevron{transform:rotate(90deg)}
+.notice-alert-details{padding:0 10px 10px;border-top:1px solid #15577d;background:linear-gradient(180deg,#082a43,#061f34)}.notice-detail-row{display:grid;grid-template-columns:23px 1fr auto;gap:8px;align-items:center;padding:8px 2px;border-bottom:1px solid #124a6c;font-size:10px;color:#82a9c1}.notice-detail-row:last-of-type{border-bottom:0}.notice-detail-row b{color:#edf8ff;text-align:right;font-size:10px}.notice-detail-icon{color:#70c6f5;display:grid;place-items:center}.notice-detail-icon .premium-svg{width:16px;height:16px}
+.notice-alert-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.notice-alert-actions button{min-height:38px;border-radius:11px;border:1px solid;font-weight:900;font-size:10px;display:flex;align-items:center;justify-content:center;gap:6px}.notice-alert-actions .premium-svg{width:16px;height:16px}.notice-action-blue{background:linear-gradient(90deg,#078cff,#168cff);color:#fff;border-color:#36a8ff}.notice-action-green{background:linear-gradient(90deg,#0ca66d,#14b97b);color:#fff;border-color:#3bd496}
+.notice-all-clear{margin-top:6px;padding:22px 12px;border:1px solid #0ca98c;border-radius:18px;background:linear-gradient(145deg,#063b3c,#075d53);display:flex;flex-direction:column;align-items:center;text-align:center}.notice-all-clear>span{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:#0b8c72;border:1px solid #54e6c3;color:#a7fff0;margin-bottom:9px}.notice-all-clear .premium-svg{width:30px;height:30px}.notice-all-clear strong{font-size:18px}.notice-all-clear small{margin-top:5px;color:#a9d8d1;font-size:11px}
+@media(max-width:600px){.notice-panel{padding:14px!important;border-radius:18px!important}.notice-title-wrap h2{font-size:18px}.notice-summary{gap:6px}.notice-summary-box{min-height:62px}.notice-summary-box b{font-size:20px}.notice-alert-head{grid-template-columns:38px minmax(0,1fr) auto 12px;gap:7px;padding:9px}.notice-alert-icon{width:36px;height:36px}.notice-alert-date{font-size:9px}.notice-alert-main strong{font-size:12px}.notice-alert-main small{font-size:9px}.notice-pill{font-size:8px;padding:4px 7px}.notice-alert-actions{gap:6px}.notice-alert-actions button{min-height:36px;font-size:9px}}
+
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
@@ -1921,53 +1937,94 @@ function getAlerts(){
  data.vehicles.forEach(v=>{
    const km=Number(v.km||0);
    (v.interventions||[]).forEach(i=>{
-     // Kilometre-based maintenance warnings
+     const base={vehicle:v.name||'Vehículo',vehicleId:v.id,interventionId:i.id,type:i.type};
      if(i.nextKm){
        const remaining=Number(i.nextKm)-km;
-       if(remaining<=0) alerts.push({level:'red',icon:'🔴',vehicle:v.name,title:i.type,detail:`Vencido por ${Math.abs(remaining).toLocaleString('es-ES')} km · Objetivo: ${Number(i.nextKm).toLocaleString('es-ES')} km`,id:i.id});
-       else if(remaining<=1500) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:i.type,detail:`Próximo en ${remaining.toLocaleString('es-ES')} km`,id:i.id});
+       if(remaining<=0) alerts.push({...base,level:'red',icon:'wrench',title:i.type,detail:`Vencido por ${Math.abs(remaining).toLocaleString('es-ES')} km · Objetivo: ${Number(i.nextKm).toLocaleString('es-ES')} km`});
+       else if(remaining<=1500) alerts.push({...base,level:'orange',icon:'wrench',title:i.type,detail:`Faltan ${remaining.toLocaleString('es-ES')} km · Próxima intervención: ${Number(i.nextKm).toLocaleString('es-ES')} km`});
      }
-     // ITV dates
      if(i.type==='ITV'){
        const match=(i.details||'').match(/Próxima ITV:\s*(\d{4}-\d{2}-\d{2})/);
        if(match){
          const d=daysUntil(match[1]);
-         if(d!==null && d<0) alerts.push({level:'red',icon:'🔴',vehicle:v.name,title:'ITV caducada',detail:`Venció hace ${Math.abs(d)} días`,id:i.id});
-         else if(d!==null && new Date(match[1]+'T00:00:00')<=addMonths(new Date(),3)) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'ITV próxima',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
+         if(d!==null && d<0) alerts.push({...base,level:'red',icon:'calendar',title:'ITV',date:match[1],days:d,detail:`Venció hace ${Math.abs(d)} días`});
+         else if(d!==null && new Date(match[1]+'T00:00:00')<=addMonths(new Date(),3)) alerts.push({...base,level:'orange',icon:'calendar',title:'ITV',date:match[1],days:d,detail:`Vence en ${d} días`});
        }
      }
-     // Insurance dates
      if(i.type==='Seguro'){
        const match=(i.details||'').match(/Vence:\s*(\d{4}-\d{2}-\d{2})/);
        if(match){
          const d=daysUntil(match[1]);
-         if(d!==null && d<0) alerts.push({level:'red',icon:'🔴',vehicle:v.name,title:'Seguro vencido',detail:`Venció hace ${Math.abs(d)} días`,id:i.id});
-         else if(d!==null && new Date(match[1]+'T00:00:00')<=addMonths(new Date(),3)) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'Seguro próximo a vencer',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
+         if(d!==null && d<0) alerts.push({...base,level:'red',icon:'shield',title:'Seguro',date:match[1],days:d,detail:`Venció hace ${Math.abs(d)} días`});
+         else if(d!==null && new Date(match[1]+'T00:00:00')<=addMonths(new Date(),3)) alerts.push({...base,level:'orange',icon:'shield',title:'Seguro',date:match[1],days:d,detail:`Vence en ${d} días`});
        }
      }
-     // Tax dates
      if(i.type==='Impuestos'){
        const match=(i.details||'').match(/Pago:\s*(\d{4}-\d{2}-\d{2})/);
        if(match){
          const d=daysUntil(match[1]);
-         if(d!==null && d<0) alerts.push({level:'red',icon:'🔴',vehicle:v.name,title:'Impuesto pendiente/vencido',detail:`Fecha superada hace ${Math.abs(d)} días`,id:i.id});
-         else if(d!==null && d<=30) alerts.push({level:'orange',icon:'🟠',vehicle:v.name,title:'Impuesto próximo',detail:`Faltan ${d} días · ${match[1]}`,id:i.id});
+         if(d!==null && d<0) alerts.push({...base,level:'red',icon:'building',title:'Impuesto de circulación',date:match[1],days:d,detail:`Fecha superada hace ${Math.abs(d)} días`});
+         else if(d!==null && d<=30) alerts.push({...base,level:'orange',icon:'building',title:'Impuesto de circulación',date:match[1],days:d,detail:`Vence en ${d} días`});
        }
      }
    });
  });
- return alerts.sort((a,b)=>a.level==='red'?-1:b.level==='red'?1:0);
+ return alerts.sort((a,b)=>a.level==='red'?-1:b.level==='red'?1:(Number(a.days??999999)-Number(b.days??999999)));
 }
+function alertVehicle(alert){return data.vehicles.find(v=>v.id===alert.vehicleId)||data.vehicles.find(v=>v.name===alert.vehicle)}
+function alertIntervention(alert){const v=alertVehicle(alert);return v?.interventions?.find(i=>i.id===alert.interventionId)}
+function formatAlertDate(d){if(!d)return '—';const a=d.split('-');return a.length===3?`${a[2]}/${a[1]}/${a[0]}`:d}
+function alertIcon(alert){return svgIcon(alert.icon||'bell')}
+function alertExtraRows(alert){
+ const v=alertVehicle(alert), i=alertIntervention(alert);
+ if(!v||!i)return '';
+ const rows=[];
+ if(alert.date)rows.push([`calendar`,'Fecha de vencimiento',formatAlertDate(alert.date)]);
+ if(alert.days!=null)rows.push([`history`,'Días restantes',alert.days<0?`Vencido hace ${Math.abs(alert.days)} días`:`${alert.days} días`]);
+ rows.push(['car','Vehículo',v.name||'—']);
+ if(i.type==='ITV'){const r=(i.details||'').match(/Resultado:\s*([^·]+)/);rows.push(['calendar','Resultado',r?.[1]?.trim()||'—']);}
+ if(i.type==='Seguro'){
+   const d=i.details||''; const company=d.split(' · ')[0]||''; const pol=d.match(/Póliza:\s*([^·]+)/)?.[1]?.trim();
+   if(company)rows.push(['shield','Compañía',company]); if(pol)rows.push(['id','Nº de póliza',pol]);
+ }
+ if(i.type==='Impuestos'){
+   const d=i.details||''; const amount=Number(i.totalCost||0); rows.push(['building','Concepto',d.split(' · ')[0]||'Impuesto']); if(amount)rows.push(['coins','Importe',euro2(amount)]);
+ }
+ if(i.nextKm){rows.push(['gauge','Kilometraje actual',`${Number(v.km||0).toLocaleString('es-ES')} km`]);rows.push(['gauge','Próximo mantenimiento',`${Number(i.nextKm).toLocaleString('es-ES')} km`]);}
+ return rows.map(r=>`<div class="notice-detail-row"><span class="notice-detail-icon">${svgIcon(r[0])}</span><span>${r[1]}</span><b>${r[2]}</b></div>`).join('');
+}
+function toggleNoticeAlert(key){
+ const card=document.querySelector(`[data-notice-key="${key}"]`);if(!card)return;
+ const open=card.classList.contains('is-expanded');card.classList.toggle('is-expanded',!open);
+ const body=card.querySelector('.notice-alert-details');const btn=card.querySelector('.notice-alert-head');
+ if(body)body.hidden=open;if(btn)btn.setAttribute('aria-expanded',String(!open));
+}
+function openAlertVehicle(key){const a=getAlerts().find(x=>String(x.interventionId)===String(key));if(!a)return;const v=alertVehicle(a);if(!v)return;data.selected=v.id;save();closeModal('vehicleDetailModal');renderVehicleDetailModal();$('vehicleDetailModal')?.classList.add('show')}
+function editAlert(key){const a=getAlerts().find(x=>String(x.interventionId)===String(key));if(!a)return;const v=alertVehicle(a);if(!v)return;data.selected=v.id;save();openIntervention(a.interventionId)}
 function renderNoticePanel(){
  const alerts=getAlerts();
  const critical=alerts.filter(a=>a.level==='red').length;
  const upcoming=alerts.filter(a=>a.level==='orange').length;
- const panel=`<section class="card notice-panel">
- <div class="top"><div><h2>🔔 Centro de avisos</h2><div style="color:#cbd5e1">Todo lo que necesita tu atención, en un solo lugar.</div></div><span class="badge" style="background:#ffffff22;color:white">${alerts.length} activos</span></div>
- <div class="notice-grid" style="margin-top:16px"><div class="notice">Críticos<b>${critical}</b><small>Caducados o vencidos</small></div><div class="notice">Próximos<b>${upcoming}</b><small>Próximos 3 meses / 1.500 km</small></div><div class="notice">Vehículos<b>${new Set(alerts.map(a=>a.vehicle)).size}</b><small>Con avisos activos</small></div></div>
- ${alerts.length?`<div style="margin-top:16px">${alerts.map(a=>`<div class="alert ${a.level}">${a.icon} <b>${a.vehicle} · ${a.title}</b><br><small>${a.detail}</small></div>`).join('')}</div>`:'<div class="alert blue" style="margin-top:16px">✨ <b>Todo bajo control.</b><br><small>No tienes avisos pendientes actualmente.</small></div>'}
+ const vehicles=new Set(alerts.map(a=>a.vehicleId)).size;
+ const statusClass=critical?'has-critical':upcoming?'has-upcoming':'all-clear';
+ const list=alerts.map((a,idx)=>{
+   const key=String(a.interventionId)+'-'+String(a.vehicleId);
+   const pill=a.level==='red'?(a.days!=null&&a.days<0?`Vencido hace ${Math.abs(a.days)} días`:'Requiere atención'):(a.days!=null?`Vence en ${a.days} días`:a.detail.replace('Próximo en ','En '));
+   return `<article class="notice-alert-card ${a.level}" data-notice-key="${key}">
+     <button type="button" class="notice-alert-head" onclick="toggleNoticeAlert('${key}')" aria-expanded="false" aria-controls="notice-alert-details-${idx}">
+       <span class="notice-alert-icon">${alertIcon(a)}</span><span class="notice-alert-main"><strong>${a.title}</strong><small>${a.vehicle||'Vehículo'}</small><span class="notice-pill">${pill}</span></span><span class="notice-alert-date">${formatAlertDate(a.date)}</span><span class="notice-alert-chevron">›</span>
+     </button>
+     <div class="notice-alert-details" id="notice-alert-details-${idx}" hidden>
+       ${alertExtraRows(a)}
+       <div class="notice-alert-actions"><button class="notice-action-blue" onclick="openAlertVehicle('${a.interventionId}')">${svgIcon('car')} Ver vehículo</button><button class="notice-action-green" onclick="editAlert('${a.interventionId}')">${svgIcon('gear')} Editar</button></div>
+     </div>
+   </article>`;
+ }).join('');
+ return `<section class="card notice-panel ${statusClass}">
+   <div class="notice-header"><div class="notice-title-wrap"><span class="notice-bell">${svgIcon('bell')}</span><div><h2>Centro de avisos</h2><small>${alerts.length?'Todo bajo control, salvo lo que requiere tu atención.':'Todo bajo control'}</small></div></div><button class="notice-settings" onclick="openSettings()">${svgIcon('gear')}</button></div>
+   <div class="notice-summary"><div class="notice-summary-box red"><b>${critical}</b><span>Urgentes</span></div><div class="notice-summary-box orange"><b>${upcoming}</b><span>Próximos</span></div><div class="notice-summary-box green"><b>${Math.max(0,vehicles?data.vehicles.length-vehicles:data.vehicles.length)}</b><span>Al día</span></div></div>
+   ${alerts.length?`<div class="notice-section-head"><strong>Avisos recientes</strong><span>${alerts.length} activos</span></div><div class="notice-alert-list">${list}</div>`:`<div class="notice-all-clear"><span>${svgIcon('bell')}</span><strong>¡Todo está al día!</strong><small>No tienes avisos pendientes.</small></div>`}
  </section>`;
- return panel;
 }
 
 let vehicleListQuery=''; let vehicleListType='all';
