@@ -1837,6 +1837,36 @@ html,body{overflow-x:hidden}
   .notice-panel+.vehicle-list-panel{margin-top:0!important;}
 }
 </style>
+
+<style>
+/* GARAGEY v35.34 — Mis vehículos: contenido ampliado e iconografía Garagey */
+@media screen and (max-width:760px){
+  .vehicle-card-premium{min-height:116px!important;height:116px!important;}
+  .vehicle-card-photo-wrap{flex-basis:30%!important;min-width:92px!important;max-width:112px!important;}
+  .vehicle-card-brand{width:40px!important;height:40px!important;top:6px!important;left:6px!important;padding:4px!important;}
+  .vehicle-card-inner{padding:10px 10px 9px 13px!important;}
+  .vehicle-card-content{height:100%!important;display:flex!important;flex-direction:column!important;justify-content:center!important;}
+  .vehicle-card-top{gap:8px!important;}
+  .vehicle-card-name{font-size:20px!important;line-height:1.08!important;font-weight:900!important;}
+  .vehicle-card-meta{font-size:13px!important;line-height:1.15!important;margin-top:5px!important;color:#b6d5ec!important;font-weight:650!important;}
+  .vehicle-card-quick{gap:14px!important;margin-top:10px!important;align-items:center!important;}
+  .vehicle-card-quick-item{gap:6px!important;font-size:12px!important;font-weight:650!important;color:#e5f5ff!important;}
+  .vehicle-card-quick-item .premium-svg{width:23px!important;height:23px!important;flex:0 0 23px!important;stroke-width:1.9!important;color:#f4fbff!important;}
+  .vehicle-card-arrow{font-size:31px!important;line-height:1!important;margin-right:1px!important;}
+}
+@media screen and (max-width:380px){
+  .vehicle-card-premium{min-height:112px!important;height:112px!important;}
+  .vehicle-card-photo-wrap{flex-basis:29%!important;min-width:86px!important;}
+  .vehicle-card-brand{width:38px!important;height:38px!important;}
+  .vehicle-card-name{font-size:18px!important;}
+  .vehicle-card-meta{font-size:12px!important;}
+  .vehicle-card-quick{gap:9px!important;margin-top:8px!important;}
+  .vehicle-card-quick-item{font-size:11px!important;gap:4px!important;}
+  .vehicle-card-quick-item .premium-svg{width:21px!important;height:21px!important;flex-basis:21px!important;}
+}
+/* Iconos de datos: misma familia SVG premium utilizada en las fichas de vehículo */
+.vehicle-card-quick-item .premium-svg{fill:none!important;stroke:currentColor!important;stroke-linecap:round!important;stroke-linejoin:round!important;}
+</style>
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
