@@ -1801,28 +1801,39 @@ html,body{overflow-x:hidden}
  .notice-panel{margin-bottom:0!important}
  .vehicle-list-panel{margin-top:0!important}
 }
-<style id="garagey-v35-31-notice-edge-fix">
-/* GARAGEY v35.31 — Centro de avisos a ancho completo, sin esquinas blancas */
-@media (max-width:900px),(pointer:coarse) and (max-width:1100px){
-  .content>.notice-panel.notice-panel,
-  .notice-panel{
-    width:100vw!important;
-    max-width:none!important;
-    margin-left:0!important;
-    margin-right:0!important;
-    margin-top:0!important;
-    margin-bottom:0!important;
-    border-radius:0!important;
-    box-shadow:none!important;
-    box-sizing:border-box!important;
-  }
-}
 </style>
+<style id="garagey-v35-32-notice-edge-fix">
+/* GARAGEY v35.32 — Centro de avisos: fondo uniforme en esquinas y sin hueco inferior */
+@media (max-width:900px),(pointer:coarse) and (max-width:1100px){
+  .content{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:0!important;
+    background:#031525!important;
+  }
+  .content>.notice-panel.notice-panel{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+    border-radius:0 0 20px 20px!important;
+    background:linear-gradient(145deg,#031b2d,#062b45)!important;
+  }
+  .content>.vehicle-list-panel{
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    box-sizing:border-box!important;
+    border-radius:0 0 20px 20px!important;
+  }
+  .notice-panel+.vehicle-list-panel{margin-top:0!important;}
+}
 </style>
 </head>
 <body><div class="app">
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.31 · Logos Nissan y Kawasaki · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.32 · Logos Nissan y Kawasaki · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
