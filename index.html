@@ -3569,3 +3569,47 @@ window.deleteVehicle=function(id){
   }
 }
 </style>
+
+<style id="garagey-v35-60-vehicle-detail-scroll-fix">
+/* v35.60 — la ficha del vehículo usa exactamente el espacio disponible bajo el encabezado.
+   El problema anterior era que el diálogo conservaba 100dvh mientras el modal
+   reservaba 86px para la cabecera; esos 86px inferiores quedaban fuera del área visible. */
+@media(max-width:600px),(pointer:coarse){
+  #vehicleDetailModal{
+    top:0!important;
+    bottom:0!important;
+    height:100dvh!important;
+    padding-top:86px!important;
+    padding-bottom:0!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+  }
+  #vehicleDetailModal .vehicle-detail-dialog{
+    width:100%!important;
+    height:calc(100dvh - 86px)!important;
+    min-height:calc(100dvh - 86px)!important;
+    max-height:calc(100dvh - 86px)!important;
+    margin:0!important;
+    overflow:hidden!important;
+  }
+  #vehicleDetailModal .vehicle-detail-scroll{
+    flex:1 1 auto!important;
+    min-height:0!important;
+    height:auto!important;
+    max-height:none!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    -webkit-overflow-scrolling:touch!important;
+    overscroll-behavior-y:auto!important;
+    scroll-padding-bottom:32px!important;
+    padding-bottom:32px!important;
+    box-sizing:border-box!important;
+  }
+  #vehicleDetailModal .vehicle-detail-modal-top{
+    flex:0 0 auto!important;
+    position:sticky!important;
+    top:0!important;
+    z-index:30!important;
+  }
+}
+</style>
