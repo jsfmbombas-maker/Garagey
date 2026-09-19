@@ -1978,6 +1978,18 @@ body{padding-top:0!important;}
 #interventionModal.intervention-select-mode .dialog>.top .soft{display:none!important}
 @media(max-width:600px){#interventionModal .dialog>.top{padding-right:64px!important}#interventionModal .intervention-picker-back{top:11px!important;right:11px!important;width:40px!important;height:40px!important}}
 </style>
+<style id="garagey-v35-54-back-arrow">
+/* v35.54 — flecha de retorno garantizada por estado JS */
+#interventionModal .intervention-picker-back{
+  position:absolute!important;top:10px!important;right:10px!important;z-index:9999!important;
+  width:44px!important;height:44px!important;display:none!important;align-items:center!important;justify-content:center!important;
+  padding:0!important;margin:0!important;border-radius:14px!important;border:1px solid rgba(255,255,255,.55)!important;
+  background:#0b8fe8!important;color:#fff!important;font-size:30px!important;line-height:1!important;font-weight:900!important;
+  box-shadow:0 6px 18px rgba(0,0,0,.35)!important;opacity:1!important;visibility:visible!important;
+}
+#interventionModal .intervention-picker-back[style*="display: flex"]{display:flex!important}
+@media(max-width:600px){#interventionModal .intervention-picker-back{top:8px!important;right:8px!important;width:42px!important;height:42px!important;font-size:29px!important}}
+</style>
 </head>
 <body>
 <div class="app">
@@ -2025,7 +2037,7 @@ body{padding-top:0!important;}
 <div class="modal history-modal fuel-history-modal" id="fuelHistoryModal"><div class="dialog history-dialog fuel-history-dialog" id="fuelHistoryModalContent"></div></div>
 <div class="modal tire-modal" id="tireModal"><div class="dialog tire-dialog" id="tireModalContent"></div></div>
 
-<div class="modal" id="interventionModal"><div class="dialog" autocomplete="off"><div class="top"><div><span class="top-kicker">GARAGEY · FICHA DE INTERVENCIÓN</span><h2>🔧 Nueva intervención</h2></div><button type="button" class="intervention-picker-back" aria-label="Volver a la ficha del vehículo" title="Volver a la ficha del vehículo" onclick="backToVehicleFromIntervention()">←</button><button class="soft" onclick="closeModal('interventionModal')">Cerrar</button></div>
+<div class="modal" id="interventionModal"><div class="dialog" autocomplete="off"><div class="top"><div><span class="top-kicker">GARAGEY · FICHA DE INTERVENCIÓN</span><h2>🔧 Nueva intervención</h2></div><button type="button" class="intervention-picker-back" aria-label="Volver a la ficha del vehículo" title="Volver a la ficha del vehículo" onclick="backToVehicleFromIntervention()" style="display:none;">←</button><button class="soft" onclick="closeModal('interventionModal')">Cerrar</button></div>
 <div class="form"><div class="full intervention-type-picker"><div class="intervention-type-heading"><div><label>Tipo de intervención</label><small>Selecciona la ficha que quieres registrar</small></div></div><div class="intervention-type-grid">
 <button type="button" class="intervention-type-card type-mantenimiento" data-type="Mantenimiento" onclick="selectInterventionType('Mantenimiento')"><span class="type-card-icon" data-icon="wrench"></span><span><b>Mantenimiento</b><small>Aceite y filtros</small></span></button>
 <button type="button" class="intervention-type-card type-neumaticos" data-type="Neumáticos" onclick="selectInterventionType('Neumáticos')"><span class="type-card-icon" data-icon="tire"></span><span><b>Neumáticos</b><small>Cambio de neumáticos</small></span></button>
@@ -2675,6 +2687,7 @@ function setInterventionFormMode(type){
  const icons={'Mantenimiento':'🔧','Neumáticos':'🛞','Correa/Cadena':'⚙️','Varios':'🔧','ITV':'📋','Seguro':'🛡️','Impuestos':'🏛️','Repostaje':'⛽'};
  if(title)title.textContent=(type==='Correa/Cadena'&&isSelectedMoto())?'Kit de distribución':(type||'Intervención');
  if(icon){const iconMap={'Mantenimiento':'wrench','Neumáticos':'tire','Correa/Cadena':'gear','Varios':'wrench','ITV':'calendar','Seguro':'shield','Impuestos':'building','Repostaje':'fuel'};icon.dataset.icon=iconMap[type]||'wrench';icon.innerHTML=svgIcon(icon.dataset.icon)}
+ const back=modal.querySelector('.intervention-picker-back'); if(back) back.style.setProperty('display','none','important');
 }
 function showInterventionTypePicker(){
  updateInterventionTypePickerLabels();
@@ -2683,6 +2696,7 @@ function showInterventionTypePicker(){
  modal.classList.add('intervention-select-mode');
  const title=modal.querySelector('.top h2');
  if(title)title.textContent='🔧 Nueva intervención';
+ const back=modal.querySelector('.intervention-picker-back'); if(back){back.style.setProperty('display','flex','important'); back.setAttribute('aria-hidden','false');}
 }
 function backToVehicleFromIntervention(){
  const modal=$('interventionModal');
