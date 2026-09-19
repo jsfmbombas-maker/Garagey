@@ -3613,3 +3613,44 @@ window.deleteVehicle=function(id){
   }
 }
 </style>
+
+<style id="garagey-v35-61-intervention-header-offset">
+/* v35.61 — formulario de editar intervención separado del encabezado global fijo */
+:root{--garagey-global-header-h:86px;}
+#interventionModal{
+  padding-top:var(--garagey-global-header-h)!important;
+  padding-bottom:0!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+}
+#interventionModal .dialog{
+  margin:0 auto!important;
+  max-height:calc(100dvh - var(--garagey-global-header-h))!important;
+  height:calc(100dvh - var(--garagey-global-header-h))!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  flex-direction:column!important;
+  overflow:hidden!important;
+}
+#interventionModal .dialog>.form{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+}
+#interventionModal .dialog>.top{flex:0 0 auto!important;}
+#interventionModal .dialog>.actions{flex:0 0 auto!important;}
+@media(max-width:600px),(pointer:coarse){
+  #interventionModal{padding-top:86px!important;padding-left:0!important;padding-right:0!important;}
+  #interventionModal .dialog{
+    width:100%!important;
+    max-width:none!important;
+    min-height:0!important;
+    height:calc(100dvh - 86px)!important;
+    max-height:calc(100dvh - 86px)!important;
+    margin:0!important;
+    border-radius:0!important;
+  }
+}
+</style>
