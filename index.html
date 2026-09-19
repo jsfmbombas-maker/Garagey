@@ -1991,10 +1991,10 @@ body{padding-top:0!important;}
 @media(max-width:600px){#interventionModal .intervention-picker-back{top:8px!important;right:8px!important;width:42px!important;height:42px!important;font-size:29px!important}}
 </style>
 <style id="garagey-v35-55-arrow-final">
-/* v35.55 — flecha visible por debajo del encabezado global fijo */
+/* v35.56 — flecha fija en viewport, fuera del overflow del encabezado del modal */
 #interventionModal.intervention-select-mode .intervention-picker-back{
   display:flex!important;
-  position:absolute!important;
+  position:fixed!important;
   top:96px!important;
   right:14px!important;
   z-index:2147483000!important;
@@ -2052,7 +2052,7 @@ body{padding-top:0!important;}
 </header>
 
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.49 · Encabezado fijo · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.56 · Encabezado fijo · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
@@ -2747,7 +2747,7 @@ function showInterventionTypePicker(){
  modal.classList.add('intervention-select-mode');
  const title=modal.querySelector('.top h2');
  if(title)title.textContent='🔧 Nueva intervención';
- const back=modal.querySelector('.intervention-picker-back'); if(back){back.style.setProperty('display','flex','important'); back.style.setProperty('pointer-events','auto','important'); back.style.setProperty('top','94px','important'); back.style.setProperty('right','12px','important'); back.setAttribute('aria-hidden','false');}
+ const back=modal.querySelector('.intervention-picker-back'); if(back){back.style.setProperty('display','flex','important'); back.style.setProperty('position','fixed','important'); back.style.setProperty('pointer-events','auto','important'); back.style.setProperty('top','94px','important'); back.style.setProperty('right','12px','important'); back.setAttribute('aria-hidden','false');}
 }
 function backToVehicleFromIntervention(){
  const modal=$('interventionModal');
@@ -2784,7 +2784,7 @@ function openIntervention(id){
  if(item){if(item.type==='ITV'&&$('itvCost'))$('itvCost').value=item.totalCost??'';if(item.type==='Seguro'&&$('insuranceCost'))$('insuranceCost').value=item.totalCost??'';if(item.type==='Impuestos'&&$('taxCost'))$('taxCost').value=item.totalCost??'';let d=item.details||'';if(item.type==='Mantenimiento')document.querySelectorAll('#maintenanceFields input[type=checkbox]').forEach(x=>x.checked=d.includes(x.value)||(x.value==='Filtro combustible'&&d.includes('Filtro de gasoil')));if(item.type==='Neumáticos'){let a=d.split(' · ');$('tireSize').value=a[0]||'';$('tireBrand').value=a[1]||'';}if(item.type==='Correa/Cadena'){let a=d.split(' · ');if(isMotoForVehicle(v)){ $('beltBrand').value=a[0]||''; $('beltModel').value=a[1]||''; }else{ $('beltType').value=a[0]||$('beltType').value; $('beltBrand').value=a[1]||''; }}if(item.type==='Varios')$('otherDescription').value=d;}
  typeFields();updateTotalCost();hydrateVehicleFormIcons();
  if(item){setInterventionFormMode(item.type);document.querySelector('#interventionModal .top h2').textContent='✏️ Editar intervención';document.querySelector('#interventionModal .intervention-form-step > .actions .primary').textContent='Guardar cambios';}
- else {showInterventionTypePicker();const back=document.querySelector('#interventionModal .intervention-picker-back');if(back){back.style.setProperty('display','flex','important');back.style.setProperty('pointer-events','auto','important');back.style.setProperty('top','94px','important');back.style.setProperty('right','12px','important');}document.querySelector('#interventionModal .intervention-form-step > .actions .primary').textContent='Guardar intervención';}
+ else {showInterventionTypePicker();const back=document.querySelector('#interventionModal .intervention-picker-back');if(back){back.style.setProperty('display','flex','important');back.style.setProperty('position','fixed','important');back.style.setProperty('pointer-events','auto','important');back.style.setProperty('top','94px','important');back.style.setProperty('right','12px','important');}document.querySelector('#interventionModal .intervention-form-step > .actions .primary').textContent='Guardar intervención';}
 }
 function openFueling(id){const v=data.vehicles.find(x=>x.id===data.selected);if(!v)return;v.fuelings=Array.isArray(v.fuelings)?v.fuelings:[];const item=v.fuelings.find(x=>x.id===id);if(!item)return;window.editFueling=id;window.editIntervention=null;$('interventionModal').classList.add('show');setInterventionFormMode('Repostaje');$('idate').value=item.date||new Date().toISOString().slice(0,10);$('ikm').value=item.km??v.km??'';$('itype').value='Repostaje';$('inext').value='';$('manualDetails').value='';$('costItems').innerHTML='';resetFuelForm();$('fuelLiters').value=item.liters??'';$('fuelPrice').value=item.price??'';$('fuelTotal').value=item.totalCost??'';$('fuelFull').checked=!!item.fullTank;$('fuelStation').value=item.station||'';$('fuelNotes').value=item.notes||'';typeFields();updateFuelTotal();hydrateVehicleFormIcons();document.querySelector('#interventionModal h2').textContent='Editar repostaje';document.querySelector('#interventionModal .intervention-form-step > .actions .primary').textContent='Guardar cambios';}
 function resetFuelForm(){['fuelLiters','fuelPrice','fuelTotal','fuelStation','fuelNotes'].forEach(id=>{if($(id))$(id).value=''});if($('fuelFull'))$('fuelFull').checked=false}
