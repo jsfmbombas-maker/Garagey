@@ -1953,8 +1953,8 @@ body{padding-top:0!important;}
 
 <style>
 /* v35.52 — Coste de piezas: marca y referencia en segunda línea */
-    /* v35.52 — reparto 65/35: pieza-marca / coste-ref */
-#interventionModal .cost-row{display:grid;grid-template-columns:minmax(0,65%) minmax(0,35%) 40px;grid-template-areas:"name cost remove" "brand ref remove";gap:7px 8px;padding:9px;background:#09263d!important;border:1px solid #1a587d!important;border-radius:13px;margin:0}
+    /* v35.53 — reparto 65/35 y posiciones Marca/Ref invertidas */
+#interventionModal .cost-row{display:grid;grid-template-columns:minmax(0,65fr) minmax(0,35fr) 40px;grid-template-areas:"name cost remove" "ref brand remove";gap:7px 8px;padding:9px;background:#09263d!important;border:1px solid #1a587d!important;border-radius:13px;margin:0}
 #interventionModal .cost-row .cost-part-name{grid-area:name}
 #interventionModal .cost-row .cost-part-cost{grid-area:cost}
 #interventionModal .cost-row .cost-part-brand{grid-area:brand}
@@ -1962,7 +1962,21 @@ body{padding-top:0!important;}
 #interventionModal .cost-row .danger{grid-area:remove;align-self:stretch}
 #interventionModal .cost-row input{background:#fff!important;border:1px solid #1a587d!important}
 #interventionModal .cost-row input::placeholder{color:#7892a7}
-@media(max-width:600px){#interventionModal .cost-row{grid-template-columns:minmax(0,65%) minmax(0,35%) 38px;gap:6px 7px;padding:8px}.cost-row input{min-width:0}}
+@media(max-width:600px){#interventionModal .cost-row{grid-template-columns:minmax(0,65fr) minmax(0,35fr) 38px;gap:6px 7px;padding:8px}.cost-row input{min-width:0}}
+/* v35.53 — flecha de retorno visible en selector de tipo de intervención */
+#interventionModal .dialog>.top{padding-right:74px!important}
+#interventionModal .intervention-picker-back{
+  display:none!important;position:absolute!important;top:12px!important;right:12px!important;z-index:50!important;
+  width:42px!important;height:42px!important;padding:0!important;margin:0!important;
+  align-items:center!important;justify-content:center!important;
+  border:1px solid rgba(255,255,255,.35)!important;border-radius:13px!important;
+  background:rgba(15,91,140,.95)!important;color:#fff!important;
+  font-size:28px!important;line-height:1!important;font-weight:900!important;
+  box-shadow:0 5px 16px rgba(0,0,0,.25)!important;opacity:1!important;visibility:visible!important;
+}
+#interventionModal.intervention-select-mode .intervention-picker-back{display:flex!important}
+#interventionModal.intervention-select-mode .dialog>.top .soft{display:none!important}
+@media(max-width:600px){#interventionModal .dialog>.top{padding-right:64px!important}#interventionModal .intervention-picker-back{top:11px!important;right:11px!important;width:40px!important;height:40px!important}}
 </style>
 </head>
 <body>
