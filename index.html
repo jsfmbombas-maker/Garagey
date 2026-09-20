@@ -1826,7 +1826,7 @@ html,body{overflow-x:hidden}
 }
 </style>
 <style id="garagey-v35-32-notice-edge-fix">
-/* GARAGEY v35.84 — Centro de avisos: fondo uniforme en esquinas y sin hueco inferior */
+/* GARAGEY v35.85 — Centro de avisos: fondo uniforme en esquinas y sin hueco inferior */
 @media (max-width:900px),(pointer:coarse) and (max-width:1100px){
   .content{
     width:100%!important;
@@ -2784,12 +2784,28 @@ function saveTireChange(mode){
    tireAddIntervention(v,`Neumático histórico · Eje ${axle==='front'?'delantero':'trasero'} · ${get(axle,'brand')||'Marca no indicada'} · ${get(axle,'size')||'Medida no indicada'}`,km,Number(get(axle,'cost')||0),date,[old.id]);
    return true;
  };
- const historicalFront=mode!=='rear'&&!isMoto&&s.front&&km<Number(s.front.installKm||0);
- const historicalRear=(mode==='rear'||mode==='both')&&s.rear&&km<Number(s.rear.installKm||0);
+ const isHistorical=(pair)=>{
+   if(!pair)return false;
+   const oldKm=Number(pair.installKm||0);
+   const oldDate=String(pair.installDate||'');
+   // Un neumático histórico puede identificarse por fecha anterior aunque los km
+   // coincidan con los del actual. Para mantener el ciclo coherente, sus km tampoco
+   // pueden ser posteriores a los del neumático actualmente instalado.
+   if(date<oldDate && km<=oldKm)return true;
+   if(km<oldKm && (!oldDate||date<oldDate))return true;
+   return false;
+ };
+ const historicalFront=mode!=='rear'&&!isMoto&&isHistorical(s.front);
+ const historicalRear=(mode==='rear'||mode==='both')&&isHistorical(s.rear);
  if(historicalFront){if(!addHistoricalBeforeCurrent('front',s.front))return;}
  if(historicalRear){if(!addHistoricalBeforeCurrent('rear',s.rear))return;}
  if(historicalFront || historicalRear){if(km>Number(v.km||0))v.km=km;save();renderTireConfirmation(mode);render();return;}
- const validateHistoricalReplacement=(pair)=>{if(!pair)return true;return true};
+ // En un cambio normal sí se exige que la fecha no sea anterior al neumático actual.
+ const validateHistoricalReplacement=(pair)=>{
+   if(!pair)return true;
+   if(pair.installDate&&date<pair.installDate){alert(`La fecha de sustitución no puede ser anterior a la fecha de montaje del neumático actual (${pair.installDate}). Si estás registrando un neumático anterior, introduce también unos kilómetros de montaje iguales o inferiores a los del neumático actual.`);return false;}
+   return true;
+ };
  if(mode==='both'&&!isMoto){if(!validateHistoricalReplacement(s.front)||!validateHistoricalReplacement(s.rear))return;}else{const axle=mode==='front'?'front':'rear';if(!validateHistoricalReplacement(tireCurrentPair(v,axle)))return}
  const retireChoice=isMoto?'retire':(document.querySelector('input[name="tireRetired"]:checked')?.value||'retire');
  if(mode==='both'&&!isMoto){
