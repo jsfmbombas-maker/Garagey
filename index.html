@@ -2149,7 +2149,7 @@ body{padding-top:0!important;}
 
 
 <style id="garagey-v35-62-no-name-card-size">
-/* v35.67 — sin nombre de vehículo; marca + modelo como título principal */
+/* v35.68 — sin nombre de vehículo; marca + modelo como título principal */
 .vehicle-card-name{font-size:23px!important;line-height:1.08!important;font-weight:900!important;letter-spacing:-.025em!important;white-space:normal!important;display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;text-shadow:0 2px 9px #0008!important}
 .vehicle-card-meta{font-size:12px!important;margin-top:5px!important;color:#d2e4f4!important;font-weight:700!important}
 @media(max-width:600px),(pointer:coarse){.vehicle-card-name{font-size:21px!important}.vehicle-card-meta{font-size:11px!important}}
@@ -2167,7 +2167,7 @@ body{padding-top:0!important;}
 </header>
 
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.67 · Encabezado fijo · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.68 · Encabezado fijo · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
@@ -2264,7 +2264,7 @@ body{padding-top:0!important;}
    La interfaz puede cambiar sin modificar ni perder los datos.
    Cada futura actualización incrementará schemaVersion y aplicará migraciones. */
 const STORAGE_KEY='garagey_data';
-const CURRENT_SCHEMA=12; // v35.67: se elimina el nombre personalizado del vehículo
+const CURRENT_SCHEMA=12; // v35.68: se elimina el nombre personalizado del vehículo
 function freshData(){return {schemaVersion:CURRENT_SCHEMA,vehicles:[],selected:null}}
 let data;
 let editVehicle=null;
@@ -3512,7 +3512,7 @@ window.deleteVehicle=function(id){
 </script>
 
 <style id="garagey-v35-65-settings-close">
-/* v35.67 — ficha de Ajustes abierta desde el engranaje del Centro de avisos */
+/* v35.68 — ficha de Ajustes abierta desde el engranaje del Centro de avisos */
 #settingsModal{
   padding-top:86px!important;
   padding-bottom:0!important;
@@ -3579,8 +3579,8 @@ window.deleteVehicle=function(id){
 }
 </style>
 
-<style id="garagey-v35-67-intervention-scroll-all">
-/* v35.67 — scroll completo para todas las fichas de nueva/edición de intervención */
+<style id="garagey-v35-68-intervention-scroll-all">
+/* v35.68 — scroll completo para todas las fichas de nueva/edición de intervención */
 #interventionModal .dialog{
   display:flex!important;
   flex-direction:column!important;
@@ -3774,7 +3774,7 @@ window.deleteVehicle=function(id){
   }
 }
 
-/* GARAGEY v35.67 — editar intervención desde Centro de avisos: desplazamiento completo bajo el encabezado fijo */
+/* GARAGEY v35.68 — editar intervención desde Centro de avisos: desplazamiento completo bajo el encabezado fijo */
 @media (max-width:900px), (pointer:coarse) and (max-width:1100px){
   #interventionModal.notice-edit-mode{
     padding:0!important;
@@ -3803,6 +3803,69 @@ window.deleteVehicle=function(id){
     position:sticky!important;
     bottom:0!important;
     z-index:20!important;
+  }
+}
+</style>
+<style id="garagey-v35-68-intervention-scroll-definitive">
+/* v35.68 — estructura de scroll definitiva para todas las fichas de intervención */
+#interventionModal{
+  overflow:hidden!important;
+}
+#interventionModal .dialog{
+  display:grid!important;
+  grid-template-rows:auto minmax(0,1fr) auto!important;
+  overflow:hidden!important;
+  min-height:0!important;
+}
+#interventionModal .dialog>.top{
+  min-height:0!important;
+  flex:none!important;
+}
+#interventionModal .dialog>.form{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  align-content:start!important;
+  min-height:0!important;
+  height:auto!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+  touch-action:pan-y!important;
+  padding-bottom:calc(44px + env(safe-area-inset-bottom))!important;
+}
+#interventionModal .dialog>.actions{
+  min-height:0!important;
+  flex:none!important;
+  position:sticky!important;
+  bottom:0!important;
+  z-index:20!important;
+}
+#interventionModal .intervention-form-step{
+  min-height:0!important;
+}
+@media(max-width:900px),(pointer:coarse) and (max-width:1100px){
+  #interventionModal{
+    padding:86px 0 0!important;
+    box-sizing:border-box!important;
+  }
+  #interventionModal .dialog{
+    width:100%!important;
+    max-width:none!important;
+    height:calc(100dvh - 86px)!important;
+    min-height:0!important;
+    max-height:calc(100dvh - 86px)!important;
+    margin:0!important;
+    border-radius:0!important;
+  }
+  #interventionModal .dialog>.form{
+    grid-template-columns:1fr!important;
+    padding:14px 12px calc(48px + env(safe-area-inset-bottom))!important;
+  }
+  #interventionModal .dialog>.actions{
+    padding:12px 12px calc(18px + env(safe-area-inset-bottom))!important;
+    background:#f7f8fc!important;
   }
 }
 </style>
