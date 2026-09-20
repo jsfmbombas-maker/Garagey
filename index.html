@@ -2199,7 +2199,7 @@ body{padding-top:0!important;}
 <div class="modal history-modal fuel-history-modal" id="fuelHistoryModal"><div class="dialog history-dialog fuel-history-dialog" id="fuelHistoryModalContent"></div></div>
 <div class="modal tire-modal" id="tireModal"><div class="dialog tire-dialog" id="tireModalContent"></div></div>
 
-<div class="modal" id="interventionModal"><div class="dialog" autocomplete="off"><div class="top"><div><span class="top-kicker">GARAGEY · FICHA DE INTERVENCIÓN</span><h2><span id="interventionTopTypeIcon" class="intervention-top-type-icon">🔧</span><span id="interventionTopTypeTitle">Nueva intervención</span></h2></div><button type="button" class="intervention-picker-back" aria-label="Volver a la ficha del vehículo" title="Volver a la ficha del vehículo" onclick="backToVehicleFromIntervention()">←</button></div>
+<div class="modal" id="interventionModal"><div class="dialog" autocomplete="off"><div class="top"><div><span class="top-kicker">GARAGEY · FICHA DE INTERVENCIÓN</span><h2><span id="interventionTopTypeIcon" class="intervention-top-type-icon">🔧</span><span id="interventionTopTypeTitle">Nueva intervención</span></h2></div><button type="button" class="intervention-picker-back" aria-label="Volver al menú de intervenciones" title="Volver al menú de intervenciones" onclick="backFromInterventionHeader()">←</button></div>
 <div class="form"><div class="full intervention-type-picker"><div class="intervention-type-heading"><div><label>Tipo de intervención</label><small>Selecciona la ficha que quieres registrar</small></div></div><div class="intervention-type-grid">
 <button type="button" class="intervention-type-card type-mantenimiento" data-type="Mantenimiento" onclick="selectInterventionType('Mantenimiento')"><span class="type-card-icon" data-icon="wrench"></span><span><b>Mantenimiento</b><small>Aceite y filtros</small></span></button>
 <button type="button" class="intervention-type-card type-neumaticos" data-type="Neumáticos" onclick="selectInterventionType('Neumáticos')"><span class="type-card-icon" data-icon="tire"></span><span><b>Neumáticos</b><small>Cambio de neumáticos</small></span></button>
@@ -2870,6 +2870,22 @@ function backToVehicleFromIntervention(){
  if(modal)modal.classList.remove('show');
  const detail=$('vehicleDetailModal');
  if(detail){renderVehicleDetailModal();detail.classList.add('show');}
+}
+function backFromInterventionHeader(){
+ const modal=$('interventionModal');
+ if(!modal)return;
+ // En una ficha concreta, la flecha vuelve al menú de tipos de intervención.
+ // Si ya estamos en el menú, la flecha vuelve a la ficha del vehículo.
+ if(modal.classList.contains('intervention-form-mode')){
+   showInterventionTypePicker();
+   const title=$('interventionTopTypeTitle'),icon=$('interventionTopTypeIcon');
+   if(title)title.textContent='Nueva intervención';
+   if(icon)icon.textContent='🔧';
+   const saveBtn=modal.querySelector('.intervention-form-step > .actions .primary');
+   if(saveBtn)saveBtn.textContent='Guardar intervención';
+   return;
+ }
+ backToVehicleFromIntervention();
 }
 function openIntervention(id){
  updateInterventionTypePickerLabels();
