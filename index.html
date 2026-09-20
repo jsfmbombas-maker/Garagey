@@ -1826,7 +1826,7 @@ html,body{overflow-x:hidden}
 }
 </style>
 <style id="garagey-v35-32-notice-edge-fix">
-/* GARAGEY v35.83 — Centro de avisos: fondo uniforme en esquinas y sin hueco inferior */
+/* GARAGEY v35.84 — Centro de avisos: fondo uniforme en esquinas y sin hueco inferior */
 @media (max-width:900px),(pointer:coarse) and (max-width:1100px){
   .content{
     width:100%!important;
@@ -2789,7 +2789,7 @@ function saveTireChange(mode){
  if(historicalFront){if(!addHistoricalBeforeCurrent('front',s.front))return;}
  if(historicalRear){if(!addHistoricalBeforeCurrent('rear',s.rear))return;}
  if(historicalFront || historicalRear){if(km>Number(v.km||0))v.km=km;save();renderTireConfirmation(mode);render();return;}
- const validateHistoricalReplacement=(pair)=>{if(!pair)return true;if(pair.installDate&&date<pair.installDate){alert(`La fecha de sustitución no puede ser anterior a la fecha de montaje del neumático actual (${pair.installDate}).`);return false}return true};
+ const validateHistoricalReplacement=(pair)=>{if(!pair)return true;return true};
  if(mode==='both'&&!isMoto){if(!validateHistoricalReplacement(s.front)||!validateHistoricalReplacement(s.rear))return;}else{const axle=mode==='front'?'front':'rear';if(!validateHistoricalReplacement(tireCurrentPair(v,axle)))return}
  const retireChoice=isMoto?'retire':(document.querySelector('input[name="tireRetired"]:checked')?.value||'retire');
  if(mode==='both'&&!isMoto){
