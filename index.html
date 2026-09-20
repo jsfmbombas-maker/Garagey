@@ -1826,7 +1826,7 @@ html,body{overflow-x:hidden}
 }
 </style>
 <style id="garagey-v35-32-notice-edge-fix">
-/* GARAGEY v35.85 — Centro de avisos: fondo uniforme en esquinas y sin hueco inferior */
+/* GARAGEY v35.86 — Centro de avisos: fondo uniforme en esquinas y sin hueco inferior */
 @media (max-width:900px),(pointer:coarse) and (max-width:1100px){
   .content{
     width:100%!important;
@@ -2795,7 +2795,7 @@ function saveTireChange(mode){
    if(km<oldKm && (!oldDate||date<oldDate))return true;
    return false;
  };
- const historicalFront=mode!=='rear'&&!isMoto&&isHistorical(s.front);
+ const historicalFront=mode!=='rear'&&isHistorical(s.front);
  const historicalRear=(mode==='rear'||mode==='both')&&isHistorical(s.rear);
  if(historicalFront){if(!addHistoricalBeforeCurrent('front',s.front))return;}
  if(historicalRear){if(!addHistoricalBeforeCurrent('rear',s.rear))return;}
