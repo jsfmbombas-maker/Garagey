@@ -176,13 +176,10 @@ opacity:1
 #interventionModal .dialog>.top:after{
   content:"";position:absolute;width:190px;height:190px;border-radius:50%;right:-70px;top:-105px;background:#ffffff14;
 }
-#interventionModal .dialog>.top h2{color:#fff;font-size:25px;letter-spacing:-.025em;position:relative;z-index:1}
-#interventionModal .dialog>.top h2:before{
-  content:"";display:inline-flex;vertical-align:-5px;width:38px;height:38px;margin-right:10px;border-radius:12px;background:#ffffff1f;box-shadow:inset 0 0 0 1px #ffffff24;
-}
-#interventionModal .dialog>.top .soft{
-  position:relative;z-index:2;background:#ffffffeb;color:#24324a;border-radius:14px;padding:10px 15px;box-shadow:0 5px 16px #0002;
-}
+#interventionModal .dialog>.top h2{color:#fff;font-size:25px;letter-spacing:-.025em;position:relative;z-index:1;display:flex;align-items:center;gap:10px;margin:0}
+#interventionModal .intervention-top-type-icon{width:38px;height:38px;display:grid;place-items:center;flex:0 0 38px;border-radius:12px;background:#ffffff1f;border:1px solid #ffffff24;box-shadow:inset 0 0 0 1px #ffffff08;font-size:25px;line-height:1}
+#interventionModal .intervention-picker-back{position:relative;z-index:2;display:flex!important;align-items:center;justify-content:center;width:44px;height:44px;padding:0;border-radius:50%;background:#0b3553;color:#dff3ff;border:1px solid #36a9ef;font-size:28px;font-weight:500;box-shadow:0 5px 16px #0003;cursor:pointer}
+#interventionModal .intervention-picker-back:active{transform:scale(.95)}
 #interventionModal .dialog>.form{
   padding:20px;
   gap:14px;
@@ -2167,7 +2164,7 @@ body{padding-top:0!important;}
 </header>
 
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.69 · Encabezado fijo · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.70 · Encabezado fijo · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
@@ -2202,7 +2199,7 @@ body{padding-top:0!important;}
 <div class="modal history-modal fuel-history-modal" id="fuelHistoryModal"><div class="dialog history-dialog fuel-history-dialog" id="fuelHistoryModalContent"></div></div>
 <div class="modal tire-modal" id="tireModal"><div class="dialog tire-dialog" id="tireModalContent"></div></div>
 
-<div class="modal" id="interventionModal"><div class="dialog" autocomplete="off"><div class="top"><div><span class="top-kicker">GARAGEY · FICHA DE INTERVENCIÓN</span><h2>🔧 Nueva intervención</h2></div><button type="button" class="intervention-picker-back" aria-label="Volver a la ficha del vehículo" title="Volver a la ficha del vehículo" onclick="backToVehicleFromIntervention()" style="display:none;">←</button><button class="soft" onclick="closeModal('interventionModal')">Cerrar</button></div>
+<div class="modal" id="interventionModal"><div class="dialog" autocomplete="off"><div class="top"><div><span class="top-kicker">GARAGEY · FICHA DE INTERVENCIÓN</span><h2><span id="interventionTopTypeIcon" class="intervention-top-type-icon">🔧</span><span id="interventionTopTypeTitle">Nueva intervención</span></h2></div><button type="button" class="intervention-picker-back" aria-label="Volver a la ficha del vehículo" title="Volver a la ficha del vehículo" onclick="backToVehicleFromIntervention()">←</button></div>
 <div class="form"><div class="full intervention-type-picker"><div class="intervention-type-heading"><div><label>Tipo de intervención</label><small>Selecciona la ficha que quieres registrar</small></div></div><div class="intervention-type-grid">
 <button type="button" class="intervention-type-card type-mantenimiento" data-type="Mantenimiento" onclick="selectInterventionType('Mantenimiento')"><span class="type-card-icon" data-icon="wrench"></span><span><b>Mantenimiento</b><small>Aceite y filtros</small></span></button>
 <button type="button" class="intervention-type-card type-neumaticos" data-type="Neumáticos" onclick="selectInterventionType('Neumáticos')"><span class="type-card-icon" data-icon="tire"></span><span><b>Neumáticos</b><small>Cambio de neumáticos</small></span></button>
@@ -2213,7 +2210,7 @@ body{padding-top:0!important;}
 <button type="button" class="intervention-type-card type-impuestos" data-type="Impuestos" onclick="selectInterventionType('Impuestos')"><span class="type-card-icon" data-icon="building"></span><span><b>Impuestos</b><small>IVTM y tasas</small></span></button>
 <button type="button" class="intervention-type-card type-repostaje" data-type="Repostaje" onclick="selectInterventionType('Repostaje')"><span class="type-card-icon" data-icon="fuel"></span><span><b>Repostaje</b><small>Combustible y consumo</small></span></button>
 </div><select id="itype" aria-hidden="true" tabindex="-1" onchange="typeFields()"><option value="Mantenimiento">Mantenimiento</option><option value="Neumáticos">Neumáticos</option><option value="Correa/Cadena">Correa/Cadena</option><option value="Varios">Varios</option><option value="ITV">ITV</option><option value="Seguro">Seguro</option><option value="Impuestos">Impuestos</option><option value="Repostaje">Repostaje</option></select></div>
-</div><div class="intervention-form-step" autocomplete="off"><div class="intervention-form-step-head"><button type="button" class="intervention-back" onclick="showInterventionTypePicker()">← Cambiar tipo</button><div><span id="interventionFormTypeIcon" class="intervention-form-type-icon">🔧</span><div><strong id="interventionFormTypeTitle">Nueva intervención</strong><small>Completa los datos de la intervención</small></div></div></div><div><label>Fecha</label><input id="idate" type="date"></div><div><label>Kilómetros actuales</label><input id="ikm" type="number"></div><div id="nextInterventionField"><label id="nextInterventionLabel">Próxima intervención (intervalo)</label><select id="inext"><option value="">Sin programar</option><option>10000</option><option>15000</option><option>20000</option><option>25000</option><option>30000</option><option>35000</option><option>40000</option><option>45000</option><option>50000</option></select><input id="inextManual" type="number" min="0" step="1" placeholder="Kilómetros de la próxima intervención" style="display:none"></div>
+</div><div class="intervention-form-step" autocomplete="off"><div><label>Fecha</label><input id="idate" type="date"></div><div><label>Kilómetros actuales</label><input id="ikm" type="number"></div><div id="nextInterventionField"><label id="nextInterventionLabel">Próxima intervención (intervalo)</label><select id="inext"><option value="">Sin programar</option><option>10000</option><option>15000</option><option>20000</option><option>25000</option><option>30000</option><option>35000</option><option>40000</option><option>45000</option><option>50000</option></select><input id="inextManual" type="number" min="0" step="1" placeholder="Kilómetros de la próxima intervención" style="display:none"></div>
 <div class="full" id="maintenanceFields"><label>Acciones realizadas</label><div class="checks"><label class="check"><input type="checkbox" value="Cambio de aceite"> Cambio de aceite</label><label class="check"><input type="checkbox" value="Filtro de aceite"> Filtro de aceite</label><label class="check"><input type="checkbox" value="Filtro combustible"> Filtro combustible</label><label class="check"><input type="checkbox" value="Filtro de aire"> Filtro de aire</label><label class="check"><input type="checkbox" value="Filtro de habitáculo"> Filtro de habitáculo</label></div></div>
 <div class="full hidden" id="tireFields"><div class="form"><div><label>Medida</label><input id="tireSize" name="garagey_tire_size" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></div><div><label>Marca</label><input id="tireBrand" name="garagey_tire_brand" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder=""></div></div></div>
 <div class="full hidden" id="beltFields"><div class="form"><div id="beltTypeField"><label>Tipo</label><select id="beltType"><option>Correa de distribución</option><option>Cadena de distribución</option><option>Correa auxiliar</option></select></div><div id="beltBrandField"><label>Marca</label><input id="beltBrand" name="garagey_belt_brand" autocomplete="off" autocapitalize="off" spellcheck="false"></div><div id="beltModelField" style="display:none"><label>Modelo</label><input id="beltModel" name="garagey_belt_model" autocomplete="off" autocapitalize="off" spellcheck="false"></div></div></div>
@@ -2852,20 +2849,21 @@ function setInterventionFormMode(type){
  const modal=$('interventionModal');
  modal.classList.remove('intervention-select-mode','intervention-form-mode');
  modal.classList.add('intervention-form-mode');
- const title=$('interventionFormTypeTitle'), icon=$('interventionFormTypeIcon');
- const icons={'Mantenimiento':'🔧','Neumáticos':'🛞','Correa/Cadena':'⚙️','Varios':'🔧','ITV':'📋','Seguro':'🛡️','Impuestos':'🏛️','Repostaje':'⛽'};
+ const title=$('interventionTopTypeTitle'), icon=$('interventionTopTypeIcon');
+ const icons={'Mantenimiento':'🔧','Neumáticos':'🛞','Correa/Cadena':'⚙️','Varios':'🛠️','ITV':'📋','Seguro':'🛡️','Impuestos':'🏛️','Repostaje':'⛽'};
  if(title)title.textContent=(type==='Correa/Cadena'&&isSelectedMoto())?'Kit de distribución':(type||'Intervención');
- if(icon){const iconMap={'Mantenimiento':'wrench','Neumáticos':'tire','Correa/Cadena':'gear','Varios':'wrench','ITV':'calendar','Seguro':'shield','Impuestos':'building','Repostaje':'fuel'};icon.dataset.icon=iconMap[type]||'wrench';icon.innerHTML=svgIcon(icon.dataset.icon)}
- const back=modal.querySelector('.intervention-picker-back'); if(back){ back.style.setProperty('display','none','important'); back.style.setProperty('pointer-events','none','important'); }
+ if(icon)icon.textContent=icons[type]||'🔧';
+ const back=modal.querySelector('.intervention-picker-back'); if(back){ back.style.removeProperty('display'); back.style.removeProperty('pointer-events'); back.style.removeProperty('position'); back.style.removeProperty('top'); back.style.removeProperty('right'); }
 }
 function showInterventionTypePicker(){
  updateInterventionTypePickerLabels();
  const modal=$('interventionModal');
  modal.classList.remove('intervention-form-mode');
  modal.classList.add('intervention-select-mode');
- const title=modal.querySelector('.top h2');
- if(title)title.textContent='🔧 Nueva intervención';
- const back=modal.querySelector('.intervention-picker-back'); if(back){back.style.setProperty('display','flex','important'); back.style.setProperty('position','fixed','important'); back.style.setProperty('pointer-events','auto','important'); back.style.setProperty('top','104px','important'); back.style.setProperty('right','46px','important'); back.setAttribute('aria-hidden','false');}
+ const title=$('interventionTopTypeTitle'),icon=$('interventionTopTypeIcon');
+ if(title)title.textContent='Nueva intervención';
+ if(icon)icon.textContent='🔧';
+ const back=modal.querySelector('.intervention-picker-back'); if(back){back.style.removeProperty('display');back.style.removeProperty('pointer-events');back.style.removeProperty('position');back.style.removeProperty('top');back.style.removeProperty('right');back.setAttribute('aria-hidden','false');}
 }
 function backToVehicleFromIntervention(){
  const modal=$('interventionModal');
@@ -2902,10 +2900,10 @@ function openIntervention(id){
  }
  if(item){if(item.type==='ITV'&&$('itvCost'))$('itvCost').value=item.totalCost??'';if(item.type==='Seguro'&&$('insuranceCost'))$('insuranceCost').value=item.totalCost??'';if(item.type==='Impuestos'&&$('taxCost'))$('taxCost').value=item.totalCost??'';let d=item.details||'';if(item.type==='Mantenimiento')document.querySelectorAll('#maintenanceFields input[type=checkbox]').forEach(x=>x.checked=d.includes(x.value)||(x.value==='Filtro combustible'&&d.includes('Filtro de gasoil')));if(item.type==='Neumáticos'){let a=d.split(' · ');$('tireSize').value=a[0]||'';$('tireBrand').value=a[1]||'';}if(item.type==='Correa/Cadena'){let a=d.split(' · ');if(isMotoForVehicle(v)){ $('beltBrand').value=a[0]||''; $('beltModel').value=a[1]||''; }else{ $('beltType').value=a[0]||$('beltType').value; $('beltBrand').value=a[1]||''; }}if(item.type==='Varios')$('otherDescription').value=d;}
  typeFields();updateTotalCost();hydrateVehicleFormIcons();
- if(item){setInterventionFormMode(item.type);document.querySelector('#interventionModal .top h2').textContent='✏️ Editar intervención';document.querySelector('#interventionModal .intervention-form-step > .actions .primary').textContent='Guardar cambios';}
- else {showInterventionTypePicker();const back=document.querySelector('#interventionModal .intervention-picker-back');if(back){back.style.setProperty('display','flex','important');back.style.setProperty('position','fixed','important');back.style.setProperty('pointer-events','auto','important');back.style.setProperty('top','104px','important');back.style.setProperty('right','46px','important');}document.querySelector('#interventionModal .intervention-form-step > .actions .primary').textContent='Guardar intervención';}
+ if(item){setInterventionFormMode(item.type);$('interventionTopTypeTitle').textContent='Editar intervención';$('interventionTopTypeIcon').textContent='✏️';document.querySelector('#interventionModal .intervention-form-step > .actions .primary').textContent='Guardar cambios';}
+ else {showInterventionTypePicker();document.querySelector('#interventionModal .intervention-form-step > .actions .primary').textContent='Guardar intervención';}
 }
-function openFueling(id){const v=data.vehicles.find(x=>x.id===data.selected);if(!v)return;v.fuelings=Array.isArray(v.fuelings)?v.fuelings:[];const item=v.fuelings.find(x=>x.id===id);if(!item)return;window.editFueling=id;window.editIntervention=null;$('interventionModal').classList.add('show');setInterventionFormMode('Repostaje');$('idate').value=item.date||new Date().toISOString().slice(0,10);$('ikm').value=item.km??v.km??'';$('itype').value='Repostaje';$('inext').value='';$('manualDetails').value='';$('costItems').innerHTML='';resetFuelForm();$('fuelLiters').value=item.liters??'';$('fuelPrice').value=item.price??'';$('fuelTotal').value=item.totalCost??'';$('fuelFull').checked=!!item.fullTank;$('fuelStation').value=item.station||'';$('fuelNotes').value=item.notes||'';typeFields();updateFuelTotal();hydrateVehicleFormIcons();document.querySelector('#interventionModal h2').textContent='Editar repostaje';document.querySelector('#interventionModal .intervention-form-step > .actions .primary').textContent='Guardar cambios';}
+function openFueling(id){const v=data.vehicles.find(x=>x.id===data.selected);if(!v)return;v.fuelings=Array.isArray(v.fuelings)?v.fuelings:[];const item=v.fuelings.find(x=>x.id===id);if(!item)return;window.editFueling=id;window.editIntervention=null;$('interventionModal').classList.add('show');setInterventionFormMode('Repostaje');$('idate').value=item.date||new Date().toISOString().slice(0,10);$('ikm').value=item.km??v.km??'';$('itype').value='Repostaje';$('inext').value='';$('manualDetails').value='';$('costItems').innerHTML='';resetFuelForm();$('fuelLiters').value=item.liters??'';$('fuelPrice').value=item.price??'';$('fuelTotal').value=item.totalCost??'';$('fuelFull').checked=!!item.fullTank;$('fuelStation').value=item.station||'';$('fuelNotes').value=item.notes||'';typeFields();updateFuelTotal();hydrateVehicleFormIcons();$('interventionTopTypeTitle').textContent='Editar repostaje';$('interventionTopTypeIcon').textContent='⛽';document.querySelector('#interventionModal .intervention-form-step > .actions .primary').textContent='Guardar cambios';}
 function resetFuelForm(){['fuelLiters','fuelPrice','fuelTotal','fuelStation','fuelNotes'].forEach(id=>{if($(id))$(id).value=''});if($('fuelFull'))$('fuelFull').checked=false}
 /* GARAGEY v32.6 — hard reset anti-restauración de Chrome en nuevas intervenciones */
 function hardResetNewInterventionFields(){
@@ -2962,7 +2960,7 @@ function clearNewInterventionAutofill(){
  if($('fuelFull'))$('fuelFull').checked=false;
 }
 function updateFuelTotal(){const l=Number($('fuelLiters')?.value||0),p=Number($('fuelPrice')?.value||0);if($('fuelTotal'))$('fuelTotal').value=l&&p?(l*p).toFixed(2):''}
-function selectInterventionType(type){const s=$('itype');const modal=$('interventionModal');if(!s||!modal)return;if(type==='Neumáticos'&&!window.editIntervention&&!window.editFueling){closeModal('interventionModal');openTireManager({mode:'change'});return;}s.value=type;if(!window.editIntervention&&!window.editFueling){hardResetNewInterventionFields();resetInterventionSpecificFields();clearNewInterventionAutofill();}document.querySelectorAll('.intervention-type-card').forEach(c=>c.classList.toggle('active',c.dataset.type===type));setInterventionFormMode(type);typeFields();const title=modal.querySelector('.top h2');if(title)title.textContent='🔧 '+((type==='Correa/Cadena'&&isSelectedMoto())?'Kit de distribución':type);const formTitle=$('interventionFormTypeTitle');if(formTitle)formTitle.textContent=(type==='Correa/Cadena'&&isSelectedMoto())?'Kit de distribución':type;const icon=$('interventionFormTypeIcon');if(icon){icon.dataset.icon=({'Mantenimiento':'wrench','Neumáticos':'tire','Correa/Cadena':'gear','Varios':'wrench','ITV':'calendar','Seguro':'shield','Impuestos':'building','Repostaje':'fuel'})[type]||'wrench';icon.innerHTML=svgIcon(icon.dataset.icon)}const dialog=modal.querySelector('.dialog');if(dialog)dialog.scrollTop=0;hydrateVehicleFormIcons();}
+function selectInterventionType(type){const s=$('itype');const modal=$('interventionModal');if(!s||!modal)return;if(type==='Neumáticos'&&!window.editIntervention&&!window.editFueling){closeModal('interventionModal');openTireManager({mode:'change'});return;}s.value=type;if(!window.editIntervention&&!window.editFueling){hardResetNewInterventionFields();resetInterventionSpecificFields();clearNewInterventionAutofill();}document.querySelectorAll('.intervention-type-card').forEach(c=>c.classList.toggle('active',c.dataset.type===type));setInterventionFormMode(type);typeFields();const title=$('interventionTopTypeTitle'),icon=$('interventionTopTypeIcon');if(title)title.textContent=(type==='Correa/Cadena'&&isSelectedMoto())?'Kit de distribución':type;if(icon)icon.textContent=({'Mantenimiento':'🔧','Neumáticos':'🛞','Correa/Cadena':'⚙️','Varios':'🛠️','ITV':'📋','Seguro':'🛡️','Impuestos':'🏛️','Repostaje':'⛽'})[type]||'🔧';const dialog=modal.querySelector('.dialog');if(dialog)dialog.scrollTop=0;hydrateVehicleFormIcons();}
 
 function isSelectedMoto(){const v=data.vehicles.find(x=>x.id===data.selected);return v?.type==='Moto'||v?.vehicleType==='motorcycle';}
 function isMotoForVehicle(v){return v?.type==='Moto'||v?.vehicleType==='motorcycle'}
@@ -3231,6 +3229,14 @@ render();
 }
 
 
+<style>
+/* v35.70 — Encabezado único para todas las fichas de intervención */
+#interventionModal .dialog>.top .intervention-picker-back{display:flex!important;position:relative!important;top:auto!important;right:auto!important;pointer-events:auto!important;margin-left:auto!important}
+#interventionModal .dialog>.top .intervention-picker-back[style]{display:flex!important}
+#interventionModal .intervention-form-step-head{display:none!important}
+#interventionModal .intervention-form-type-icon,#interventionModal #interventionFormTypeTitle{display:none!important}
+@media(max-width:600px){#interventionModal .intervention-picker-back{width:42px;height:42px;font-size:27px;flex:0 0 42px}}
+</style>
 </style>
 <script>
 /* v27: after changing vehicle, ensure the current detail sheet is redrawn */
