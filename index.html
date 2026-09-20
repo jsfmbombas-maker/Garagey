@@ -2149,7 +2149,7 @@ body{padding-top:0!important;}
 
 
 <style id="garagey-v35-62-no-name-card-size">
-/* v35.65 — sin nombre de vehículo; marca + modelo como título principal */
+/* v35.67 — sin nombre de vehículo; marca + modelo como título principal */
 .vehicle-card-name{font-size:23px!important;line-height:1.08!important;font-weight:900!important;letter-spacing:-.025em!important;white-space:normal!important;display:-webkit-box!important;-webkit-line-clamp:2!important;-webkit-box-orient:vertical!important;overflow:hidden!important;text-shadow:0 2px 9px #0008!important}
 .vehicle-card-meta{font-size:12px!important;margin-top:5px!important;color:#d2e4f4!important;font-weight:700!important}
 @media(max-width:600px),(pointer:coarse){.vehicle-card-name{font-size:21px!important}.vehicle-card-meta{font-size:11px!important}}
@@ -2167,7 +2167,7 @@ body{padding-top:0!important;}
 </header>
 
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.65 · Encabezado fijo · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.67 · Encabezado fijo · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
@@ -2264,7 +2264,7 @@ body{padding-top:0!important;}
    La interfaz puede cambiar sin modificar ni perder los datos.
    Cada futura actualización incrementará schemaVersion y aplicará migraciones. */
 const STORAGE_KEY='garagey_data';
-const CURRENT_SCHEMA=12; // v35.65: se elimina el nombre personalizado del vehículo
+const CURRENT_SCHEMA=12; // v35.67: se elimina el nombre personalizado del vehículo
 function freshData(){return {schemaVersion:CURRENT_SCHEMA,vehicles:[],selected:null}}
 let data;
 let editVehicle=null;
@@ -2340,7 +2340,7 @@ function getAlerts(){
    const km=Number(v.km||0);
    (v.interventions||[]).forEach(i=>{
      const base={vehicle:[v.brand,v.model].filter(Boolean).join(' ')||'Vehículo',vehicleId:v.id,interventionId:i.id,type:i.type};
-     if(i.nextKm){
+     if(i.nextKm && i.type!=='ITV'){
        const remaining=Number(i.nextKm)-km;
        if(remaining<=500) alerts.push({...base,level:'red',icon:'wrench',title:i.type,detail:remaining<=0?`Vencido por ${Math.abs(remaining).toLocaleString('es-ES')} km · Objetivo: ${Number(i.nextKm).toLocaleString('es-ES')} km`:`Faltan ${remaining.toLocaleString('es-ES')} km · Objetivo: ${Number(i.nextKm).toLocaleString('es-ES')} km`});
        else if(remaining<=1500) alerts.push({...base,level:'orange',icon:'wrench',title:i.type,detail:`Faltan ${remaining.toLocaleString('es-ES')} km · Próxima intervención: ${Number(i.nextKm).toLocaleString('es-ES')} km`});
@@ -2967,10 +2967,10 @@ function selectInterventionType(type){const s=$('itype');const modal=$('interven
 function isSelectedMoto(){const v=data.vehicles.find(x=>x.id===data.selected);return v?.type==='Moto'||v?.vehicleType==='motorcycle';}
 function isMotoForVehicle(v){return v?.type==='Moto'||v?.vehicleType==='motorcycle'}
 function updateInterventionIntervalOptions(){const s=$('inext'),m=$('inextManual');if(!s)return;const belt=$('itype')?.value==='Correa/Cadena';const current=Number(s.value||0);const manualCurrent=m?Number(m.value||0):0;const values=isSelectedMoto()?[4000,6000,8000,10000,12000]:[10000,15000,20000,25000,30000,35000,40000,45000,50000];if(belt){s.style.display='none';if(m){m.style.display='block';if(!m.value&&manualCurrent)m.value=manualCurrent;}return}if(m)m.style.display='none';s.style.display='';s.innerHTML='<option value="">Sin programar</option>'+values.map(v=>`<option value="${v}">${v}</option>`).join('');s.value=values.includes(current)?String(current):'';}
-function typeFields(){['maintenanceFields','tireFields','beltFields','otherFields','itvFields','insuranceFields','taxFields','fuelFields'].forEach(x=>$(x).classList.add('hidden'));['nextInterventionField','manualDetailsWrap','costPanel'].forEach(x=>$(x)?.classList.remove('fuel-mode-hidden'));let t=$('itype').value;document.querySelectorAll('.intervention-type-card').forEach(c=>c.classList.toggle('active',c.dataset.type===t));let map={'Mantenimiento':'maintenanceFields','Neumáticos':'tireFields','Correa/Cadena':'beltFields','Varios':'otherFields','ITV':'itvFields','Seguro':'insuranceFields','Impuestos':'taxFields','Repostaje':'fuelFields'};$(map[t]).classList.remove('hidden');const noNext=['Varios','Seguro','Impuestos'];if(noNext.includes(t))$('nextInterventionField')?.classList.add('fuel-mode-hidden');if(['ITV','Seguro','Impuestos'].includes(t))$('costPanel')?.classList.add('fuel-mode-hidden');updateInterventionIntervalOptions();if(t==='Neumáticos'){$('nextInterventionField')?.classList.add('fuel-mode-hidden');$('inext').value='';if($('inextManual'))$('inextManual').value='';}if(t==='Repostaje'){['nextInterventionField','manualDetailsWrap','costPanel'].forEach(x=>$(x)?.classList.add('fuel-mode-hidden'));updateFuelTotal()}if(t==='Correa/Cadena'){const moto=isSelectedMoto();if($('beltTypeField'))$('beltTypeField').style.display=moto?'none':'';if($('beltBrandField'))$('beltBrandField').style.display='';if($('beltBrandField')?.querySelector('label'))$('beltBrandField').querySelector('label').textContent=moto?'Marca':'Marca';if($('beltModelField'))$('beltModelField').style.display=moto?'':'none';if($('nextInterventionLabel'))$('nextInterventionLabel').textContent=moto?'Próxima intervención (km)':'Próxima intervención (km)';}if(t==='Mantenimiento'){const isMoto=isSelectedMoto();const habitaculo=[...document.querySelectorAll('#maintenanceFields input[type="checkbox"]')].find(x=>x.value==='Filtro de habitáculo');if(habitaculo){const row=habitaculo.closest('label');if(row)row.classList.toggle('hidden',!!isMoto);if(isMoto)habitaculo.checked=false;}}hydrateVehicleFormIcons();}
+function typeFields(){['maintenanceFields','tireFields','beltFields','otherFields','itvFields','insuranceFields','taxFields','fuelFields'].forEach(x=>$(x).classList.add('hidden'));['nextInterventionField','manualDetailsWrap','costPanel'].forEach(x=>$(x)?.classList.remove('fuel-mode-hidden'));let t=$('itype').value;document.querySelectorAll('.intervention-type-card').forEach(c=>c.classList.toggle('active',c.dataset.type===t));let map={'Mantenimiento':'maintenanceFields','Neumáticos':'tireFields','Correa/Cadena':'beltFields','Varios':'otherFields','ITV':'itvFields','Seguro':'insuranceFields','Impuestos':'taxFields','Repostaje':'fuelFields'};$(map[t]).classList.remove('hidden');const noNext=['Varios','Seguro','Impuestos','ITV'];if(noNext.includes(t))$('nextInterventionField')?.classList.add('fuel-mode-hidden');if(['ITV','Seguro','Impuestos'].includes(t))$('costPanel')?.classList.add('fuel-mode-hidden');updateInterventionIntervalOptions();if(t==='Neumáticos'){$('nextInterventionField')?.classList.add('fuel-mode-hidden');$('inext').value='';if($('inextManual'))$('inextManual').value='';}if(t==='Repostaje'){['nextInterventionField','manualDetailsWrap','costPanel'].forEach(x=>$(x)?.classList.add('fuel-mode-hidden'));updateFuelTotal()}if(t==='Correa/Cadena'){const moto=isSelectedMoto();if($('beltTypeField'))$('beltTypeField').style.display=moto?'none':'';if($('beltBrandField'))$('beltBrandField').style.display='';if($('beltBrandField')?.querySelector('label'))$('beltBrandField').querySelector('label').textContent=moto?'Marca':'Marca';if($('beltModelField'))$('beltModelField').style.display=moto?'':'none';if($('nextInterventionLabel'))$('nextInterventionLabel').textContent=moto?'Próxima intervención (km)':'Próxima intervención (km)';}if(t==='Mantenimiento'){const isMoto=isSelectedMoto();const habitaculo=[...document.querySelectorAll('#maintenanceFields input[type="checkbox"]')].find(x=>x.value==='Filtro de habitáculo');if(habitaculo){const row=habitaculo.closest('label');if(row)row.classList.toggle('hidden',!!isMoto);if(isMoto)habitaculo.checked=false;}}hydrateVehicleFormIcons();}
 function updateTotalCost(){const total=[...document.querySelectorAll('#costItems .cost-row input[type=number]')].reduce((a,x)=>a+Number(x.value||0),0);$('totalCost').value=total.toFixed(2);return total}
 function addCost(){let d=document.createElement('div');d.className='cost-row';d.innerHTML='<input class="cost-part-name" placeholder="Pieza o elemento"><input class="cost-part-cost" type="number" step=".01" min="0" placeholder="Coste €"><input class="cost-part-brand" placeholder="Marca"><input class="cost-part-ref" placeholder="Ref."><button class="danger" type="button" onclick="this.parentElement.remove();updateTotalCost()">×</button>';d.querySelector('input[type=number]').addEventListener('input',updateTotalCost);$('costItems').appendChild(d);updateTotalCost()}
-function saveIntervention(){let v=data.vehicles.find(x=>x.id===data.selected),type=$('itype').value;if(type==='Repostaje'){v.fuelings=Array.isArray(v.fuelings)?v.fuelings:[];updateFuelTotal();const liters=Number($('fuelLiters').value||0),price=Number($('fuelPrice').value||0),total=Number($('fuelTotal').value||0),km=Number($('ikm').value||0);if(!liters||!km||!price){alert('Indica litros, precio por litro y kilómetros del repostaje');return}const record={date:$('idate').value,km,liters,price,totalCost:total||liters*price,fullTank:$('fuelFull').checked,station:$('fuelStation').value.trim(),notes:$('fuelNotes').value.trim()};if(window.editFueling){const ex=v.fuelings.find(x=>x.id===window.editFueling);if(ex)Object.assign(ex,record)}else{record.id=Date.now();v.fuelings.push(record)}window.editFueling=null;window.editIntervention=null;if(km>Number(v.km||0))v.km=km;save();closeModal('interventionModal');render();if($('fuelHistoryModal')?.classList.contains('show'))renderFuelHistoryModal();if($('vehicleDetailModal')?.classList.contains('show'))renderVehicleDetailModal();return}let details='';if(type==='Mantenimiento')details=[...document.querySelectorAll('#maintenanceFields input:checked')].map(x=>x.value).join(', ')||'Mantenimiento general';if(type==='Neumáticos')details=`${$('tireSize').value||'Medida no indicada'} · ${$('tireBrand').value||'Marca no indicada'}`;if(type==='Correa/Cadena'){if(isSelectedMoto())details=`${$('beltBrand').value||'Marca no indicada'} · ${$('beltModel').value||'Modelo no indicado'}`;else details=`${$('beltType').value} · ${$('beltBrand').value||'Marca no indicada'}`;}if(type==='Varios')details=$('otherDescription').value||'Intervención sin descripción';if(type==='ITV')details=`Resultado: ${$('itvResult').value}${$('itvNextDate').value?' · Próxima ITV: '+$('itvNextDate').value:''}${$('itvNotes').value?' · '+$('itvNotes').value:''}`;if(type==='Seguro')details=`${$('insuranceCompany').value||'Aseguradora no indicada'} · ${$('insurancePeriod').value}${$('insuranceExpiry').value?' · Vence: '+$('insuranceExpiry').value:''}${$('insurancePolicy').value?' · Póliza: '+$('insurancePolicy').value:''}`;if(type==='Impuestos')details=`${$('taxType').value}${$('taxDueDate').value?' · Pago: '+$('taxDueDate').value:''}${$('taxNotes').value?' · '+$('taxNotes').value:''}`;let manual=$('manualDetails').value.trim();if(manual)details=manual;let km=Number($('ikm').value||0),interval=type==='Correa/Cadena'?Number($('inextManual').value||0):Number($('inext').value||0);let parts=[...document.querySelectorAll('.cost-row')].map(r=>{const inputs=r.querySelectorAll('input');return {name:inputs[0]?.value?.trim()||'',cost:Number(inputs[1]?.value||0),brand:inputs[2]?.value?.trim()||'',ref:inputs[3]?.value?.trim()||''}}).filter(x=>x.name||x.cost||x.brand||x.ref);let partsTotal=parts.reduce((a,p)=>a+Number(p.cost||0),0);let finalCost=partsTotal;if(type==='ITV')finalCost=Number($('itvCost')?.value||0);if(type==='Seguro')finalCost=Number($('insuranceCost')?.value||0);if(type==='Impuestos')finalCost=Number($('taxCost')?.value||0);let record={type,date:$('idate').value,km,nextKm:interval?km+interval:null,interval,details,parts:['ITV','Seguro','Impuestos'].includes(type)?[]:parts,totalCost:finalCost};if(type==='Neumáticos'&&window.editIntervention){const existingTire=(v.interventions||[]).find(x=>x.id===window.editIntervention);const linkedIds=Array.isArray(existingTire?.tirePairIds)?existingTire.tirePairIds:[];const linkedPair=linkedIds.map(id=>tirePairById(v,id)).find(Boolean);if(linkedPair?.installDate)record.date=linkedPair.installDate}if(window.editIntervention){let existing=(v.interventions||[]).find(x=>x.id===window.editIntervention);if(existing)Object.assign(existing,record)}else{record.id=Date.now();v.interventions.push(record)}window.editIntervention=null;window.editFueling=null;if(km>Number(v.km||0))v.km=km;save();closeModal('interventionModal');render();if($('historyModal')?.classList.contains('show'))renderHistoryModal();}
+function saveIntervention(){let v=data.vehicles.find(x=>x.id===data.selected),type=$('itype').value;if(type==='Repostaje'){v.fuelings=Array.isArray(v.fuelings)?v.fuelings:[];updateFuelTotal();const liters=Number($('fuelLiters').value||0),price=Number($('fuelPrice').value||0),total=Number($('fuelTotal').value||0),km=Number($('ikm').value||0);if(!liters||!km||!price){alert('Indica litros, precio por litro y kilómetros del repostaje');return}const record={date:$('idate').value,km,liters,price,totalCost:total||liters*price,fullTank:$('fuelFull').checked,station:$('fuelStation').value.trim(),notes:$('fuelNotes').value.trim()};if(window.editFueling){const ex=v.fuelings.find(x=>x.id===window.editFueling);if(ex)Object.assign(ex,record)}else{record.id=Date.now();v.fuelings.push(record)}window.editFueling=null;window.editIntervention=null;if(km>Number(v.km||0))v.km=km;save();closeModal('interventionModal');render();if($('fuelHistoryModal')?.classList.contains('show'))renderFuelHistoryModal();if($('vehicleDetailModal')?.classList.contains('show'))renderVehicleDetailModal();return}let details='';if(type==='Mantenimiento')details=[...document.querySelectorAll('#maintenanceFields input:checked')].map(x=>x.value).join(', ')||'Mantenimiento general';if(type==='Neumáticos')details=`${$('tireSize').value||'Medida no indicada'} · ${$('tireBrand').value||'Marca no indicada'}`;if(type==='Correa/Cadena'){if(isSelectedMoto())details=`${$('beltBrand').value||'Marca no indicada'} · ${$('beltModel').value||'Modelo no indicado'}`;else details=`${$('beltType').value} · ${$('beltBrand').value||'Marca no indicada'}`;}if(type==='Varios')details=$('otherDescription').value||'Intervención sin descripción';if(type==='ITV')details=`Resultado: ${$('itvResult').value}${$('itvNextDate').value?' · Próxima ITV: '+$('itvNextDate').value:''}${$('itvNotes').value?' · '+$('itvNotes').value:''}`;if(type==='Seguro')details=`${$('insuranceCompany').value||'Aseguradora no indicada'} · ${$('insurancePeriod').value}${$('insuranceExpiry').value?' · Vence: '+$('insuranceExpiry').value:''}${$('insurancePolicy').value?' · Póliza: '+$('insurancePolicy').value:''}`;if(type==='Impuestos')details=`${$('taxType').value}${$('taxDueDate').value?' · Pago: '+$('taxDueDate').value:''}${$('taxNotes').value?' · '+$('taxNotes').value:''}`;let manual=$('manualDetails').value.trim();if(manual)details=manual;let km=Number($('ikm').value||0),interval=type==='ITV'?0:(type==='Correa/Cadena'?Number($('inextManual').value||0):Number($('inext').value||0));let parts=[...document.querySelectorAll('.cost-row')].map(r=>{const inputs=r.querySelectorAll('input');return {name:inputs[0]?.value?.trim()||'',cost:Number(inputs[1]?.value||0),brand:inputs[2]?.value?.trim()||'',ref:inputs[3]?.value?.trim()||''}}).filter(x=>x.name||x.cost||x.brand||x.ref);let partsTotal=parts.reduce((a,p)=>a+Number(p.cost||0),0);let finalCost=partsTotal;if(type==='ITV')finalCost=Number($('itvCost')?.value||0);if(type==='Seguro')finalCost=Number($('insuranceCost')?.value||0);if(type==='Impuestos')finalCost=Number($('taxCost')?.value||0);let record={type,date:$('idate').value,km,nextKm:interval?km+interval:null,interval,details,parts:['ITV','Seguro','Impuestos'].includes(type)?[]:parts,totalCost:finalCost};if(type==='Neumáticos'&&window.editIntervention){const existingTire=(v.interventions||[]).find(x=>x.id===window.editIntervention);const linkedIds=Array.isArray(existingTire?.tirePairIds)?existingTire.tirePairIds:[];const linkedPair=linkedIds.map(id=>tirePairById(v,id)).find(Boolean);if(linkedPair?.installDate)record.date=linkedPair.installDate}if(window.editIntervention){let existing=(v.interventions||[]).find(x=>x.id===window.editIntervention);if(existing)Object.assign(existing,record)}else{record.id=Date.now();v.interventions.push(record)}window.editIntervention=null;window.editFueling=null;if(km>Number(v.km||0))v.km=km;save();closeModal('interventionModal');render();if($('historyModal')?.classList.contains('show'))renderHistoryModal();}
 function deleteFueling(id){const v=data.vehicles.find(x=>x.id===data.selected);if(!v)return;if(confirm('¿Eliminar este repostaje?')){v.fuelings=(v.fuelings||[]).filter(x=>x.id!==id);save();render();if($('fuelHistoryModal')?.classList.contains('show'))renderFuelHistoryModal();if($('vehicleDetailModal')?.classList.contains('show'))renderVehicleDetailModal()}}
 function deleteIntervention(id){let v=data.vehicles.find(x=>x.id===data.selected);if(confirm('¿Eliminar esta intervención?')){v.interventions=v.interventions.filter(x=>x.id!==id);save();render();if($('historyModal')?.classList.contains('show'))renderHistoryModal()}}
 function deleteVehicle(id){if(confirm('¿Eliminar vehículo y todo su historial?')){data.vehicles=data.vehicles.filter(x=>x.id!==id);data.selected=data.vehicles[0]?.id||null;closeModal('historyModal');save();render()}}
@@ -3512,7 +3512,7 @@ window.deleteVehicle=function(id){
 </script>
 
 <style id="garagey-v35-65-settings-close">
-/* v35.65 — ficha de Ajustes abierta desde el engranaje del Centro de avisos */
+/* v35.67 — ficha de Ajustes abierta desde el engranaje del Centro de avisos */
 #settingsModal{
   padding-top:86px!important;
   padding-bottom:0!important;
@@ -3578,6 +3578,45 @@ window.deleteVehicle=function(id){
   #settingsModal .settings-back-btn{min-height:40px!important;padding:8px 12px!important;font-size:13px!important;}
 }
 </style>
+
+<style id="garagey-v35-67-intervention-scroll-all">
+/* v35.67 — scroll completo para todas las fichas de nueva/edición de intervención */
+#interventionModal .dialog{
+  display:flex!important;
+  flex-direction:column!important;
+  overflow:hidden!important;
+  min-height:0!important;
+}
+#interventionModal .dialog>.top{flex:0 0 auto!important;}
+#interventionModal .dialog>.form{
+  flex:1 1 auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior:contain!important;
+  box-sizing:border-box!important;
+  padding-bottom:calc(28px + env(safe-area-inset-bottom))!important;
+}
+#interventionModal .dialog>.actions{flex:0 0 auto!important;}
+#interventionModal .intervention-form-step{
+  min-height:0!important;
+  padding-bottom:18px!important;
+}
+@media(max-width:600px),(pointer:coarse){
+  #interventionModal .dialog{
+    height:calc(100dvh - 86px)!important;
+    max-height:calc(100dvh - 86px)!important;
+    min-height:0!important;
+  }
+  #interventionModal .dialog>.form{
+    padding-bottom:calc(34px + env(safe-area-inset-bottom))!important;
+    touch-action:pan-y!important;
+  }
+}
+</style>
+
 </body></html>
 <style id="garagey-v35-59-modal-header-offset">
 /* v35.59 — reservar el espacio del encabezado global fijo en los modales de vehículo */
@@ -3735,7 +3774,7 @@ window.deleteVehicle=function(id){
   }
 }
 
-/* GARAGEY v35.65 — editar intervención desde Centro de avisos: desplazamiento completo bajo el encabezado fijo */
+/* GARAGEY v35.67 — editar intervención desde Centro de avisos: desplazamiento completo bajo el encabezado fijo */
 @media (max-width:900px), (pointer:coarse) and (max-width:1100px){
   #interventionModal.notice-edit-mode{
     padding:0!important;
