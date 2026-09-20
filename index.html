@@ -2164,7 +2164,7 @@ body{padding-top:0!important;}
 </header>
 
 <main class="content" id="main"></main>
-<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.70 · Encabezado fijo · Diseño Android</div></div>
+<button id="mobileAddVehicle" class="mobile-add-vehicle" onclick="openVehicle()">＋ Añadir vehículo</button><div class="footer-note">Garagey v35.71 · Encabezado fijo · Diseño Android</div></div>
 
 <div class="modal garagey-type-modal" id="vehicleTypeModal"><div class="garagey-type-dialog"><header class="garagey-type-header"><button class="garagey-back" onclick="closeModal('vehicleTypeModal')" aria-label="Volver">←</button><h2>Añadir vehículo</h2></header><section class="garagey-type-content"><div class="garagey-type-question">¿Qué tipo de vehículo<br>quieres añadir?</div><div class="garagey-type-choices"><button class="garagey-type-card garagey-car-choice" onclick="chooseVehicleType('Coche')" aria-label="Añadir coche"><img src="assets/car_choice_exact.png" alt="Coche"><span class="sr-only">Coche</span></button><button class="garagey-type-card garagey-moto-choice" onclick="chooseVehicleType('Moto')" aria-label="Añadir moto"><img src="assets/moto_choice_exact.png" alt="Moto"><span class="sr-only">Moto</span></button></div></section></div></div>
 
@@ -3230,7 +3230,7 @@ render();
 
 
 <style>
-/* v35.70 — Encabezado único para todas las fichas de intervención */
+/* v35.71 — Encabezado único para todas las fichas de intervención */
 #interventionModal .dialog>.top .intervention-picker-back{display:flex!important;position:relative!important;top:auto!important;right:auto!important;pointer-events:auto!important;margin-left:auto!important}
 #interventionModal .dialog>.top .intervention-picker-back[style]{display:flex!important}
 #interventionModal .intervention-form-step-head{display:none!important}
@@ -3825,5 +3825,60 @@ window.deleteVehicle=function(id){
  #interventionModal .dialog{width:100%!important;max-width:none!important;height:calc(100dvh - 86px)!important;min-height:0!important;max-height:calc(100dvh - 86px)!important;margin:0!important;border-radius:0!important}
  #interventionModal .dialog>.form{grid-template-columns:1fr!important;padding:14px 12px 20px!important}
  #interventionModal .dialog>.actions{padding:12px 12px calc(18px + env(safe-area-inset-bottom))!important}
+}
+</style>
+<style id="garagey-v35-71-arrow-visible">
+/* v35.71 — Flecha de retorno visible en el encabezado de TODAS las fichas de intervención */
+#interventionModal .dialog > .top .intervention-picker-back{
+  display:flex !important;
+  position:relative !important;
+  top:auto !important;
+  right:auto !important;
+  z-index:99999 !important;
+  flex:0 0 44px !important;
+  width:44px !important;
+  height:44px !important;
+  min-width:44px !important;
+  min-height:44px !important;
+  margin-left:auto !important;
+  padding:0 !important;
+  box-sizing:border-box !important;
+  align-items:center !important;
+  justify-content:center !important;
+  border:1px solid rgba(125,205,255,.95) !important;
+  border-radius:50% !important;
+  background:#087fc8 !important;
+  color:#fff !important;
+  font-size:0 !important;
+  line-height:1 !important;
+  font-family:Arial,sans-serif !important;
+  font-weight:900 !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  pointer-events:auto !important;
+  cursor:pointer !important;
+  box-shadow:0 4px 14px rgba(0,0,0,.35) !important;
+}
+#interventionModal .dialog > .top .intervention-picker-back::before{
+  content:'←' !important;
+  display:block !important;
+  color:#fff !important;
+  font-size:29px !important;
+  line-height:1 !important;
+  font-family:Arial,sans-serif !important;
+  font-weight:900 !important;
+  transform:none !important;
+  width:auto !important;
+  height:auto !important;
+  border:0 !important;
+  margin:0 !important;
+}
+#interventionModal .dialog > .top .intervention-picker-back:active{transform:scale(.94) !important}
+@media(max-width:600px){
+  #interventionModal .dialog > .top{padding-right:14px !important}
+  #interventionModal .dialog > .top .intervention-picker-back{
+    flex-basis:42px !important;width:42px !important;height:42px !important;
+    min-width:42px !important;min-height:42px !important;
+  }
 }
 </style>
