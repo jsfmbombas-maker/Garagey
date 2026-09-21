@@ -2713,13 +2713,21 @@ function expenseStats(v){
  const fuel=Array.isArray(v?.fuelings)?v.fuelings.reduce((a,r)=>a+Number(r.totalCost||0),0):0;
  result.push({type:'Repostaje',label:'Combustible / repostajes',total:fuel});
  const total=result.reduce((a,r)=>a+r.total,0);
- // Para evitar atribuir a Garagey kilómetros anteriores al comienzo del historial,
- // el denominador parte del km de la primera intervención registrada.
- const interventionKms=rows.map(i=>Number(i.km||0)).filter(k=>k>0);
- const startKm=interventionKms.length?Math.min(...interventionKms):null;
- const currentKm=Number(v?.km||0);
+ // El denominador debe partir del kilometraje de la PRIMERA intervención
+ // registrada, no del menor kilometraje encontrado. Esto es importante si
+ // posteriormente se añaden intervenciones históricas con km inferiores.
+ const datedInterventions=rows
+   .map(i=>({i,km:Number(i.km||0),date:String(i.date||'')}))
+   .filter(x=>x.km>0)
+   .sort((a,b)=>String(a.date).localeCompare(String(b.date)) || a.km-b.km || Number(a.i.id||0)-Number(b.i.id||0));
+ const firstIntervention=datedInterventions[0]||null;
+ const startKm=firstIntervention?firstIntervention.km:null;
+ // El kilometraje actual procede del vehículo; si por alguna razón quedó
+ // desactualizado, usamos el mayor km registrado como respaldo.
+ const recordedKms=[...rows.map(i=>Number(i.km||0)),...(Array.isArray(v?.fuelings)?v.fuelings.map(r=>Number(r.km||0)):[])].filter(k=>k>0);
+ const currentKm=Math.max(Number(v?.km||0),...(recordedKms.length?recordedKms:[0]));
  const km=startKm===null?0:Math.max(0,currentKm-startKm);
- return {result,total,startKm,currentKm,km,costKm:km>0?total/km:null};
+ return {result,total,startKm,currentKm,km,costKm:km>0?total/km:null,firstIntervention};
 }
 function openExpenseModal(){renderExpenseModal();$('expenseModal')?.classList.add('show');}
 function renderExpenseModal(){const modal=$('expenseModal'),box=$('expenseModalContent');if(!modal||!box)return;const v=data.vehicles.find(x=>x.id===data.selected);if(!v){modal.classList.remove('show');return}const st=expenseStats(v);const rows=st.result.filter(r=>r.total>0);const euroKm=x=>st.costKm===null?'—':(x/st.km).toLocaleString('es-ES',{minimumFractionDigits:4,maximumFractionDigits:4})+' €/km';const html=`<div class="history-modal-top"><div><span class="eyebrow">GASTOS DEL VEHÍCULO</span><strong>${[v.brand,v.model].filter(Boolean).join(' · ')||'Mi vehículo'}</strong><small>${Number(st.currentKm||0).toLocaleString('es-ES')} km actuales · desde ${st.startKm===null?'—':Number(st.startKm).toLocaleString('es-ES')+' km'}</small></div><button class="history-modal-close" onclick="closeModal('expenseModal')">Cerrar ×</button></div><div class="history-modal-scroll"><div class="expense-summary-grid"><div class="expense-summary-card"><span>Gasto total</span><b>${euro2(st.total)}</b><small>Suma de todos los gastos registrados</small></div><div class="expense-summary-card"><span>Coste total por km</span><b>${st.costKm===null?'—':st.costKm.toLocaleString('es-ES',{minimumFractionDigits:4,maximumFractionDigits:4})+' €/km'}</b><small>Calculado sobre ${Number(st.km||0).toLocaleString('es-ES')} km registrados desde la primera intervención</small></div></div><div class="history-detail-title">Desglose de gastos</div><div class="expense-list">${rows.length?rows.map(r=>`<div class="expense-row"><div class="expense-row-main"><b>${r.label}</b><small>${r.type==='Repostaje'?'Registros de combustible':'Intervenciones registradas'}</small></div><div class="expense-row-values"><b>${euro2(r.total)}</b><small>${euroKm(r.total)}</small></div></div>`).join(''):'<div class="fuel-empty">Todavía no hay gastos registrados.</div>'}</div><div class="expense-total"><span>TOTAL ACUMULADO</span><b>${euro2(st.total)}<br><small>${st.costKm===null?'—':st.costKm.toLocaleString('es-ES',{minimumFractionDigits:4,maximumFractionDigits:4})+' €/km'}</small></b></div><p class="expense-note">El coste por km se calcula con los kilómetros recorridos desde la primera intervención registrada hasta el kilometraje actual. Así no se contabilizan kilómetros anteriores al inicio del historial de Garagey.</p></div></div>`;box.innerHTML=html;}
@@ -4001,7 +4009,7 @@ window.deleteVehicle=function(id){
   }
 }
 
-/* GARAGEY v35.93 — Ficha vehículo: solo Gasto acumulado + Avisos, repartidos al 50% */
+/* GARAGEY v35.94 — Ficha vehículo: solo Gasto acumulado + Avisos, repartidos al 50% */
 .vehicle-detail-dialog .vehicle-stats-pro{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
 .vehicle-detail-dialog .vehicle-stats-pro .vstat{min-width:0!important;width:100%!important;box-sizing:border-box!important}
 .vehicle-detail-dialog .vehicle-stats-pro .vstat>div{min-width:0!important}
