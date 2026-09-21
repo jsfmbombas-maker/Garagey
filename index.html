@@ -2709,28 +2709,68 @@ function toggleHistoryIntervention(id){
 function expenseStats(v){
  const rows=Array.isArray(v?.interventions)?v.interventions:[];
  const cats=[['Mantenimiento','Mantenimiento'],['Neumáticos','Neumáticos'],['Correa/Cadena','Correa / Cadena'],['Varios','Intervenciones varias'],['ITV','ITV'],['Seguro','Seguro'],['Impuestos','Impuestos']];
- const result=cats.map(([type,label])=>{const total=rows.filter(i=>i.type===type).reduce((a,i)=>a+interventionCost(i),0);return {type,label,total}});
- const fuel=Array.isArray(v?.fuelings)?v.fuelings.reduce((a,r)=>a+Number(r.totalCost||0),0):0;
- result.push({type:'Repostaje',label:'Combustible / repostajes',total:fuel});
- const total=result.reduce((a,r)=>a+r.total,0);
- // El denominador debe partir del kilometraje de la PRIMERA intervención
- // registrada, no del menor kilometraje encontrado. Esto es importante si
- // posteriormente se añaden intervenciones históricas con km inferiores.
- const datedInterventions=rows
-   .map(i=>({i,km:Number(i.km||0),date:String(i.date||'')}))
-   .filter(x=>x.km>0)
-   .sort((a,b)=>String(a.date).localeCompare(String(b.date)) || a.km-b.km || Number(a.i.id||0)-Number(b.i.id||0));
- const firstIntervention=datedInterventions[0]||null;
+ const positiveKms=rows.map(i=>Number(i.km||0)).filter(k=>k>0);
+ const fuelRows=Array.isArray(v?.fuelings)?v.fuelings:[];
+ const allDates=[...rows.map(i=>i.date).filter(Boolean),...fuelRows.map(r=>r.date).filter(Boolean)].sort();
+ const firstDate=allDates[0]||v?.purchaseDate||null;
+ const datedKms=[...rows.map(i=>({date:i.date,km:Number(i.km||0)})),...fuelRows.map(r=>({date:r.date,km:Number(r.km||0)}))].filter(x=>x.km>0&&x.date);
+ const firstIntervention=rows.map(i=>({i,km:Number(i.km||0),date:String(i.date||'')})).filter(x=>x.km>0).sort((a,b)=>String(a.date).localeCompare(String(b.date))||a.km-b.km||Number(a.i.id||0)-Number(b.i.id||0))[0]||null;
  const startKm=firstIntervention?firstIntervention.km:null;
- // El kilometraje actual procede del vehículo; si por alguna razón quedó
- // desactualizado, usamos el mayor km registrado como respaldo.
- const recordedKms=[...rows.map(i=>Number(i.km||0)),...(Array.isArray(v?.fuelings)?v.fuelings.map(r=>Number(r.km||0)):[])].filter(k=>k>0);
+ const recordedKms=[...positiveKms,...fuelRows.map(r=>Number(r.km||0)).filter(k=>k>0)];
  const currentKm=Math.max(Number(v?.km||0),...(recordedKms.length?recordedKms:[0]));
  const km=startKm===null?0:Math.max(0,currentKm-startKm);
- return {result,total,startKm,currentKm,km,costKm:km>0?total/km:null,firstIntervention};
+ const annualKm=(()=>{
+   if(!datedKms.length||!currentKm)return null;
+   const dated=datedKms.slice().sort((a,b)=>String(a.date).localeCompare(String(b.date))||a.km-b.km);
+   const first=dated[0], last={date:new Date().toISOString().slice(0,10),km:currentKm};
+   const d0=new Date(first.date+'T00:00:00'), d1=new Date(last.date+'T00:00:00');
+   const years=(d1-d0)/(365.25*86400000);
+   if(!(years>0))return null;
+   return Math.max(0,(last.km-first.km)/years);
+ })();
+ const vehicleYear=Number(v?.year||0);
+ const ageAtDate=(date)=>{
+   if(!vehicleYear||!date)return null;
+   const y=Number(String(date).slice(0,4));
+   return y-vehicleYear;
+ };
+ const itvIntervalYears=(date)=>{
+   const age=ageAtDate(date);
+   if(age===null)return 2;
+   if(age<4)return 4;
+   if(age<10)return 2;
+   return 1;
+ };
+ const fixedCostKm=(type)=>{
+   const items=rows.filter(i=>i.type===type&&interventionCost(i)>0);
+   if(!annualKm||annualKm<=0||!items.length)return null;
+   if(type==='ITV'){
+     const kmCovered=items.reduce((sum,i)=>sum+annualKm*itvIntervalYears(i.date),0);
+     return kmCovered>0?items.reduce((sum,i)=>sum+interventionCost(i),0)/kmCovered:null;
+   }
+   // Seguro e Impuestos son costes periódicos anuales.
+   return items.reduce((sum,i)=>sum+interventionCost(i),0)/(annualKm*items.length);
+ };
+ const variableCostKm=(type,total)=>{
+   if(!total||!km)return null;
+   return total/km;
+ };
+ const result=cats.map(([type,label])=>{
+   const total=rows.filter(i=>i.type===type).reduce((a,i)=>a+interventionCost(i),0);
+   const costKm=['ITV','Seguro','Impuestos'].includes(type)?fixedCostKm(type):variableCostKm(type,total);
+   return {type,label,total,costKm};
+ });
+ const fuel=fuelRows.reduce((a,r)=>a+Number(r.totalCost||0),0);
+ result.push({type:'Repostaje',label:'Combustible / repostajes',total:fuel,costKm:variableCostKm('Repostaje',fuel)});
+ const total=result.reduce((a,r)=>a+r.total,0);
+ // El total €/km es la suma de los costes/km de cada categoría. Para los
+ // costes variables se usa el periodo real registrado; para Seguro,
+ // Impuestos e ITV se anualiza usando el promedio de km/año y su periodicidad.
+ const totalCostKm=result.reduce((a,r)=>a+(r.costKm===null?0:r.costKm),0);
+ return {result,total,startKm,currentKm,km,costKm:result.some(r=>r.costKm!==null)?totalCostKm:null,firstIntervention,annualKm,firstDate};
 }
 function openExpenseModal(){renderExpenseModal();$('expenseModal')?.classList.add('show');}
-function renderExpenseModal(){const modal=$('expenseModal'),box=$('expenseModalContent');if(!modal||!box)return;const v=data.vehicles.find(x=>x.id===data.selected);if(!v){modal.classList.remove('show');return}const st=expenseStats(v);const rows=st.result.filter(r=>r.total>0);const euroKm=x=>st.costKm===null?'—':(x/st.km).toLocaleString('es-ES',{minimumFractionDigits:4,maximumFractionDigits:4})+' €/km';const html=`<div class="history-modal-top"><div><span class="eyebrow">GASTOS DEL VEHÍCULO</span><strong>${[v.brand,v.model].filter(Boolean).join(' · ')||'Mi vehículo'}</strong><small>${Number(st.currentKm||0).toLocaleString('es-ES')} km actuales · desde ${st.startKm===null?'—':Number(st.startKm).toLocaleString('es-ES')+' km'}</small></div><button class="history-modal-close" onclick="closeModal('expenseModal')">Cerrar ×</button></div><div class="history-modal-scroll"><div class="expense-summary-grid"><div class="expense-summary-card"><span>Gasto total</span><b>${euro2(st.total)}</b><small>Suma de todos los gastos registrados</small></div><div class="expense-summary-card"><span>Coste total por km</span><b>${st.costKm===null?'—':st.costKm.toLocaleString('es-ES',{minimumFractionDigits:4,maximumFractionDigits:4})+' €/km'}</b><small>Calculado sobre ${Number(st.km||0).toLocaleString('es-ES')} km registrados desde la primera intervención</small></div></div><div class="history-detail-title">Desglose de gastos</div><div class="expense-list">${rows.length?rows.map(r=>`<div class="expense-row"><div class="expense-row-main"><b>${r.label}</b><small>${r.type==='Repostaje'?'Registros de combustible':'Intervenciones registradas'}</small></div><div class="expense-row-values"><b>${euro2(r.total)}</b><small>${euroKm(r.total)}</small></div></div>`).join(''):'<div class="fuel-empty">Todavía no hay gastos registrados.</div>'}</div><div class="expense-total"><span>TOTAL ACUMULADO</span><b>${euro2(st.total)}<br><small>${st.costKm===null?'—':st.costKm.toLocaleString('es-ES',{minimumFractionDigits:4,maximumFractionDigits:4})+' €/km'}</small></b></div><p class="expense-note">El coste por km se calcula con los kilómetros recorridos desde la primera intervención registrada hasta el kilometraje actual. Así no se contabilizan kilómetros anteriores al inicio del historial de Garagey.</p></div></div>`;box.innerHTML=html;}
+function renderExpenseModal(){const modal=$('expenseModal'),box=$('expenseModalContent');if(!modal||!box)return;const v=data.vehicles.find(x=>x.id===data.selected);if(!v){modal.classList.remove('show');return}const st=expenseStats(v);const rows=st.result.filter(r=>r.total>0);const euroKm=x=>x===null||x===undefined?'—':Number(x).toLocaleString('es-ES',{minimumFractionDigits:4,maximumFractionDigits:4})+' €/km';const html=`<div class="history-modal-top"><div><span class="eyebrow">GASTOS DEL VEHÍCULO</span><strong>${[v.brand,v.model].filter(Boolean).join(' · ')||'Mi vehículo'}</strong><small>${Number(st.currentKm||0).toLocaleString('es-ES')} km actuales · desde ${st.startKm===null?'—':Number(st.startKm).toLocaleString('es-ES')+' km'}</small></div><button class="history-modal-close" onclick="closeModal('expenseModal')">Cerrar ×</button></div><div class="history-modal-scroll"><div class="expense-summary-grid"><div class="expense-summary-card"><span>Gasto total</span><b>${euro2(st.total)}</b><small>Suma de todos los gastos registrados</small></div><div class="expense-summary-card"><span>Coste total por km</span><b>${st.costKm===null?'—':st.costKm.toLocaleString('es-ES',{minimumFractionDigits:4,maximumFractionDigits:4})+' €/km'}</b><small>Calculado con el periodo de referencia correspondiente a cada gasto: km reales registrados para gastos por uso y km/año medios para Seguro, Impuestos e ITV</small></div></div><div class="history-detail-title">Desglose de gastos</div><div class="expense-list">${rows.length?rows.map(r=>`<div class="expense-row"><div class="expense-row-main"><b>${r.label}</b><small>${r.type==='Repostaje'?'Registros de combustible':'Intervenciones registradas'}</small></div><div class="expense-row-values"><b>${euro2(r.total)}</b><small>${euroKm(r.costKm)}</small></div></div>`).join(''):'<div class="fuel-empty">Todavía no hay gastos registrados.</div>'}</div><div class="expense-total"><span>TOTAL ACUMULADO</span><b>${euro2(st.total)}<br><small>${st.costKm===null?'—':st.costKm.toLocaleString('es-ES',{minimumFractionDigits:4,maximumFractionDigits:4})+' €/km'}</small></b></div><p class="expense-note">Los gastos por uso usan los km registrados desde el inicio del historial. Seguro e Impuestos se calculan como costes anuales usando la media de km/año; ITV aplica 4, 2 o 1 años según la antigüedad del vehículo.</p></div></div>`;box.innerHTML=html;}
 function renderFuelHistoryModal(){const modal=$('fuelHistoryModal'),box=$('fuelHistoryModalContent');if(!modal||!box)return;const v=data.vehicles.find(x=>x.id===data.selected);if(!v){modal.classList.remove('show');return}v.fuelings=Array.isArray(v.fuelings)?v.fuelings:[];const fs=fuelStats(v);const avg=fs.consumption===null?'—':fs.consumption.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})+' L/100 km';const ck=fs.costKm===null?'—':(fs.costKm*100).toLocaleString('es-ES',{minimumFractionDigits:1,maximumFractionDigits:1})+' cént/km';let html=`<div class="history-modal-top"><div><span class="eyebrow">HISTORIAL DE REPOSTAJES</span><strong>${[v.brand,v.model].filter(Boolean).join(' · ')||'Mi vehículo'}</strong><small>${[v.brand,v.model].filter(Boolean).join(' · ')||'Sin marca/modelo'} · ${Number(v.km||0).toLocaleString('es-ES')} km</small></div><button class="history-modal-close" onclick="closeModal('fuelHistoryModal')">Cerrar ×</button></div><div class="history-modal-scroll"><div class="fuel-summary-grid"><div class="fuel-summary-card"><span>Consumo medio</span><b>${avg}</b><small>Entre depósitos llenos</small></div><div class="fuel-summary-card"><span>Coste por km</span><b>${ck}</b><small>Combustible</small></div><div class="fuel-summary-card"><span>Gasto combustible</span><b>${euro2(fs.spend)}</b><small>${fs.rows.length} repostajes</small></div></div><div class="fuel-history-list">${fs.rows.length?[...fs.rows].sort((a,b)=>String(b.date||'').localeCompare(String(a.date||''))||Number(b.km||0)-Number(a.km||0)||Number(b.id||0)-Number(a.id||0)).map(r=>`<article class="fuel-history-card history-compact-card combustible" id="fuel-history-item-${r.id}"><button type="button" class="history-compact-head fuel-history-compact-head" onclick="toggleFuelHistory(${r.id})" aria-expanded="false" aria-controls="fuel-history-details-${r.id}"><span class="history-compact-icon">${svgIcon('fuel')}</span><span class="history-compact-main"><b>Repostaje ${r.fullTank?'· Depósito lleno':''}</b><span class="history-compact-meta"><span class="history-meta-item"><i>${svgIcon('calendar')}</i>${r.date||'Fecha no indicada'}</span><span class="history-meta-item"><i>${svgIcon('gauge')}</i>${Number(r.km||0).toLocaleString('es-ES')} km</span></span></span><span class="fuel-history-cost"><strong>${euro2(r.totalCost)}</strong><small>${Number(r.price||0).toLocaleString('es-ES',{minimumFractionDigits:3,maximumFractionDigits:3})} €/L</small></span><span class="history-compact-chevron" aria-hidden="true">›</span></button><div class="history-compact-details fuel-history-body" id="fuel-history-details-${r.id}" hidden><div class="history-detail-title">Detalles del repostaje</div><div class="fuel-history-meta"><div><span>Litros</span><b>${Number(r.liters||0).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2})} L</b></div><div><span>Precio por litro</span><b>${Number(r.price||0).toLocaleString('es-ES',{minimumFractionDigits:3,maximumFractionDigits:3})} €/L</b></div>${r.station?`<div><span>Gasolinera</span><b>${r.station}</b></div>`:''}${r.notes?`<div><span>Observaciones</span><b>${r.notes}</b></div>`:''}</div><div class="history-detail-cost"><span>Coste total</span><b>${euro2(r.totalCost)}</b></div><div class="fuel-history-actions history-detail-actions"><button class="edit" onclick="event.stopPropagation();openFueling(${r.id})">✎ Editar</button><button class="delete" onclick="event.stopPropagation();deleteFueling(${r.id})">▣ Eliminar</button></div></div></article>`).join(''):'<div class="fuel-empty">Todavía no hay repostajes registrados.<br><br>Pulsa «Nueva intervención» y selecciona <b>Repostaje</b>.</div>'}</div></div>`;box.innerHTML=html;hydrateVehicleFormIcons();}
 function toggleFuelHistory(id){const card=document.getElementById(`fuel-history-item-${id}`);if(!card)return;const head=card.querySelector('.history-compact-head'),details=card.querySelector('.history-compact-details');const expanded=card.classList.contains('is-expanded');card.classList.toggle('is-expanded',!expanded);if(head)head.setAttribute('aria-expanded',String(!expanded));if(details)details.hidden=expanded;}
 function openHistoryModal(){renderHistoryModal();$('historyModal').classList.add('show')}function openFuelHistoryModal(){renderFuelHistoryModal();$('fuelHistoryModal').classList.add('show')}
@@ -4009,7 +4049,7 @@ window.deleteVehicle=function(id){
   }
 }
 
-/* GARAGEY v35.94 — Ficha vehículo: solo Gasto acumulado + Avisos, repartidos al 50% */
+/* GARAGEY v35.95 — Ficha vehículo: solo Gasto acumulado + Avisos, repartidos al 50% */
 .vehicle-detail-dialog .vehicle-stats-pro{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
 .vehicle-detail-dialog .vehicle-stats-pro .vstat{min-width:0!important;width:100%!important;box-sizing:border-box!important}
 .vehicle-detail-dialog .vehicle-stats-pro .vstat>div{min-width:0!important}
