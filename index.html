@@ -779,6 +779,22 @@ html,body{width:100%!important;min-width:0!important;max-width:100%!important;ov
 @media(max-width:900px),(pointer:coarse) and (max-width:1100px){.vehicle-detail-modal{padding:0}.vehicle-detail-dialog{width:100%;max-width:none;min-height:100%;border-radius:0;border:0}.vehicle-detail-modal-top{position:sticky;top:0;z-index:30;padding:14px 14px}.vehicle-detail-modal-top strong{font-size:18px}.vehicle-detail-dialog .vehicle-hero{min-height:390px}.vehicle-detail-dialog .vehicle-hero-content{min-height:390px;padding:16px 16px 20px}.vehicle-detail-dialog .vehicle-stats-pro{grid-template-columns:repeat(3,1fr)}.vehicle-detail-dialog .vehicle-data-panel{margin-left:12px;margin-right:12px}.vehicle-detail-dialog .vehicle-actions-pro{padding:0 12px 14px}.vehicle-detail-dialog .history-dropdown{margin:12px}.vehicle-detail-dialog .history-launch{margin:12px;width:calc(100% - 24px)}}
 @media(max-width:520px){.vehicle-detail-dialog .vehicle-stats-pro{grid-template-columns:1fr}.vehicle-detail-dialog .vehicle-spec-line{grid-template-columns:1fr}.vehicle-detail-dialog .vehicle-hero{min-height:360px}.vehicle-detail-dialog .vehicle-hero-content{min-height:360px}.vehicle-detail-modal-top{gap:8px}.vehicle-detail-close{padding:8px 9px;font-size:11px}}
 
+
+/* GARAGEY v35.91 — campos de gastos legibles y coherentes con el resto de la interfaz */
+.expense-summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 14px 10px}
+.expense-summary-card{min-width:0;padding:14px;border-radius:16px;background:linear-gradient(135deg,#082c47,#0a2034);border:1px solid #245e85;color:#fff;box-shadow:0 8px 20px #0003}
+.expense-summary-card span,.expense-row-main small{display:block;color:#69b8ee;font-size:11px;font-weight:800;margin-bottom:5px}
+.expense-summary-card b{display:block;color:#fff;font-size:21px;line-height:1.2;overflow-wrap:anywhere;word-break:break-word}
+.expense-summary-card small{display:block;color:#9eb8cc;font-size:10px;margin-top:6px;line-height:1.35}
+.expense-list{padding:0 14px;display:grid;gap:8px}
+.expense-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:12px;padding:13px 14px;border-radius:14px;background:#061a2c;border:1px solid #214b6f;min-width:0}
+.expense-row-main{min-width:0}.expense-row-main b{display:block;color:#fff;font-size:14px;overflow-wrap:anywhere}.expense-row-main small{margin-top:3px;margin-bottom:0;color:#8fa9c0;font-weight:600}
+.expense-row-values{text-align:right;min-width:90px}.expense-row-values b{display:block;color:#fff;font-size:16px;white-space:nowrap}.expense-row-values small{display:block;color:#69b8ee;font-size:11px;font-weight:800;margin-top:3px;white-space:nowrap}
+.expense-total{margin:12px 14px;padding:15px;border-radius:16px;background:linear-gradient(135deg,#075a4c,#0b403a);border:1px solid #2a907b;display:flex;align-items:center;justify-content:space-between;gap:12px;color:#fff}
+.expense-total>span{color:#a8e8d8;font-size:12px;font-weight:900;letter-spacing:.06em}.expense-total>b{text-align:right;font-size:21px;line-height:1.15;overflow-wrap:anywhere}.expense-total small{color:#9fe4d4;font-size:11px}
+.expense-note{margin:0 14px 16px;padding:11px 12px;border-radius:12px;background:#0a2338;border:1px solid #214b6f;color:#8fa9c0;font-size:11px;line-height:1.45}
+@media(max-width:520px){.expense-summary-grid{grid-template-columns:1fr;padding:12px}.expense-summary-card{padding:13px}.expense-summary-card b{font-size:20px}.expense-list{padding:0 12px}.expense-row{grid-template-columns:minmax(0,1fr) auto;padding:12px}.expense-row-values{min-width:82px}.expense-total{margin-left:12px;margin-right:12px}.expense-note{margin-left:12px;margin-right:12px}}
+
 /* GARAGEY — organización de pantalla y desplegables */
 .layout{display:block!important;margin-top:20px}.content{width:100%!important;max-width:none!important}.garagey-bottom{margin-top:4px;margin-bottom:0}.vehicle-expand-wrap{margin-top:16px;padding-top:14px;border-top:1px solid #173d5c}.vehicle-expand-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding:0 4px}.vehicle-expand-head strong{display:block;color:#fff;font-size:19px}.vehicle-expand-head small{display:block;color:#91b0c8;font-size:12px;margin-top:2px}.vehicle-collapse{background:#0a2338;color:#bfe2ff;border:1px solid #2e79ad;border-radius:11px;padding:9px 11px;font-weight:800}.vehicle-detail-dropdown{margin-top:0;border:1px solid #1b547c;box-shadow:0 16px 35px #0005}.history-launch{width:100%;margin-top:12px;padding:15px 16px;border-radius:15px;background:linear-gradient(90deg,#0a3150,#123f63);color:#dff2ff;border:1px solid #2e8ac8;font-weight:900;display:flex;align-items:center;justify-content:space-between;font-size:14px}.history-dropdown{margin-top:12px;border:1px solid #d8deea;animation:garageyDrop .22s ease-out}.vehicle-detail-alerts .alert{margin-top:12px}@keyframes garageyDrop{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 @media(max-width:900px),(pointer:coarse) and (max-width:1100px){.app{padding:0 0 70px}.layout{margin-top:0}.content{padding:0 0!important}.notice-panel,.vehicle-list-panel,.garagey-bottom{border-radius:0!important}.notice-panel{margin-bottom:10px!important;padding:18px 14px!important}.vehicle-list-panel{padding:14px 12px!important;margin-bottom:10px!important}.vehicle-expand-head{align-items:flex-start}.vehicle-collapse{font-size:11px;padding:8px 9px}.history-launch{font-size:13px}.garagey-bottom{margin-top:10px;padding:20px 14px!important}.garagey-bottom .quick{grid-template-columns:1fr 1fr}}
@@ -1826,7 +1842,7 @@ html,body{overflow-x:hidden}
 }
 </style>
 <style id="garagey-v35-32-notice-edge-fix">
-/* GARAGEY v35.90 — Botón de detalle de neumático activo vuelve a Gestión */
+/* GARAGEY v35.91 — Botón de detalle de neumático activo vuelve a Gestión */
 @media (max-width:900px),(pointer:coarse) and (max-width:1100px){
   .content{
     width:100%!important;
